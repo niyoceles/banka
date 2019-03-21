@@ -1,0 +1,264 @@
+body {
+    margin: 0;
+}
+
+.header {
+    height: 50px;
+    color: white;
+    background-color: #19705a;
+    padding: 10px;
+    text-align: center;
+}
+
+.header p {
+    float: left;
+    margin-left: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.header img {
+    height: 35px;
+    width: 40px;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #191970;
+    width: 100%;
+    font-family: Helvetica, sans-serif;
+}
+
+.navbar button {
+    width: auto;
+    margin-right: 20px;
+    float: right;
+}
+
+.navbar a {
+    float: right;
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    margin-right: 20px;
+    font-family: arial;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    background-color: #E6E6FA;
+    color: black;
+}
+
+.navbar a.active {
+    background-color: #DC143C;
+    color: white;
+}
+
+.body-container {
+    max-width: 100%;
+    position: relative;
+    background-color: #7777af;
+    margin: auto;
+    text-align: center;
+}
+
+
+ul {
+    padding: 0;
+    position: relative;
+    width: 99%;
+    margin-top: 10px;
+}
+
+ul li {
+    list-style: none;
+    float: right;
+    color: black;
+    font-family: arial;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-top: -5px;
+}
+
+ul li:hover,
+.active {
+    background: gray;
+    color: white;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #e6e6e6;
+    padding: 25px 50px;
+    overflow-x: auto;
+}
+
+label {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* Set a style for all buttons */
+
+button {
+    background-color: #191970;
+    padding: 14px 30px;
+    margin: 4px 0;
+    border: none;
+    cursor: pointer;
+    width: 35%;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 15px;
+    font-family: Helvetica, sans-serif;
+}
+button.desactivate {
+    background-color: rgb(180, 60, 60);
+}
+button.activate {
+    background-color: rgb(57, 145, 76);
+}
+
+button#goto-desactivate {
+    background-color: rgb(180, 60, 60);
+}
+button#goto-activate {
+    background-color: rgb(57, 145, 76);
+}
+
+button:hover {
+    background-color: #008000;
+}
+
+/* Extra styles for the cancel button */
+button.cancelbtn {
+    background-color: rgb(206, 74, 74);
+}
+
+
+/* Center the image and position the close button */
+
+.img-close {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+
+/* The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full of height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+
+/* Modal Content/Box */
+
+.modal-content {
+    background-color: rgb(43, 90, 61);
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 2px solid rgb(43, 90, 61);
+    width: 98%;
+    /* Could be more or less, depending on screen size */
+}
+
+
+/* The Close Button (x) */
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover .close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+
+/* Add Zoom Animation */
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+
+/* Change styles for span and cancel button on extra small screens */
+
+@media screen and (max-width: 300px) {
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+#table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #table tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #table tr:hover {background-color: #ddd;}
+  
+  #table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }

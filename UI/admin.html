@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Banka | Activate or deactivate user account</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+        <div class="header">
+                <ul>
+                    <p>Banka</p>
+                    <li href="#"><img src="icon/ig.png">
+                    <li><a href="#"><img src="icon/twitter.png"></a>
+                    <li href="#"><img src="icon/fb.png">
+                    <li>Follow us on</li>
+                </ul>
+            </div>
+            <div class="navbar">
+                <button><a href="#">Logout</a></button>
+            </div>
+            <div class="container">
+              <h1>User Account</h1>
+                    <table id="table">
+                            <tr>
+                              <th>ID</th>
+                              <th>Email</th>
+                              <th>First name</th> 
+                              <th>Last name</th>
+                              <th>Password</th>
+                              <th>Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>celestin@gmail.com</td>
+                              <td>Celestin</td>
+                              <td>TUYISHIMIRE</td>
+                              <td>password</td>
+                              <td>admin</td>
+                              <td> <span class="activate">Active</span></td>
+                              <td><button class="activate" id="activate-user-account">Activate</button>
+                                <button class="desactivate" id="desactivate-user-account">Desactivate</button></td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>kamanaalp@gmail.com</td>
+                              <td>Alphonse </td>
+                              <td>kamanzi</td>
+                              <td>password</td>
+                              <td>cashier</td>
+                              <td> <span class="desactivate">Desactive</span></td>
+                              <td><button id="goto-activate">Activate</button>
+                                <button id="goto-desactivate">Desactivate</button></td>
+                            </tr>
+                          </table>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <div class="img-close">
+                        <span class="close" title="Close Modal">&times;</span>
+                    </div>
+                    <div class="container">
+                        <form class="animate" id="activate">
+                            <h2>Are you sure want to Activate this User Account?</h2>
+                            <button id="" class="btn-submit">Confirm</button> 
+                            <button id="" class="cancelbtn">close</button>    
+                        </form>
+
+                        <form class="animate" id="desactivate">
+                            <h2>Are you sure want to Desactivate this User Account?</h2>
+                            <button id="" class="btn-submit">Confirm</button> 
+                            <button id="" class="cancelbtn">close</button>  
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        <script src="js/app.js"></script>
+</body>
+</html>
