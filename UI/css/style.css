@@ -98,6 +98,20 @@ ul li:hover,
     overflow-x: auto;
 }
 
+input[type],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    resize: vertical;
+}
+
 label {
     font-family: 'Raleway', Arial, sans-serif;
     font-size: 15px;
