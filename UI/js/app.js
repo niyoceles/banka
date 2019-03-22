@@ -32,6 +32,10 @@ const gotoViewAccount= document.querySelector('#goto-viewAccount');
 const deleteAccount = document.querySelector('#deleteAccount');
 const deleteAccountLink = document.querySelector('.delete-account-link');
 const gotoDeleteAccount= document.querySelector('#goto-delete-account');
+// Sign Up
+const gotoSignUp = document.querySelector('#goto-sign-up');
+const gotoSignUpLink = document.querySelector('.get-stared-link');
+const signUpForm = document.querySelector('#signUpForm');
 /*
     check if an element is in the DOM
     @params element
@@ -101,6 +105,11 @@ const _gotoActivateDesactivate = () => {
   setDisplay(viewAccount, 'none');
 };
 
+//display the sign up modal page
+const _gotoSignUp = () => {
+   setDisplay(signUpForm, 'block');
+ };
+
   // closing modal
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
@@ -154,6 +163,12 @@ const _gotoActivateDesactivate = () => {
   elementExist(gotoDeleteAccount, () => {
     gotoDeleteAccount.addEventListener('click', () => {
       _gotoDeleteAccount();
+    });
+  });
+
+  elementExist(gotoSignUp, () => {
+    gotoSignUp.addEventListener('click', () => {
+      _gotoSignUp();
     });
   });
 ///////////////////////////////////////////////////
@@ -254,5 +269,23 @@ const _gotoActivateDesactivate = () => {
       openModal();
       // go to Delete specific account form
       _gotoDeleteAccount();
+    });
+  });
+
+  elementExist(gotoSignUp, () => {
+    gotoSignUp.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignUpLink, () => {
+    gotoSignUpLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignUp();
     });
   });
