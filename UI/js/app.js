@@ -27,6 +27,11 @@ const gotoDebitAccount= document.querySelector('.goto-debitAccount');
 const viewAccount = document.querySelector('#viewAccount');
 const viewAccountLink = document.querySelector('.view-account-link');
 const gotoViewAccount= document.querySelector('#goto-viewAccount');
+
+// on delete specific account
+const deleteAccount = document.querySelector('#deleteAccount');
+const deleteAccountLink = document.querySelector('.delete-account-link');
+const gotoDeleteAccount= document.querySelector('#goto-delete-account');
 /*
     check if an element is in the DOM
     @params element
@@ -88,8 +93,13 @@ const _gotoActivateDesactivate = () => {
   //display  view specific account modal page
  const _gotoViewAccount = () => {
    setDisplay(viewAccount, 'block');
-   setDisplay(gotoViewAccount, 'block');
+   setDisplay(deleteAccount, 'none');
  };
+// display delete specific account modal
+ const _gotoDeleteAccount = () => {
+  setDisplay(deleteAccount, 'block');
+  setDisplay(viewAccount, 'none');
+};
 
   // closing modal
   elementExist(btnClose, () => {
@@ -138,6 +148,12 @@ const _gotoActivateDesactivate = () => {
   elementExist(gotoViewAccount, () => {
     gotoViewAccount.addEventListener('click', () => {
       _gotoViewAccount();
+    });
+  });
+
+  elementExist(gotoDeleteAccount, () => {
+    gotoDeleteAccount.addEventListener('click', () => {
+      _gotoDeleteAccount();
     });
   });
 ///////////////////////////////////////////////////
@@ -219,7 +235,24 @@ const _gotoActivateDesactivate = () => {
     gotoViewAccount.addEventListener('click', () => {
       // open the modal
       openModal();
-      // go to Desactivate form
+      // go to View account form
       _gotoViewAccount();
+    });
+  });
+
+  elementExist(gotoDeleteAccount, () => {
+    gotoDeleteAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Delete specific account form
+      _gotoDeleteAccount();
+    });
+  });
+  elementExist(deleteAccountLink, () => {
+    deleteAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Delete specific account form
+      _gotoDeleteAccount();
     });
   });

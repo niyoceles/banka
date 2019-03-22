@@ -127,24 +127,27 @@ h3{
 button {
     background-color: #191970;
     padding: 14px 30px;
-     margin: 4px 1px;
+    margin: 4px 1px;
     border: none;
     cursor: pointer;
-    width: 35%;
     float: right;
     font-weight: bold;
     letter-spacing: 2px;
     font-size: 15px;
     font-family: Helvetica, sans-serif;
-    float: right;
 }
 button.view-account-link{
-    float: right;
-    width: 100%;
+    background-color: rgb(57, 145, 76);
 }
 button#goto-viewAccount{
-    float: right;
-    width: 100%;
+    background-color: rgb(57, 145, 76);
+}
+button#goto-delete-account{
+    background-color: rgb(180, 60, 60);
+}
+
+button.delete-account-link{
+    background-color: rgb(180, 60, 60);
 }
 button.desactivate {
     background-color: rgb(180, 60, 60);
@@ -168,7 +171,6 @@ button:hover {
 button.cancelbtn {
     background-color: rgb(206, 74, 74);
 }
-
 
 /* Center the image and position the close button */
 
@@ -231,7 +233,6 @@ button.cancelbtn {
     color: red;
     cursor: pointer;
 }
-
 
 /* Add Zoom Animation */
 
