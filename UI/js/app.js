@@ -23,6 +23,10 @@ const gotoCreditAccount= document.querySelector('.goto-creditAccount');
 const debitAccountLink = document.querySelector('#debit-account-link');
 const debitAccount = document.querySelector('#debitAccount');
 const gotoDebitAccount= document.querySelector('.goto-debitAccount');
+// on view specific account
+const viewAccount = document.querySelector('#viewAccount');
+const viewAccountLink = document.querySelector('.view-account-link');
+const gotoViewAccount= document.querySelector('#goto-viewAccount');
 /*
     check if an element is in the DOM
     @params element
@@ -81,6 +85,12 @@ const _gotoActivateDesactivate = () => {
     setDisplay(creditAccount, 'none');
   };
 
+  //display  view specific account modal page
+ const _gotoViewAccount = () => {
+   setDisplay(viewAccount, 'block');
+   setDisplay(gotoViewAccount, 'block');
+ };
+
   // closing modal
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
@@ -125,6 +135,14 @@ const _gotoActivateDesactivate = () => {
     });
   });
 
+  elementExist(gotoViewAccount, () => {
+    gotoViewAccount.addEventListener('click', () => {
+      _gotoViewAccount();
+    });
+  });
+///////////////////////////////////////////////////
+////           OPENING THE MODA               ////
+/////////////////////////////////////////////////
   elementExist(activateDeactivateLink, () => {
     activateDeactivateLink.addEventListener('click', () => {
       // open the modal
@@ -187,3 +205,21 @@ const _gotoActivateDesactivate = () => {
     });
   });
 
+  elementExist(viewAccountLink, () => {
+    viewAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+  
+      // and the view specific account 
+      _gotoViewAccount();
+    });
+  });
+
+  elementExist(gotoViewAccount, () => {
+    gotoViewAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Desactivate form
+      _gotoViewAccount();
+    });
+  });
