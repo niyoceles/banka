@@ -66,6 +66,14 @@ body {
     text-align: center;
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background-image: linear-gradient(rgba(7, 23, 248, 0.6), rgba(7, 4, 170, 0.6));
+}
 
 ul {
     padding: 0;
@@ -165,6 +173,10 @@ button#goto-activate {
 
 button:hover {
     background-color: #008000;
+}
+
+button.get-stared-link{
+    float: left;
 }
 
 /* Extra styles for the cancel button */
