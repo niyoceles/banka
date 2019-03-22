@@ -19,6 +19,10 @@ const creditAccountLink = document.querySelector('#credit-account-link');
 const creditAccount = document.querySelector('#creditAccount');
 const gotoCreditAccount= document.querySelector('.goto-creditAccount');
 
+// on debit account
+const debitAccountLink = document.querySelector('#debit-account-link');
+const debitAccount = document.querySelector('#debitAccount');
+const gotoDebitAccount= document.querySelector('.goto-debitAccount');
 /*
     check if an element is in the DOM
     @params element
@@ -69,6 +73,12 @@ const _gotoActivateDesactivate = () => {
   // display credit account modal page
   const _gotoCreditAccount = () => {
     setDisplay(creditAccount, 'block');
+    setDisplay(debitAccount, 'none');
+  };
+   // display debit account modal page
+   const _gotoDebitAccount = () => {
+    setDisplay(debitAccount, 'block');
+    setDisplay(creditAccount, 'none');
   };
 
   // closing modal
@@ -109,6 +119,11 @@ const _gotoActivateDesactivate = () => {
     });
   });
 
+ elementExist(gotoDebitAccount, () => {
+    gotoDebitAccount.addEventListener('click', () => {
+      _gotoDebitAccount();
+    });
+  });
 
   elementExist(activateDeactivateLink, () => {
     activateDeactivateLink.addEventListener('click', () => {
@@ -163,3 +178,12 @@ const _gotoActivateDesactivate = () => {
       _gotoCreditAccount();
     });
   });
+  elementExist(debitAccountLink, () => {
+    debitAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // and the Debit account form
+      _gotoDebitAccount();
+    });
+  });
+

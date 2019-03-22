@@ -117,20 +117,17 @@ label {
     font-size: 15px;
     font-weight: bold;
 }
-
 h3{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
   }
-
-
 /* Set a style for all buttons */
 
 button {
     background-color: #191970;
     padding: 14px 30px;
-    margin: 4px 0;
+    margin:1px;
     border: none;
     cursor: pointer;
     width: 35%;
@@ -139,6 +136,7 @@ button {
     letter-spacing: 2px;
     font-size: 15px;
     font-family: Helvetica, sans-serif;
+    float: right;
 }
 button.desactivate {
     background-color: rgb(180, 60, 60);
