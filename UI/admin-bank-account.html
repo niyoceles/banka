@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Banka| Admin view all bank account</title>
+    <title>Banka | Admin view all bank account</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -43,7 +43,9 @@
                               <td>Savings</td>
                               <td>Active</td>
                               <td>55.000</td>
-                              <td><button class="view-account-link">View</button>
+                              <td><button class="delete-account-link">Delete</button>
+                                  <button class="view-account-link">View</button>
+                                
                             </tr>
                             <tr>
                                 <td>2</td>
@@ -53,7 +55,9 @@
                               <td>Savings</td>
                               <td>Desactive</td>
                               <td>58.000</td>
-                              <td><button id="goto-viewAccount">View</button>
+                              <td><button id="goto-delete-account">Delete</button>
+                                  <button id="goto-viewAccount">View</button>
+                                
                             </tr>
                           </table>
             </div>
@@ -90,6 +94,11 @@
                                       <td>30/03/2018</td>
                                     </tr>
                                   </table>
+                        </form>
+                        <form class="animate" id="deleteAccount">
+                                <h2>Are you sure want to Delete this Account?</h2>
+                                <button id="" class="btn-submit">Confirm Delete</button> 
+                                <button id="" class="cancelbtn">Close</button>    
                         </form>
                     </div>
                 </div>
