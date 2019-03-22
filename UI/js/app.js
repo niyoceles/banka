@@ -14,6 +14,10 @@ const btnCancel = document.querySelector('.cancelbtn');
 const createAccountLink = document.querySelector('#create-account-link');
 const createAccount = document.querySelector('#createAccount');
 const gotoCreateAccount= document.querySelector('.goto-createAccount');
+// on credit account
+const creditAccountLink = document.querySelector('#credit-account-link');
+const creditAccount = document.querySelector('#creditAccount');
+const gotoCreditAccount= document.querySelector('.goto-creditAccount');
 
 /*
     check if an element is in the DOM
@@ -55,13 +59,18 @@ const _gotoActivateDesactivate = () => {
     setDisplay(createAccount, 'none');
   };
 
-    // display create account modal page
-    const _gotoCreateAccount = () => {
-      setDisplay(createAccount, 'block');
-      setDisplay(activateDesactivate, 'none');
-      setDisplay(desactivateActivate, 'none');
-    };
- 
+  // display create account modal page
+  const _gotoCreateAccount = () => {
+    setDisplay(createAccount, 'block');
+    setDisplay(activateDesactivate, 'none');
+    setDisplay(desactivateActivate, 'none');
+  };
+
+  // display credit account modal page
+  const _gotoCreditAccount = () => {
+    setDisplay(creditAccount, 'block');
+  };
+
   // closing modal
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
@@ -90,6 +99,12 @@ const _gotoActivateDesactivate = () => {
 
   elementExist(gotoCreateAccount, () => {
     gotoCreateAccount.addEventListener('click', () => {
+      _gotoCreateAccount();
+    });
+  });
+
+  elementExist(gotoCreditAccount, () => {
+    gotoCreditAccount.addEventListener('click', () => {
       _gotoCreateAccount();
     });
   });
@@ -140,3 +155,11 @@ const _gotoActivateDesactivate = () => {
     });
   });
 
+  elementExist(creditAccountLink, () => {
+    creditAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // and the Credit account form
+      _gotoCreditAccount();
+    });
+  });
