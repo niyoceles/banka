@@ -18,6 +18,7 @@ const gotoCreateAccount= document.querySelector('.goto-createAccount');
 const creditAccountLink = document.querySelector('#credit-account-link');
 const creditAccount = document.querySelector('#creditAccount');
 const gotoCreditAccount= document.querySelector('.goto-creditAccount');
+
 // on debit account
 const debitAccountLink = document.querySelector('#debit-account-link');
 const debitAccount = document.querySelector('#debitAccount');
@@ -74,8 +75,7 @@ const _gotoActivateDesactivate = () => {
     setDisplay(creditAccount, 'block');
     setDisplay(debitAccount, 'none');
   };
-
-   // display credit account modal page
+   // display debit account modal page
    const _gotoDebitAccount = () => {
     setDisplay(debitAccount, 'block');
     setDisplay(creditAccount, 'none');
@@ -119,12 +119,11 @@ const _gotoActivateDesactivate = () => {
     });
   });
 
-  elementExist(gotoDebitAccount, () => {
+ elementExist(gotoDebitAccount, () => {
     gotoDebitAccount.addEventListener('click', () => {
       _gotoDebitAccount();
     });
   });
-
 
   elementExist(activateDeactivateLink, () => {
     activateDeactivateLink.addEventListener('click', () => {
@@ -179,7 +178,6 @@ const _gotoActivateDesactivate = () => {
       _gotoCreditAccount();
     });
   });
-
   elementExist(debitAccountLink, () => {
     debitAccountLink.addEventListener('click', () => {
       // open the modal
@@ -188,3 +186,4 @@ const _gotoActivateDesactivate = () => {
       _gotoDebitAccount();
     });
   });
+
