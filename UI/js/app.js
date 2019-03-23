@@ -42,6 +42,9 @@ const signUpForm = document.querySelector('#signUpForm');
 const signInForm = document.querySelector('#signInForm');
 const signInLink = document.querySelector('#sign-in-link');
 const gotoSignIn = document.querySelector('#goto-sign-in');
+// create Bank Account
+const createBankAccount = document.querySelector('#createBankAccount');
+const gotoCreateBankAccount= document.querySelector('#goto-createBankAccount');
 /*
     check if an element is in the DOM
     @params element
@@ -123,7 +126,12 @@ const _gotoSignIn = () => {
   setDisplay(signUpForm, 'none');
 };
 
-  // closing modal
+//display create bank account modal page
+ const _gotoCreateBankAccount = () => {
+   setDisplay(createBankAccount, 'block');
+ };
+
+  // closing modal X
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
       setDisplay(modal, 'none');
@@ -190,8 +198,14 @@ const _gotoSignIn = () => {
       _gotoSignIn();
     });
   });
+
+  elementExist(gotoCreateBankAccount, () => {
+    gotoCreateBankAccount.addEventListener('click', () => {
+      _gotoCreateBankAccount();
+    });
+  });
 ///////////////////////////////////////////////////
-////           OPENING THE MODA               ////
+////           OPENING THE MODAl               ////
 /////////////////////////////////////////////////
   elementExist(activateDeactivateLink, () => {
     activateDeactivateLink.addEventListener('click', () => {
@@ -335,5 +349,15 @@ const _gotoSignIn = () => {
   
       // and the signIn form
       _gotoSignIn();
+    });
+  });
+
+  elementExist(createBankAccount, () => {
+    createBankAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+  
+      // and the Create bank  account form
+      _gotoCreateBankAccount();
     });
   });
