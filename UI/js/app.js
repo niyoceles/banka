@@ -35,7 +35,13 @@ const gotoDeleteAccount= document.querySelector('#goto-delete-account');
 // Sign Up
 const gotoSignUp = document.querySelector('#goto-sign-up');
 const gotoSignUpLink = document.querySelector('.get-stared-link');
+const gotoSignUpLink2 = document.querySelector('#get-stared-link2');
 const signUpForm = document.querySelector('#signUpForm');
+
+// Sign in
+const signInForm = document.querySelector('#signInForm');
+const signInLink = document.querySelector('#sign-in-link');
+const gotoSignIn = document.querySelector('#goto-sign-in');
 /*
     check if an element is in the DOM
     @params element
@@ -108,7 +114,14 @@ const _gotoActivateDesactivate = () => {
 //display the sign up modal page
 const _gotoSignUp = () => {
    setDisplay(signUpForm, 'block');
+   setDisplay(signInForm, 'none');
  };
+
+//display the sign in modal page
+const _gotoSignIn = () => {
+  setDisplay(signInForm, 'block');
+  setDisplay(signUpForm, 'none');
+};
 
   // closing modal
   elementExist(btnClose, () => {
@@ -169,6 +182,12 @@ const _gotoSignUp = () => {
   elementExist(gotoSignUp, () => {
     gotoSignUp.addEventListener('click', () => {
       _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignIn, () => {
+    gotoSignIn.addEventListener('click', () => {
+      _gotoSignIn();
     });
   });
 ///////////////////////////////////////////////////
@@ -287,5 +306,34 @@ const _gotoSignUp = () => {
       openModal();
       // go to Sign up form
       _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignUpLink2, () => {
+    gotoSignUpLink2.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignIn, () => {
+    gotoSignIn.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignIn();
+    });
+  });
+
+  //  open signin form modal 
+  elementExist(signInLink, () => {
+    signInLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+  
+      // and the signIn form
+      _gotoSignIn();
     });
   });
