@@ -3,23 +3,20 @@ body {
 }
 
 .header {
-    height: 50px;
+    height: 55px;
     color: white;
     background-color: #19705a;
     padding: 10px;
     text-align: center;
 }
 
-.header p {
+.logo img {
     float: left;
-    margin-left: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    width: 200px;
 }
 
 .header img {
-    height: 35px;
-    width: 40px;
+    height: 50px;
 }
 
 .navbar {
@@ -79,7 +76,7 @@ ul {
     padding: 0;
     position: relative;
     width: 99%;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 ul li {
@@ -89,13 +86,17 @@ ul li {
     font-family: arial;
     text-transform: uppercase;
     font-weight: bold;
-    margin-right: 20px;
+    margin-right: -5px;
+}
+h5{
+    float:right;
+    font-family: Arial;
     margin-top: -5px;
+    margin-right: -105px;
 }
 
 ul li:hover,
 .active {
-    background: gray;
     color: white;
 }
 
@@ -127,6 +128,12 @@ label {
 }
 h1{
     text-align: center;
+    font-family: Arial;
+}
+
+h2{
+    text-align: center;
+    font-family: Arial;
 }
 h3{
     text-align: center;
@@ -145,7 +152,7 @@ button {
     font-weight: bold;
     letter-spacing: 2px;
     font-size: 15px;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial;
 }
 button.view-account-link{
     background-color: rgb(57, 145, 76);
