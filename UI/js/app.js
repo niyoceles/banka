@@ -35,7 +35,16 @@ const gotoDeleteAccount= document.querySelector('#goto-delete-account');
 // Sign Up
 const gotoSignUp = document.querySelector('#goto-sign-up');
 const gotoSignUpLink = document.querySelector('.get-stared-link');
+const gotoSignUpLink2 = document.querySelector('#get-stared-link2');
 const signUpForm = document.querySelector('#signUpForm');
+
+// Sign in
+const signInForm = document.querySelector('#signInForm');
+const signInLink = document.querySelector('#sign-in-link');
+const gotoSignIn = document.querySelector('#goto-sign-in');
+// create Bank Account
+const createBankAccount = document.querySelector('#createBankAccount');
+const gotoCreateBankAccount= document.querySelector('#goto-createBankAccount');
 /*
     check if an element is in the DOM
     @params element
@@ -108,9 +117,21 @@ const _gotoActivateDesactivate = () => {
 //display the sign up modal page
 const _gotoSignUp = () => {
    setDisplay(signUpForm, 'block');
+   setDisplay(signInForm, 'none');
  };
 
-  // closing modal
+//display the sign in modal page
+const _gotoSignIn = () => {
+  setDisplay(signInForm, 'block');
+  setDisplay(signUpForm, 'none');
+};
+
+//display create bank account modal page
+ const _gotoCreateBankAccount = () => {
+   setDisplay(createBankAccount, 'block');
+ };
+
+  // closing modal X
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
       setDisplay(modal, 'none');
@@ -171,8 +192,20 @@ const _gotoSignUp = () => {
       _gotoSignUp();
     });
   });
+
+  elementExist(gotoSignIn, () => {
+    gotoSignIn.addEventListener('click', () => {
+      _gotoSignIn();
+    });
+  });
+
+  elementExist(gotoCreateBankAccount, () => {
+    gotoCreateBankAccount.addEventListener('click', () => {
+      _gotoCreateBankAccount();
+    });
+  });
 ///////////////////////////////////////////////////
-////           OPENING THE MODA               ////
+////           OPENING THE MODAl               ////
 /////////////////////////////////////////////////
   elementExist(activateDeactivateLink, () => {
     activateDeactivateLink.addEventListener('click', () => {
@@ -287,5 +320,44 @@ const _gotoSignUp = () => {
       openModal();
       // go to Sign up form
       _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignUpLink2, () => {
+    gotoSignUpLink2.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignUp();
+    });
+  });
+
+  elementExist(gotoSignIn, () => {
+    gotoSignIn.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // go to Sign up form
+      _gotoSignIn();
+    });
+  });
+
+  //  open signin form modal 
+  elementExist(signInLink, () => {
+    signInLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+  
+      // and the signIn form
+      _gotoSignIn();
+    });
+  });
+
+  elementExist(createBankAccount, () => {
+    createBankAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+  
+      // and the Create bank  account form
+      _gotoCreateBankAccount();
     });
   });

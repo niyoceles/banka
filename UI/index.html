@@ -12,16 +12,18 @@
 <body>
     <div class="header">
         <ul>
-            <p>Banka</p>
+            <div class="logo"><img src="icon/logo.png"></div>
             <li href="#"><img src="icon/ig.png"></li>
             <li><a href="#"><img src="icon/twitter.png"></a></li>
             <li href="#"><img src="icon/fb.png"></li>
-            <li>Follow us on</li>
+            <h5>Follow us on</h5>
         </ul>
     </div>
     <div class="navbar">
         <button><a href="admin.html">Admin</a></button>
         <button><a href="cashier.html">Cashier</a></button>
+        <button><a href="user.html">User</a></button>
+        <button id="goto-sign-in"><a id="">Sign in</a></button>
         <button id="goto-sign-up"><a id="">Sign Up</a></button>
     </div>
 
@@ -50,8 +52,20 @@
 
                     <label>Password</label>
                     <input type="text" placeholder="Enter Password" id="password" required>
+                  
                     <button type="submit" id="btnSignUp">Sign Up</button>
-                </form>                
+                    <p id="sign-in-link">Already have an Account? Sign-in</p>
+                </form>  
+                <form class="animate" id="signInForm">
+                    <h3> Sign In page</h3>
+                    <label>Username</label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+
+                    <label>Password</label>
+                    <input type="text" placeholder="Enter Password" name="psw" required>
+                    <button id="btn-sign-in" class="btn-submit" name="submit">Sign-In</button>
+                    <p id="get-stared-link2">Not yet a member? Sign-Up</p>
+                </form>              
             </div>
         </div>
     </div>
