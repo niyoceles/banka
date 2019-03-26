@@ -20,10 +20,12 @@ body {
 }
 
 .navbar {
+    position: sticky;
     overflow: hidden;
-    background-color: #191970;
+    background-color: #3f51b5;
     width: 100%;
     font-family: Helvetica, sans-serif;
+    top: 0;
 }
 
 .navbar button {
@@ -68,8 +70,11 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
+    padding: 2px;
     color: white;
-    background-image: linear-gradient(rgba(7, 23, 248, 0.6), rgba(7, 4, 170, 0.6));
+    background-color:#19705a;
+    text-align: center;
+    font-family: Arial;
 }
 
 ul {
@@ -105,6 +110,7 @@ ul li:hover,
     background-color: #e6e6e6;
     padding: 25px 50px;
     overflow-x: auto;
+    margin-bottom: 5%;
 }
 
 input[type],
@@ -143,7 +149,7 @@ h3{
 /* Set a style for all buttons */
 
 button {
-    background-color: #191970;
+    background-color: #3f51b5;
     padding: 14px 30px;
     margin: 4px 1px;
     border: none;
