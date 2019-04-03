@@ -3,30 +3,29 @@ body {
 }
 
 .header {
-    height: 50px;
+    height: 55px;
     color: white;
     background-color: #19705a;
     padding: 10px;
     text-align: center;
 }
 
-.header p {
+.logo img {
     float: left;
-    margin-left: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    width: 200px;
 }
 
 .header img {
-    height: 35px;
-    width: 40px;
+    height: 50px;
 }
 
 .navbar {
+    position: sticky;
     overflow: hidden;
-    background-color: #191970;
+    background-color: #3f51b5;
     width: 100%;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
+    top: 0;
 }
 
 .navbar button {
@@ -54,7 +53,6 @@ body {
 }
 
 .navbar a.active {
-    background-color: #DC143C;
     color: white;
 }
 
@@ -71,15 +69,18 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
+    padding: 2px;
     color: white;
-    background-image: linear-gradient(rgba(7, 23, 248, 0.6), rgba(7, 4, 170, 0.6));
+    background-color:#19705a;
+    text-align: center;
+    font-family: Arial;
 }
 
 ul {
     padding: 0;
     position: relative;
     width: 99%;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 ul li {
@@ -89,13 +90,17 @@ ul li {
     font-family: arial;
     text-transform: uppercase;
     font-weight: bold;
-    margin-right: 20px;
+    margin-right: -5px;
+}
+h5{
+    float:right;
+    font-family: Arial;
     margin-top: -5px;
+    margin-right: -105px;
 }
 
 ul li:hover,
 .active {
-    background: gray;
     color: white;
 }
 
@@ -121,10 +126,15 @@ textarea {
 }
 
 label {
-    font-family: 'Raleway', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 15px;
     font-weight: bold;
 }
+h1{
+    text-align: center;
+    font-family: Arial;
+}
+
 h3{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -133,7 +143,7 @@ h3{
 /* Set a style for all buttons */
 
 button {
-    background-color: #191970;
+    background-color: #3f51b5;
     padding: 14px 30px;
     margin: 4px 1px;
     border: none;
@@ -142,34 +152,9 @@ button {
     font-weight: bold;
     letter-spacing: 2px;
     font-size: 15px;
-    font-family: Helvetica, sans-serif;
-}
-button.view-account-link{
-    background-color: rgb(57, 145, 76);
-}
-button#goto-viewAccount{
-    background-color: rgb(57, 145, 76);
-}
-button#goto-delete-account{
-    background-color: rgb(180, 60, 60);
+    font-family: Arial;
 }
 
-button.delete-account-link{
-    background-color: rgb(180, 60, 60);
-}
-button.desactivate {
-    background-color: rgb(180, 60, 60);
-}
-button.activate {
-    background-color: rgb(57, 145, 76);
-}
-
-button#goto-desactivate {
-    background-color: rgb(180, 60, 60);
-}
-button#goto-activate {
-    background-color: rgb(57, 145, 76);
-}
 
 button:hover {
     background-color: #008000;
@@ -178,10 +163,8 @@ button:hover {
 button.get-stared-link{
     float: left;
 }
-
-/* Extra styles for the cancel button */
-button.cancelbtn {
-    background-color: rgb(206, 74, 74);
+button.ifyou {
+    float: left;
 }
 
 /* Center the image and position the close button */
@@ -229,7 +212,6 @@ button.cancelbtn {
     /* Could be more or less, depending on screen size */
 }
 
-
 /* The Close Button (x) */
 
 .close {
@@ -241,13 +223,7 @@ button.cancelbtn {
     font-weight: bold;
 }
 
-.close:hover .close:focus {
-    color: red;
-    cursor: pointer;
-}
-
 /* Add Zoom Animation */
-
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
@@ -262,43 +238,10 @@ button.cancelbtn {
     }
 }
 
-@keyframes animatezoom {
-    from {
-        transform: scale(0)
-    }
-    to {
-        transform: scale(1)
-    }
-}
 
-
-/* Change styles for span and cancel button on extra small screens */
-
+/* styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     .cancelbtn {
         width: 100%;
     }
 }
-
-#table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  #table td, #table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  #table tr:nth-child(even){background-color: #f2f2f2;}
-  
-  #table tr:hover {background-color: #ddd;}
-  
-  #table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
