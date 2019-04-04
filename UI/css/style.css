@@ -24,7 +24,7 @@ body {
     overflow: hidden;
     background-color: #3f51b5;
     width: 100%;
-    font-family: Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     top: 0;
 }
 
@@ -53,7 +53,6 @@ body {
 }
 
 .navbar a.active {
-    background-color: #DC143C;
     color: white;
 }
 
@@ -128,7 +127,7 @@ textarea {
 }
 
 label {
-    font-family: 'Raleway', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 15px;
     font-weight: bold;
 }
@@ -137,10 +136,6 @@ h1{
     font-family: Arial;
 }
 
-h2{
-    text-align: center;
-    font-family: Arial;
-}
 h3{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -160,32 +155,7 @@ button {
     font-size: 15px;
     font-family: Arial;
 }
-button.view-account-link{
-    background-color: rgb(57, 145, 76);
-}
-button#goto-viewAccount{
-    background-color: rgb(57, 145, 76);
-}
-button#goto-delete-account{
-    background-color: rgb(180, 60, 60);
-}
 
-button.delete-account-link{
-    background-color: rgb(180, 60, 60);
-}
-button.desactivate {
-    background-color: rgb(180, 60, 60);
-}
-button.activate {
-    background-color: rgb(57, 145, 76);
-}
-
-button#goto-desactivate {
-    background-color: rgb(180, 60, 60);
-}
-button#goto-activate {
-    background-color: rgb(57, 145, 76);
-}
 
 button:hover {
     background-color: #008000;
@@ -194,12 +164,9 @@ button:hover {
 button.get-stared-link{
     float: left;
 }
-
-/* Extra styles for the cancel button */
-button.cancelbtn {
-    background-color: rgb(206, 74, 74);
+button.ifyou {
+    float: left;
 }
-
 /* Center the image and position the close button */
 
 .img-close {
@@ -245,7 +212,6 @@ button.cancelbtn {
     /* Could be more or less, depending on screen size */
 }
 
-
 /* The Close Button (x) */
 
 .close {
@@ -257,13 +223,7 @@ button.cancelbtn {
     font-weight: bold;
 }
 
-.close:hover .close:focus {
-    color: red;
-    cursor: pointer;
-}
-
 /* Add Zoom Animation */
-
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
@@ -278,43 +238,10 @@ button.cancelbtn {
     }
 }
 
-@keyframes animatezoom {
-    from {
-        transform: scale(0)
-    }
-    to {
-        transform: scale(1)
-    }
-}
 
-
-/* Change styles for span and cancel button on extra small screens */
-
+/* styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
     .cancelbtn {
         width: 100%;
     }
 }
-
-#table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  #table td, #table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  #table tr:nth-child(even){background-color: #f2f2f2;}
-  
-  #table tr:hover {background-color: #ddd;}
-  
-  #table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
