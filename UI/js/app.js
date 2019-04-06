@@ -10,7 +10,17 @@ const signUpForm = document.querySelector('#signUpForm');
 const signIn = document.querySelector('#sign-in');
 const signInLink = document.querySelector('.signInlink');
 const signInForm = document.querySelector('#signInForm');
-  
+
+// on activate 
+const activate = document.querySelector('#activate-user-account');
+const activateLink = document.querySelector('.activateLink');
+const activateModal = document.querySelector('#activateModal');
+
+  // on desactivate 
+const desactivate = document.querySelector('#desactivate-user-account');
+const desactivateLink = document.querySelector('.desactivateLink');
+const desactivateModal = document.querySelector('#desactivateModal');
+
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -35,6 +45,18 @@ const onSignUp = () => {
 const onSignIn = () => {
   signInForm.style.display = 'block';
   signUpForm.style.display = 'none';
+ };
+
+ //display the Activate modal page
+const onActivate = () => {
+  activateModal.style.display = 'block';
+  desactivateModal.style.display = 'none';
+ };
+
+  //display the Desactivate modal page
+const onDesactivate = () => {
+  desactivateModal.style.display = 'block';
+  activateModal.style.display = 'none';
  };
 
   // closing modal
@@ -74,6 +96,24 @@ const onSignIn = () => {
     });
   });
 
+  elementExist(activate, () => {
+    activate.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Activate modal
+      onActivate();
+    });
+  });
+
+  elementExist(desactivate, () => {
+    desactivate.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Desactivate modal
+      onDesactivate();
+    });
+  });
+  
 
   elementExist(signUpLink, () => {
     signUpLink.addEventListener('click', () => {
@@ -92,3 +132,22 @@ const onSignIn = () => {
       onSignIn();
     });
   });
+
+  elementExist(activateLink, () => {
+    activateLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Activate link modal
+      onActivate();
+    });
+  });
+
+  elementExist(desactivateLink, () => {
+    desactivateLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Desactivate link modal
+      onDesactivate();
+    });
+  });
+  
