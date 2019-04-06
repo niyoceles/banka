@@ -43,6 +43,11 @@ const creditAccountForm= document.querySelector('#creditAccountForm');
   const deleteAccountLink = document.querySelector('#deleteAccountLink');
   const deleteAccountForm= document.querySelector('#deleteAccountForm');
 
+   // on create  bank account
+   const createBankAccount = document.querySelector('#createBankAccount');
+   const createBankAccountLink = document.querySelector('#createAccountLink');
+   const createBankActivateForm= document.querySelector('#createBankAccountForm');
+
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -112,6 +117,9 @@ const onDebitAccount = () => {
  viewAccountTable.style.display= 'none';
 }
 
+const onCreateBankAccount = ()=>{
+  createBankActivateForm.style.display= 'block';
+ }
   // closing modal
   elementExist(btnClose, () => {
     btnClose.addEventListener('click', () => {
@@ -213,6 +221,14 @@ const onDebitAccount = () => {
     });
   });
 
+  elementExist(createBankAccount, () => {
+    createBankAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with  create bank account 
+      onCreateBankAccount();
+    });
+  });
   //////////////////////////////////
   ////// LINKS/////////////////////
   ///////////////////////////////
