@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Banka | cashier credit or debit Account</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="header">
+        <ul>
+            <div class="logo"><img src="../assets/logo.png"></div>
+            <li href="#"><img src="../assets/ig.png"></li>
+            <li><a href="#"><img src="../assets/twitter.png"></a></li>
+            <li href="#"><img src="../assets/fb.png"></li>
+            <h5>Follow us on</h5>
+        </ul>
+    </div>
+    <div class="navbar">  
+        <div class="navbar-header">
+            <div class="navbar-title">
+              Banka
+            </div>
+          </div>
+          <div class="navbar-btn">
+            <label for="navbar-check">
+              <span></span>
+              <span></span>
+              <span></span>
+            </label>
+          </div>
+          <input type="checkbox" id="navbar-check">
+          <div class="navbar-links">
+            <a href="../index.html">Logout</a>
+            <a href="admin.html">Admin page</a>
+            <a id="creditAccount">Credit Account</a>
+          </div>
+    </div>
+            <div class="container">
+              <h3>Account Transaction</h3>
+                    <table id="table">
+                            <tr>
+                              <th>No</th>
+                              <th>Account</th>
+                              <th>Debit</th> 
+                              <th>Credit</th>
+                              <th>Reason</th>
+                              <th>Date</th>
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>000-234-1234-001</td>
+                              <td>60.000</td>
+                              <td></td>
+                              <td>Bank charges</td>
+                              <td>22/03/2018</td>
+                            <tr>
+                              <td>2</td>
+                              <td>000-234-1234-002</td>
+                              <td></td>
+                              <td>55.500</td>
+                              <td>Monthly Interest</td>
+                              <td>30/02/2018</td>
+                            </tr>
+                          </table>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <div class="img-close">
+                        <span class="close" title="Close Modal">&times;</span>
+                    </div>
+                    <div class="container">
+                        <form class="animate" id="creditAccountForm">
+                            <h3>Credit Account</h3>
+
+                            <label>Account Number</label>
+                            <input type="number" placeholder="Enter Account number" id="account-no" required>
+
+                            <label>Account Name</label>
+                            <input type="text" placeholder="Enter Account Names" id="account-name" required>
+
+                            <label>Reason/Motif</label>
+                            <input type="text" placeholder="Enter Reason" id="motif" required>
+                            <button type="submit" id="credit">Credit</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        <script src="../js/app.js"></script>
+</body>
+</html>
