@@ -1,4 +1,4 @@
-# banka
+# Banka
 Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money.
 #Required Features
 1. User (client) can sign up.
@@ -14,8 +14,8 @@ Banka is a light-weight core banking application that powers banking operations 
 11. Admin/staff can delete a specific user account.
 12. Admin can create staff and admin user accounts.
 
-#WEBSITE
+# Website
 https://niyoceles.github.io/banka/UI/
 
-#Author
+# Author
 Celestin NIYONSABA
