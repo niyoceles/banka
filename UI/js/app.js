@@ -28,6 +28,10 @@ const desactivateModal = document.querySelector('#desactivateModal');
   // on credit account
 const creditAccount = document.querySelector('#creditAccount');
 const creditAccountForm= document.querySelector('#creditAccountForm');
+
+ // on debit account
+ const debitAccount = document.querySelector('#debitAccount');
+ const debitAccountForm= document.querySelector('#debitAccountForm');
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -78,6 +82,13 @@ const onCreateAccount = () => {
     //display the credit account modal page
 const onCreditAccount = () => {
   creditAccountForm.style.display = 'block';
+  debitAccountForm.style.display = 'none';
+ };
+
+     //display the debit account modal page
+const onDebitAccount = () => {
+  debitAccountForm.style.display = 'block';
+  creditAccountForm.style.display = 'none';
  };
 
   // closing modal
@@ -148,8 +159,17 @@ const onCreditAccount = () => {
     creditAccount.addEventListener('click', () => {
       // open the modal
       openModal();
-      // with Create account form
+      // with credit account form
       onCreditAccount();
+    });
+  });
+
+  elementExist(debitAccount, () => {
+    debitAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Debit account form
+      onDebitAccount();
     });
   });
 

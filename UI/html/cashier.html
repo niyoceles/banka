@@ -35,6 +35,7 @@
             <a href="../index.html">Logout</a>
             <a href="admin.html">Admin page</a>
             <a id="creditAccount">Credit Account</a>
+            <a id="debitAccount">Debit Account</a>
           </div>
     </div>
             <div class="container">
@@ -83,7 +84,19 @@
                             <label>Reason/Motif</label>
                             <input type="text" placeholder="Enter Reason" id="motif" required>
                             <button type="submit" id="credit">Credit</button>
-                        </form> 
+                        </form>
+                        <form class="animate" id="debitAccountForm">
+                            <h3> Debit Account</h3>
+                            <label>Account Number</label>
+                            <input type="number" placeholder="Enter Account number" id="account-no" required>
+
+                            <label>Account Name</label>
+                            <input type="text" placeholder="Enter Account Names" id="account-name" required>
+
+                            <label>Reason/Motif</label>
+                            <input type="text" placeholder="Enter Reason" id="motif" required>      
+                            <button type="submit" id="debit">Debit</button>
+                        </form>  
                     </div>
                 </div>
             </div>
