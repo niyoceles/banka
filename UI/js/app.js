@@ -25,6 +25,9 @@ const desactivateModal = document.querySelector('#desactivateModal');
   const createAccount = document.querySelector('#createAccount');
   const createAccountForm = document.querySelector('#createAccountForm');
 
+  // on credit account
+const creditAccount = document.querySelector('#creditAccount');
+const creditAccountForm= document.querySelector('#creditAccountForm');
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -70,6 +73,11 @@ const onCreateAccount = () => {
   createAccountForm.style.display = 'block';
   desactivateModal.style.display = 'none';
   activateModal.style.display = 'none';
+ };
+
+    //display the credit account modal page
+const onCreditAccount = () => {
+  creditAccountForm.style.display = 'block';
  };
 
   // closing modal
@@ -133,6 +141,15 @@ const onCreateAccount = () => {
       openModal();
       // with Create account form
       onCreateAccount();
+    });
+  });
+
+  elementExist(creditAccount, () => {
+    creditAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Create account form
+      onCreditAccount();
     });
   });
 
