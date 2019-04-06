@@ -237,7 +237,7 @@ button#goto-activate {
     animation: animatezoom 0.6s
 }
 
-@-webkit-keyframes animatezoom {
+@keyframes animatezoom {
     from {
         -webkit-transform: scale(0)
     }
@@ -287,7 +287,6 @@ button.cancelbtn {
   
   .navbar > .navbar-links {
     display: inline;
-    float: right;
     font-size: 20px;
     font-family: Arial;
   }

@@ -21,6 +21,10 @@ const desactivate = document.querySelector('#desactivate-user-account');
 const desactivateLink = document.querySelector('.desactivateLink');
 const desactivateModal = document.querySelector('#desactivateModal');
 
+  // on create an admin/staff Account 
+  const createAccount = document.querySelector('#createAccount');
+  const createAccountForm = document.querySelector('#createAccountForm');
+
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -51,11 +55,20 @@ const onSignIn = () => {
 const onActivate = () => {
   activateModal.style.display = 'block';
   desactivateModal.style.display = 'none';
+  createAccountForm.style.display = 'none';
  };
 
   //display the Desactivate modal page
 const onDesactivate = () => {
   desactivateModal.style.display = 'block';
+  activateModal.style.display = 'none';
+  createAccountForm.style.display = 'none';
+ };
+
+   //display the Desactivate modal page
+const onCreateAccount = () => {
+  createAccountForm.style.display = 'block';
+  desactivateModal.style.display = 'none';
   activateModal.style.display = 'none';
  };
 
@@ -114,6 +127,14 @@ const onDesactivate = () => {
     });
   });
   
+  elementExist(createAccount, () => {
+    createAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with Create account form
+      onCreateAccount();
+    });
+  });
 
   elementExist(signUpLink, () => {
     signUpLink.addEventListener('click', () => {

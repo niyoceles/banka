@@ -35,7 +35,7 @@
                   <div class="navbar-links">
                     <a href="../index.html">Logout</a>
                     <a href="#">User Account</a>
-                    <!-- <a href="#">Bank Account</a> -->
+                    <a href="#" id="createAccount">Create Account</a>
                   </div>
             </div>
 
@@ -94,6 +94,28 @@
                             <button id="" class="btn-confirm">Confirm</button> 
                             <button id="" class="cancelbtn">Close</button>  
                         </form>
+                        <form class="animate" id="createAccountForm">
+                          <h3> Create User Account</h3>
+                          <label>Email</label>
+                          <input type="email" id="email" placeholder="Enter Email" required>
+
+                          <label>First Name</label>
+                          <input type="text" placeholder="Enter First Name" id="firstname" required>
+
+                          <label>Last Name</label>
+                          <input type="text" placeholder="Enter Last Name" id="lastname" required>
+                          
+                          <label>Password</label>
+                          <input type="password" id="password" placeholder="Enter Password" required>
+
+                          <label>User Account type</label>
+                          <select name="account-type" id="account-type">
+                            <option value="">Select account type</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                          </select>
+                          <button type="submit" id="btnSignUp">Create User</button>
+                      </form> 
                     </div>
                 </div>
             </div>
