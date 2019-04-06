@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Banka | Admin view all bank account</title>
+    <link rel="shortcut icon" href="../assets/banka.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+        <div class="header">
+                <ul>
+                  <div class="logo"><img src="../assets/logo.png"></div>
+                  <li href="#"><img src="../assets/ig.png"></li>
+                  <li><a href="#"><img src="../assets/twitter.png"></a></li>
+                  <li href="#"><img src="../assets/fb.png"></li>
+                  <h5>Follow us on</h5>
+              </ul>
+            </div>
+            <div class="navbar">  
+              <div class="navbar-header">
+                  <div class="navbar-title">
+                    Banka
+                  </div>
+                </div>
+                <div class="navbar-btn">
+                  <label for="navbar-check">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </label>
+                </div>
+              <input type="checkbox" id="navbar-check">
+                <div class="navbar-links">
+                  <a href="../index.html">Logout</a>
+                  <a href="cashier.html">Cashier page</a>
+                  <a href="admin.html">User Account</a>
+                  <a href="admin-bank-account.html">Bank Account</a>
+                </div>
+          </div>
+            <div class="container">
+              <h1>list of all bank accounts</h1>
+                    <table id="table">
+                            <tr>
+                              <th>ID</th>
+                              <th>Account Number</th>
+                              <th>Created On</th>
+                              <th>Owner</th>
+                              <th>Type</th>
+                              <th>Status</th>
+                              <th>Balance</th>
+                              <!-- <th>Action</th> -->
+                            </tr>
+                            <tr>
+                              <td>1</td>
+                              <td>000-234-1234-001</td>
+                              <td>20/03/2019</td>
+                              <td>Celestin NIYONSABA</td>
+                              <td>Savings</td>
+                              <td>Active</td>
+                              <td>55.000</td>
+                              <!-- <td><button class="delete-account-link">Delete</button>
+                                  <button class="view-account-link">View</button></td> -->
+                                
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                              <td>000-998-3838-02</td>
+                              <td>20/03/2019</td>
+                              <td>Celestin TUYISHIMIRE</td>
+                              <td>Savings</td>
+                              <td>Desactive</td>
+                              <td>58.000</td>
+                              <!-- <td><button id="goto-delete-account">Delete</button>
+                                  <button id="goto-viewAccount">View</button></td> -->
+                                
+                            </tr>
+                          </table>
+            </div>
+            
+                    </div>
+                </div>
+            </div>
+        <script src="../js/app.js"></script>
+</body>
+</html>
