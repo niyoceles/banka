@@ -173,6 +173,34 @@ button#goto-activate {
     background-color: rgb(57, 145, 76);
 }
 
+button#viewAccountLink{
+  background-color: rgb(57, 145, 76);
+}
+button#viewAccount{
+  background-color: rgb(57, 145, 76);
+}
+button#deleteAccountLink{
+  background-color: rgb(180, 60, 60);
+}
+
+button#deleteAccount{
+  background-color: rgb(180, 60, 60);
+}
+button.desactivate {
+  background-color: rgb(180, 60, 60);
+}
+button.activate {
+  background-color: rgb(57, 145, 76);
+}
+
+button#goto-desactivate {
+  background-color: rgb(180, 60, 60);
+}
+button#goto-activate {
+  background-color: rgb(57, 145, 76);
+}
+
+
 
 
 /* Center the image and position the close button */
@@ -256,7 +284,6 @@ button#goto-activate {
 
 button.cancelbtn {
     background-color: rgb(206, 74, 74);
-    float: left;
 }
 
 /* responsive navbar */

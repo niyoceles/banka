@@ -37,6 +37,12 @@ const creditAccountForm= document.querySelector('#creditAccountForm');
  const viewAccount = document.querySelector('#viewAccount');
  const viewAccountLink = document.querySelector('#viewAccountLink');
  const viewAccountTable= document.querySelector('#viewAccountTable');
+
+  // on delete specific  bank account
+  const deleteAccount = document.querySelector('#deleteAccount');
+  const deleteAccountLink = document.querySelector('#deleteAccountLink');
+  const deleteAccountForm= document.querySelector('#deleteAccountForm');
+
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -98,7 +104,13 @@ const onDebitAccount = () => {
 
  const onViewAccount = ()=>{
    viewAccountTable.style.display= 'block';
- }
+   deleteAccountForm.style.display= 'none';
+ };
+
+ const onDeleteAccount = ()=>{
+ deleteAccountForm.style.display= 'block';
+ viewAccountTable.style.display= 'none';
+}
 
   // closing modal
   elementExist(btnClose, () => {
@@ -192,6 +204,19 @@ const onDebitAccount = () => {
     });
   });
 
+  elementExist(deleteAccount, () => {
+    deleteAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with delete an account 
+      onDeleteAccount();
+    });
+  });
+
+  //////////////////////////////////
+  ////// LINKS/////////////////////
+  ///////////////////////////////
+
   elementExist(signUpLink, () => {
     signUpLink.addEventListener('click', () => {
       // open the modal
@@ -235,5 +260,14 @@ const onDebitAccount = () => {
       openModal();
       // with view account table
       onViewAccount();
+    });
+  });
+
+  elementExist(deleteAccountLink, () => {
+    deleteAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with delete an account 
+      onDeleteAccount();
     });
   });
