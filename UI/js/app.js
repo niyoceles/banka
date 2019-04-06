@@ -32,6 +32,11 @@ const creditAccountForm= document.querySelector('#creditAccountForm');
  // on debit account
  const debitAccount = document.querySelector('#debitAccount');
  const debitAccountForm= document.querySelector('#debitAccountForm');
+
+ // on view specific bank account
+ const viewAccount = document.querySelector('#viewAccount');
+ const viewAccountLink = document.querySelector('#viewAccountLink');
+ const viewAccountTable= document.querySelector('#viewAccountTable');
 //check if an element is in DOM
 //  @parameter element 
 // @parameter callback function to do action
@@ -90,6 +95,10 @@ const onDebitAccount = () => {
   debitAccountForm.style.display = 'block';
   creditAccountForm.style.display = 'none';
  };
+
+ const onViewAccount = ()=>{
+   viewAccountTable.style.display= 'block';
+ }
 
   // closing modal
   elementExist(btnClose, () => {
@@ -173,6 +182,16 @@ const onDebitAccount = () => {
     });
   });
 
+  
+  elementExist(viewAccount, () => {
+    viewAccount.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with view account table
+      onViewAccount();
+    });
+  });
+
   elementExist(signUpLink, () => {
     signUpLink.addEventListener('click', () => {
       // open the modal
@@ -209,3 +228,12 @@ const onDebitAccount = () => {
     });
   });
   
+    
+  elementExist(viewAccountLink, () => {
+    viewAccountLink.addEventListener('click', () => {
+      // open the modal
+      openModal();
+      // with view account table
+      onViewAccount();
+    });
+  });
