@@ -101,6 +101,7 @@ ul li:hover,
     background-color: #e6e6e6;
     padding: 25px 50px;
     overflow-x: auto;
+    margin-bottom: 25px;
 }
 
 input[type],
