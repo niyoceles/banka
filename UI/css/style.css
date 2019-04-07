@@ -131,7 +131,7 @@ h1{
 h3{
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: 18px;
   }
 /* Set a style for all buttons */
 
@@ -402,3 +402,61 @@ button.cancelbtn {
     background-color: #4CAF50;
     color: white;
   }
+
+#main-section .panel{
+  float: left;
+  width: 25%;
+  padding: 25px;
+  text-align: center;
+  margin: 15px;
+  background: #fff;
+}
+
+h2{
+  font-family: Arial;
+  font-size: 18px;
+}
+h4{
+  font-family: Arial;
+  font-size: 20px;
+}
+#main-section .panel2{
+  float: left;
+  width: 95%;
+  padding: 15px;
+  text-align: center;
+  margin: 30px;
+  background: #fff;
+}
+
+#main-section .panel2 h2{
+  font-size: 36px;
+}
+#main-section .panel2 h3{
+  font-size: 24px;
+}
+
+@media only screen and (max-width: 768px) {
+  #main-section .panel{
+    width: 100%;
+    margin-left: -10px;
+  }
+  #main-section .panel2{
+    width: 100%;
+    margin-left: -10px;
+  }
+
+  #main-section .panel img{
+    width: 70%;
+    height: 160px;
+    border-radius: 8px;
+    margin: auto;
+  }
+
+}
+#main-section .panel img{
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  margin: auto;
+}
