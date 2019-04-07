@@ -5,25 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Banka | cashier credit or debit Account</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="icon/banka.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-        <div class="header">
-                <ul>
-                    <div class="logo"><img src="icon/logo.png"></div>
-                    <li href="#"><img src="icon/ig.png"></li>
-                    <li><a href="#"><img src="icon/twitter.png"></a></li>
-                    <li href="#"><img src="icon/fb.png"></li>
-                    <h5>Follow us on</h5>
-                </ul>
+    <div class="header">
+        <ul>
+            <div class="logo"><img src="../assets/logo.png"></div>
+            <li href="#"><img src="../assets/ig.png"></li>
+            <li><a href="#"><img src="../assets/twitter.png"></a></li>
+            <li href="#"><img src="../assets/fb.png"></li>
+            <h5>Follow us on</h5>
+        </ul>
+    </div>
+    <div class="navbar">  
+        <div class="navbar-header">
+            <div class="navbar-title">
+              Banka
             </div>
-            <div class="navbar">
-                <button><a href="index.html">Logout</a></button>
-                <button><a href="admin.html">Admin page</a></button>
-                <button><a id="credit-account-link">Credit Account</a></button>
-                <button><a id="debit-account-link">Debit Account</a></button>
-            </div>
+          </div>
+          <div class="navbar-btn">
+            <label for="navbar-check">
+              <span></span>
+              <span></span>
+              <span></span>
+            </label>
+          </div>
+          <input type="checkbox" id="navbar-check">
+          <div class="navbar-links">
+            <a href="../index.html">Logout</a>
+            <a href="admin.html">Admin page</a>
+            <a id="creditAccount">Credit Account</a>
+            <a id="debitAccount">Debit Account</a>
+          </div>
+    </div>
             <div class="container">
               <h3>Account Transaction</h3>
                     <table id="table">
@@ -58,7 +72,7 @@
                         <span class="close" title="Close Modal">&times;</span>
                     </div>
                     <div class="container">
-                        <form class="animate" id="creditAccount">
+                        <form class="animate" id="creditAccountForm">
                             <h3>Credit Account</h3>
 
                             <label>Account Number</label>
@@ -70,8 +84,8 @@
                             <label>Reason/Motif</label>
                             <input type="text" placeholder="Enter Reason" id="motif" required>
                             <button type="submit" id="credit">Credit</button>
-                        </form> 
-                        <form class="animate" id="debitAccount">
+                        </form>
+                        <form class="animate" id="debitAccountForm">
                             <h3> Debit Account</h3>
                             <label>Account Number</label>
                             <input type="number" placeholder="Enter Account number" id="account-no" required>
@@ -82,15 +96,16 @@
                             <label>Reason/Motif</label>
                             <input type="text" placeholder="Enter Reason" id="motif" required>      
                             <button type="submit" id="debit">Debit</button>
-                        </form> 
+                        </form>  
                     </div>
                 </div>
             </div>
+
             <div class="footer">
                 <ul>
                     <p>Banka Copyright&copy;2019 by Celestin NIYONSABA </p>
                 </ul>
             </div>
-        <script src="js/app.js"></script>
+        <script src="../js/app.js"></script>
 </body>
 </html>
