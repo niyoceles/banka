@@ -6,25 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
-    <title>Banka | Sign up user</title>
+    <title>Banka | Home</title>
+    <link rel="shortcut icon" href="assets/banka.png" type="image/x-icon">
 </head>
 
 <body>
     <div class="header">
         <ul>
-            <div class="logo"><img src="icon/logo.png"></div>
-            <li href="#"><img src="icon/ig.png"></li>
-            <li><a href="#"><img src="icon/twitter.png"></a></li>
-            <li href="#"><img src="icon/fb.png"></li>
+            <div class="logo"><img src="assets/logo.png"></div>
+            <li href="#"><img src="assets/ig.png"></li>
+            <li><a href="#"><img src="assets//twitter.png"></a></li>
+            <li href="#"><img src="assets//fb.png"></li>
             <h5>Follow us on</h5>
         </ul>
     </div>
+
     <div class="navbar">
-        <button><a href="admin.html">Admin</a></button>
-        <button><a href="cashier.html">Cashier</a></button>
-        <button><a href="user.html">User</a></button>
-        <button id="goto-sign-in"><a id="">Sign in</a></button>
-        <button id="goto-sign-up"><a id="">Sign Up</a></button>
+        <div class="navbar-header">
+            <div class="navbar-title">
+                Banka
+            </div>
+        </div>
+        <div class="navbar-btn">
+            <label for="navbar-check">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
+        <input type="checkbox" id="navbar-check">
+        <div class="navbar-links">
+            <a href="./html/cashier.html">Staff</a>
+            <a href="./html/user.html">User</a>
+            <a id="sign-up">Sign Up</a>
+            <a id="sign-in">Sign In</a>
+        </div>
     </div>
 
     <div id="modal" class="modal">
@@ -37,46 +53,76 @@
                     <h3> Sign Up</h3>
                     <label>First name</label>
                     <input type="text" id="firstname" placeholder="Enter First name" required>
-
                     <label>Last name</label>
                     <input type="text" placeholder="Enter Last name" id="lastname" required>
-
                     <label>Email</label>
                     <input type="email" id="email" placeholder="Enter Email" required>
-
                     <label>Phone Number</label>
                     <input type="number" placeholder="Enter Phone number" id="phonenumber" required>
-
                     <label>Username</label>
                     <input type="text" placeholder="Enter Username" id="username" required>
-
                     <label>Password</label>
-                    <input type="text" placeholder="Enter Password" id="password" required>
-                  
+                    <input type="password" placeholder="Enter Password" id="password" required>
                     <button type="submit" id="btnSignUp">Sign Up</button>
-                    <p id="sign-in-link">Already have an Account? Sign-in</p>
-                </form>  
+                    <p class="signInlink">Are you a Member? <b>Sign In</b> </p>
+                </form>
                 <form class="animate" id="signInForm">
                     <h3> Sign In page</h3>
                     <label>Username</label>
                     <input type="text" placeholder="Enter Username" name="username" required>
 
                     <label>Password</label>
-                    <input type="text" placeholder="Enter Password" name="psw" required>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
                     <button id="btn-sign-in" class="btn-submit" name="submit">Sign-In</button>
-                    <p id="get-stared-link2">Not yet a member? Sign-Up</p>
-                </form>              
+                    <p class="signUplink">Not yet a Member? <b>Sign Up </b> </p>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="container">
         <h1>Welcome to Banka Application </h1>
-        <button class="get-stared-link">Get Started</button>
+
     </div>
+    <section id="main-section">
+        <div class="container">
+            <div class="panel">
+                <img src="./assets/open-account.jpg" alt="Service">
+                <h1>Opening Account:</h1>
+                <h3>Fell free to open an account by signup here</h3>
+                <button class="get-stared-link">Get Started</button>
+            </div>
+            <div class="panel">
+                <img src="./assets/loan1.jpg" alt="security picture">
+                <h1>Get a loan with us:</h1>
+                <h3>After getting an account,<br><br>
+                    you can start to request a loan
+                    <br>
+                </h3>
+
+            </div>
+            <div class="panel">
+                <img src="./assets/security.jpg" alt="Contact">
+                <h1>Fell the Security of your money</h1>
+                <h3>We are here to make safe of your money security and profitability</h3>
+            </div>
+        </div>
+    </section>
+    <section id="main-section">
+        <div class="container">
+            <div class="panel2">
+                <h2>Contact us</h2>
+                <h3> Do you need any advice or helps?</h3>
+                <h3>Please Feel Free to Contact on our
+                    <address>Call (250) 783-067-644.</address>
+                    <address>Mail: celestin@banka.com</address>
+                </h3>
+            </div>
+        </div>
+    </section>
     <div class="footer">
         <ul>
-            <p>Banka Copyright&copy;2019 by Celestin NIYONSABA </p>
+            <p>Banka Copyright &copy;2019 by Celestin NIYONSABA </p>
         </ul>
     </div>
     <script src="js/app.js"></script>
