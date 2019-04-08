@@ -1,0 +1,44 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "build": "babel api/test --watch -d api/build/",
+    "test": "mocha --require @babel/register api/test/indexTest.js",
+    "serve": "node ./dist/index.js",
+    "start": "babel-node api/server.js",
+    "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
+    "devp": "nodemon api/index.js --exec babel-node --presets @babel/preset-env"
+  },
+  "author": "Celestin NIYONSABA",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "0.2.8",
+    "express": "^4.16.4",
+    "chai": "^5.6.0",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10"
+  },
+  "keywords": [],
+  "description": "Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money.\r #Required Features\r 1. User (client) can sign up.\r 2. User (client) can login.\r 3. User (client) can create an account.\r 4. User (client) can view account transaction history.\r 5. User (client) can view a specific account transaction.\r 6. Staff (cashier) can debit user (client) account.\r 7. Staff (cashier) can credit user (client) account.\r 8. Admin/staff can view all user accounts.\r 9. Admin/staff can view a specific user account.\r 10. Admin/staff can activate or deactivate an account.\r 11. Admin/staff can delete a specific user account.\r 12. Admin can create staff and admin user accounts.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niyoceles/banka.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niyoceles/banka/issues"
+  },
+  "homepage": "https://github.com/niyoceles/banka#readme"
+}
