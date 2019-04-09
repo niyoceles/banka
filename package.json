@@ -4,18 +4,24 @@
   "main": "app.js",
   "scripts": {
     "build": "babel api/test --watch -d api/build/",
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/indexTest.js",
+    "test0": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/test.js",
+    "test": "mocha --require @babel/register api/test/test.js",
     "serve": "node ./dist/index.js",
     "start": "babel-node api/server.js",
     "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
+    "cover1": "istanbul cover _mocha --require @babel/register api/test/indexTest.js",
     "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
-    "devp": "nodemon api/index.js --exec babel-node --presets @babel/preset-env"
+    "coveralls1": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha -- --require @babel/register api/test/allTests.js",
+    "testing": "istanbul cover ./node_modules/mocha/bin/_mocha api/test/test.js --exit",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Celestin NIYONSABA",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "dotenv": "0.2.8",
     "express": "^4.16.4",
     "morgan": "^1.9.1"
@@ -31,6 +37,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.10",
     "nyc": "^13.3.0"
   },

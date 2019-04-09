@@ -1,5 +1,10 @@
-const sayHello = () => 'Hello guys!';
+// const sayHello = () => 'Hello guys!';
 
-console.log(sayHello());
+// console.log(sayHello());
 
-export default sayHello;
+// export default sayHello;
+
+function sum(a, b) {
+  return a + b;
+}
+module.exports = sum;
