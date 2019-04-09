@@ -2,5 +2,5 @@ language: node_js
 node_js:
  - "node"
 script:
-  - npm run test
+  - npm test0
 after_success: npm run coverage
