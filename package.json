@@ -4,16 +4,16 @@
   "main": "app.js",
   "scripts": {
     "build": "babel api/test --watch -d api/build/",
-    "test0": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/test.js",
-    "test": "mocha --require @babel/register api/test/test.js",
+    "test0": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/allTests.js",
+    "test": "mocha --require @babel/register api/test/allTests.js",
     "serve": "node ./dist/index.js",
     "start": "babel-node api/server.js",
     "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
-    "cover1": "istanbul cover _mocha --require @babel/register api/test/indexTest.js",
+    "cover1": "istanbul cover _mocha --require @babel/register api/test/allTests.js",
     "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
     "coveralls1": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha -- --require @babel/register api/test/allTests.js",
-    "testing": "istanbul cover ./node_modules/mocha/bin/_mocha api/test/test.js --exit",
+    "testing": "istanbul cover ./node_modules/mocha/bin/_mocha api/test/allTests.js --exit",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Celestin NIYONSABA",
@@ -22,7 +22,6 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "dotenv": "0.2.8",
     "express": "^4.16.4",
     "morgan": "^1.9.1"
   },
