@@ -6,7 +6,6 @@ const baseUrl = '/api/v1';
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
-
 describe('Sign Up', () => {
   describe('POST /api/v1/auth/signup', () => {
     // test 3
@@ -32,6 +31,38 @@ describe('Sign Up', () => {
 }); // end of Sign-up
 
 describe('Users POST', () => {
+  describe('POST / Signin with Invalid Data', () => {
+    const signInData = {
+      email: '',
+      password: '',
+    };
+    it('Should return a 400 status', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST / Signin with Valid Data', () => {
+    const signInData = {
+      email: 'niyoceles3@gmail.com',
+      password: 'celes123',
+    };
+    it('Should return a 200 status', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
+
   describe('/POST signUp User with Valid Data', () => {
     const signUpData = {
       id: 1,
@@ -42,12 +73,12 @@ describe('Users POST', () => {
       userName: 'niyoceles',
       password: 'celes123',
     };
-    it('User not registered  Should return 404 status', (done) => {
+    it('User successful registered Should return a 200 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/auth/signup`)
         .send(signUpData)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.body.should.be.a('object');
           done();
         });
     });
