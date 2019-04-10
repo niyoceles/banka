@@ -7,28 +7,6 @@ const baseUrl = '/api/v1';
 chai.use(chaiHttp);
 chai.should();
 
-describe('Users GET', () => {
-  describe('GET / the Valid Data', () => {
-    it('Should return a 200 status', (done) => {
-      chai.request(app)
-        .get(`${baseUrl}/auth/users`)
-        .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-    });
-
-    it('User id Not found should return status 200', (done) => {
-      chai.request(app)
-        .get(`${baseUrl}/auth/users/:id`)
-        .end((err, res) => {
-          res.should.have.status(404);
-          done();
-        });
-    });
-  });
-});
-
 describe('Sign Up', () => {
   describe('POST /api/v1/auth/signup', () => {
     // test 3
@@ -54,22 +32,6 @@ describe('Sign Up', () => {
 }); // end of Sign-up
 
 describe('Users POST', () => {
-  describe('POST / Signin with Invalid Data', () => {
-    const signInData = {
-      email: '',
-      password: '',
-    };
-    it('Should return a 400 status', (done) => {
-      chai.request(app)
-        .post(`${baseUrl}/auth/signin`)
-        .send(signInData)
-        .end((err, res) => {
-          res.should.have.status(400);
-          done();
-        });
-    });
-  });
-
   describe('/POST signUp User with Valid Data', () => {
     const signUpData = {
       id: 1,
@@ -80,12 +42,12 @@ describe('Users POST', () => {
       userName: 'niyoceles',
       password: 'celes123',
     };
-    it('User successful registered Should return a 200 status', (done) => {
+    it('User not registered  Should return 404 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/auth/signup`)
         .send(signUpData)
         .end((err, res) => {
-          res.body.should.be.a('object');
+          res.should.have.status(404);
           done();
         });
     });
