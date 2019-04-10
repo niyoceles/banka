@@ -1,6 +1,12 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=f832d4a72486dfcbb351b642b79f71b397851349e87551ba3ae3042e1a6d6070
 language: node_js
 node_js:
  - "stable"
 script:
   - npm run test0
 after_success: npm run coverage
+addons:
+  code_climate:
+    repo_token: nDJ8gGLCWBsyee7RvO0ocazAurzQKqYKQ
