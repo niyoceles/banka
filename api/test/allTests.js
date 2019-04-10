@@ -1,2 +1,2 @@
-import userTest from './userTest';
-// console.log(userTest);
+import userTest from './testUser';
+export default userTest;
