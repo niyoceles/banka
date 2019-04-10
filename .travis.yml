@@ -2,5 +2,5 @@ language: node_js
 node_js:
  - "stable"
 script:
-  - npm test0
+  - npm run test0
 after_success: npm run coverage
