@@ -1,2 +1,4 @@
 import userTest from './testUser';
-export default userTest;
+import accountTest from './testAccount';
+
+export default { userTest, accountTest };
