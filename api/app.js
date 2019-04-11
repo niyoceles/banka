@@ -9,8 +9,8 @@ const app = express();
 app.use(express.json());
 const baseUrl = '/api/v1';
 // Configure app to user bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.use(`${baseUrl}/auth`, usersRouter);
