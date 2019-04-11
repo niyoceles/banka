@@ -31,7 +31,7 @@ describe('Create Account', () => {
 
 describe('Account Account POST', () => {
   describe('POST / Create account with Invalid Data', () => {
-    const accountData = {
+    const badAccountData = {
       firstName: '',
       lastName: '',
       email: '',
@@ -41,7 +41,7 @@ describe('Account Account POST', () => {
     it('Should return a 404 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
-        .send(accountData)
+        .send(badAccountData)
         .end((err, res) => {
           res.should.have.status(404);
           done();
@@ -65,6 +65,35 @@ describe('Account Account POST', () => {
           res.should.have.status(200);
           done();
         });
+    });
+  });
+});
+
+describe('Account PATCH', () => {
+  describe('PATCH / Account number not found ', () => {
+    it('Should return a 404 status', (done) => {
+      chai.request(app)
+        .patch(`${baseUrl}/accounts/:accountNumber`)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
+    describe('PATCH / Activate or deactivate with Invalid Data', () => {
+      const badAccount = {
+        accountNumber: '',
+        status: '',
+      };
+      it('Should return a 404 status', (done) => {
+        chai.request(app)
+          .post(`${baseUrl}/accounts/:accountNumber`)
+          .send(badAccount)
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
+      });
     });
   });
 });

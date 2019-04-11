@@ -2,21 +2,21 @@ import accounts from '../models/accounts';
 
 class AccountsController {
   // Get a single Accounts
-  // static getSingleAccount(req, res) {
-  //   const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber));
-  //   if (findAccounts) res.status(200).json({ Accounts: findAccounts, message: 'A single Accounts record' });
-  //   res.status(404).json({ message: 'Account Id is not found' });
-  // }
+  static getSingleAccount(req, res) {
+    const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber));
+    if (findAccounts) res.status(200).json({ status: '200', Accounts: findAccounts, message: 'A single Accounts record' });
+    res.status(404).json({ status: '404', message: 'Account Id is not found' });
+  }
 
   static createAccount(req, res) {
     if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.type) {
-      res.status(404).json({ message: 'All fied are required ' });
+      res.status(404).json({ status: '404', message: 'All fied are required ' });
       return;
     }
 
     accounts.forEach((val) => {
       const accountData = req.body;
-      if (val.accountNumber === accountData.accountNumber) res.status(404).json({ message: ' Already this account is exist' });
+      if (val.accountNumber === accountData.accountNumber) res.status(404).json({ status: '404', message: ' Already this account is exist' });
     });
     const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     const account = {
@@ -26,12 +26,37 @@ class AccountsController {
       lastName: req.body.lastName,
       email: req.body.email,
       type: req.body.type,
+      status: 'Deactivate',
       openingBalance: req.body.openingBalance,
       openingDate: date.toString(),
     };
     accounts.push(account);
-    res.status(200).json({
-      status: '200', accounts,
+    res.status(200).json({ status: '200', accounts });
+  }
+
+  static updateAccount(req, res) {
+    const accountNumber = parseInt(req.params.accountNumber, 10);
+    let accountFound;
+    let itemIndex;
+    accounts.map((account, index) => {
+      if (account.accountNumber === accountNumber) {
+        accountFound = account;
+        itemIndex = index;
+      }
+    });
+
+    if (!accountFound) res.status(404).json({ status: '404', message: 'account number not found' });
+    if (!req.body.status) res.status(400).json({ status: '400', message: 'status is required' });
+
+    const updatedAccount = {
+      accountNumber: accountFound.accountNumber,
+      status: req.body.status,
+    };
+    accounts.splice(itemIndex, 1, updatedAccount);
+    return res.status(200).json({
+      status: '200',
+      message: 'account Updated successfully',
+      updatedAccount,
     });
   }
 }
