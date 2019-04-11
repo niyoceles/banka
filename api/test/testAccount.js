@@ -3,9 +3,13 @@ import chaiHttp from 'chai-http';
 import app from '../app';
 
 const baseUrl = '/api/v1';
+
+const { expect } = chai;
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
+// chai.expect();
+
 describe('Create Account', () => {
   describe('POST /api/v1/accounts', () => {
     // test 3
@@ -89,6 +93,40 @@ describe('Account PATCH', () => {
         chai.request(app)
           .post(`${baseUrl}/accounts/:accountNumber`)
           .send(badAccount)
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
+      });
+    });
+  });
+});
+
+
+describe('DELETE', () => {
+
+  describe('DELETE / Account deleted with Invalid ', () => {
+    const accountData = {
+      accountNumber: '',
+    };
+    it('Should return a 404 status', (done) => {
+      chai.request(app)
+        .delete(`${baseUrl}/accounts/:accountNumber`)
+        .send(accountData)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
+    describe('DELETE / Delete account Successful', () => {
+      const accountNumber = {
+        accountNumber: '1554972750164',
+      };
+      it('Should return a 200 status', (done) => {
+        chai.request(app)
+          .delete(`${baseUrl}/accounts/:accountNumber`)
+          .send(accountNumber)
           .end((err, res) => {
             res.should.have.status(404);
             done();

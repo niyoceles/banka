@@ -4,8 +4,8 @@ class AccountsController {
   // Get a single Accounts
   static getSingleAccount(req, res) {
     const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber));
-    if (findAccounts) res.status(200).json({ status: '200', Accounts: findAccounts, message: 'A single Accounts record' });
-    res.status(404).json({ status: '404', message: 'Account Id is not found' });
+    if (!findAccounts) res.status(404).json({ status: '404', message: 'Account Id is not found' });
+    res.status(200).json({ status: '200', Accounts: findAccounts, message: 'A single Accounts record' });
   }
 
   static createAccount(req, res) {
@@ -59,5 +59,13 @@ class AccountsController {
       updatedAccount,
     });
   }
+
+  static deleteAccount(req, res) {
+    const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber));
+    if (!findAccounts) res.status(404).json({ status: '404', message: 'Account number is not found' });
+    const index = accounts.indexOf(findAccounts);
+    accounts.splice(index, 1);
+    res.status(200).json({ status: '200', message: 'Account successfully deleted' });
+  };
 }
 export default AccountsController;
