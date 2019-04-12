@@ -4,7 +4,7 @@ import app from '../app';
 
 const baseUrl = '/api/v1';
 
-const { expect } = chai;
+// const { expect } = chai;
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
