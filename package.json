@@ -7,7 +7,8 @@
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/allTests.js",
     "test-local": "mocha --require @babel/register api/test/allTests.js",
     "serve": "node ./dist/index.js",
-    "start": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
+    "server:start": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
+    "start": "babel-node api/server.js",
     "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
     "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha -- --require @babel/register api/test/allTests.js",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
