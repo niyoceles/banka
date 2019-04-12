@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "build": "babel api/test --watch -d api/build/",
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/allTests.js",
     "test-local": "mocha --require @babel/register api/test/allTests.js",
     "compile": "./node_modules/.bin/babel ./api -d ./build",
