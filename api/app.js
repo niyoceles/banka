@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import usersRouter from './routes/usersRouter';
 import accountsRouter from './routes/accountsRouter';
+import transactionsRouter from './routes/transactionsRouter';
 // Instantiate express
 const app = express();
 // initialize url version
@@ -15,6 +16,7 @@ app.use(morgan('dev'));
 
 app.use(`${baseUrl}/auth`, usersRouter);
 app.use(`${baseUrl}`, accountsRouter);
+app.use(`${baseUrl}`, transactionsRouter);
 
 // ERRROR HANDLING
 app.use((req, res, next) => {
