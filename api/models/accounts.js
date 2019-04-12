@@ -6,8 +6,7 @@ const accounts = [
     email: 'niyoceles3@gmail.com',
     type: 'Savings',
     status: 'Deactivate',
-    openingBalance: '20000',
-    status: 'Activate',
+    openingBalance: 20000,
     openingDate: '2019/04/11',
   },
   {
@@ -17,8 +16,7 @@ const accounts = [
     email: 'mafi@gmail.com',
     type: 'current',
     status: 'Deactivate',
-    openingBalance: '30000',
-    status: 'Deactivate',
+    openingBalance: 30000,
     openingDate: '2019/04/11',
   },
 ];
