@@ -44,12 +44,12 @@ function () {
   }, {
     key: "creditAccount",
     value: function creditAccount(req, res) {
-      var accountNumber = parseInt(req.params.accountNumber, 10);
+      var accountNumberCdt = parseInt(req.params.accountNumber, 10);
       var accountFound;
       var itemIndex;
 
       _accounts.default.map(function (account, index) {
-        if (account.accountNumber === accountNumber) {
+        if (account.accountNumber === accountNumberCdt) {
           accountFound = account;
           itemIndex = index;
         }
@@ -70,7 +70,7 @@ function () {
       if (!balanceFound) res.status(404).json({
         status: '404',
         message: 'account number not found'
-      }); // new transanction Object with generating transactionId auto increment
+      }); // generating  auto increment after credit account
 
       var accontBalance = req.body.amount;
       var addingAmount = (accontBalance += accontBalance) / 2;
@@ -106,12 +106,12 @@ function () {
   }, {
     key: "debitAccount",
     value: function debitAccount(req, res) {
-      var accountNumber = parseInt(req.params.accountNumber, 10);
+      var accountNumberDbt = parseInt(req.params.accountNumber, 10);
       var accountFound;
       var itemIndex;
 
       _accounts.default.map(function (account, index) {
-        if (account.accountNumber === accountNumber) {
+        if (account.accountNumber === accountNumberDbt) {
           accountFound = account;
           itemIndex = index;
         }
