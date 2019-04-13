@@ -7,6 +7,7 @@ const users = [
     phone: '+250783067644',
     userName: 'niyoceles',
     password: 'celes123',
+    isAdmin: true,
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const users = [
     phone: '+2507888888',
     userName: 'mafi',
     password: '12345',
+    isAdmin: false,
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const users = [
     phone: '+2507899999',
     userName: 'kalisa',
     password: 'alex123',
+    isAdmin: false,
   },
 ];
 

@@ -9,7 +9,7 @@ const transactions = [
   },
   {
     transactionId: 1554972750160,
-    accountNumber: 1554972750176,
+    accountNumber: 1554972750177,
     amount: 30000,
     cashier: 1, // cashier that consumated the transaction
     transactionType: 'debit',
