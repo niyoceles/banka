@@ -11,12 +11,11 @@ class TransactionsController {
   }
 
   static creditAccount(req, res) {
-    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const accountNumberCdt = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
     accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) { accountFound = account; itemIndex = index }
+      if (account.accountNumber === accountNumberCdt) { accountFound = account; itemIndex = index }
     });
-
     let balanceFound;
     transactions.map((accountb) => {
       if (accountb.accountBalance) { balanceFound = accountb }
@@ -24,11 +23,9 @@ class TransactionsController {
 
     if (!accountFound) res.status(404).json({ status: '404', message: 'account number not found' });
     if (!balanceFound) res.status(404).json({ status: '404', message: 'account number not found' });
-
-    // new transanction Object with generating transactionId auto increment
+    // generating  auto increment after credit account
     let accontBalance = (req.body.amount);
     const addingAmount = (accontBalance += accontBalance) / 2;
-
     const transaction = {
       transactionId: transactions.length + 1,
       accountNumber: accountFound.accountNumber,
@@ -47,12 +44,11 @@ class TransactionsController {
   }
 
   static debitAccount(req, res) {
-    const accountNumber = parseInt(req.params.accountNumber, 10);
+    const accountNumberDbt = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
     accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) { accountFound = account; itemIndex = index }
+      if (account.accountNumber === accountNumberDbt) { accountFound = account; itemIndex = index }
     });
-
     let balanceFound;
     transactions.map((accountb) => {
       if (accountb.accountBalance) { balanceFound = accountb }
@@ -63,7 +59,6 @@ class TransactionsController {
     // setting how debit will reduce the balance account
     let accontBalance = (req.body.amount);
     const addingAmount = (accontBalance += accontBalance) / 2;
-
     const transaction = {
       transactionId: transactions.length + 1,
       accountNumber: accountFound.accountNumber,
