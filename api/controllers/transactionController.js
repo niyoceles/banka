@@ -12,20 +12,14 @@ class TransactionsController {
 
   static creditAccount(req, res) {
     const accountNumber = parseInt(req.params.accountNumber, 10);
-    let accountFound;
-    let itemIndex;
+    let accountFound; let itemIndex;
     accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) {
-        accountFound = account;
-        itemIndex = index;
-      }
+      if (account.accountNumber === accountNumber) { accountFound = account; itemIndex = index }
     });
 
     let balanceFound;
     transactions.map((accountb) => {
-      if (accountb.accountBalance) {
-        balanceFound = accountb;
-      }
+      if (accountb.accountBalance) { balanceFound = accountb }
     });
 
     if (!accountFound) res.status(404).json({ status: '404', message: 'account number not found' });
@@ -45,38 +39,23 @@ class TransactionsController {
     };
 
     transactions.push(transaction);
-    res.status(200).json({
-      status: '200', transactions, message: 'account Credited successfully',
-    });
+    res.status(200).json({ status: '200', transactions, message: 'account Credited successfully' });
 
-    const updatedBalance = {
-      accountNumber: accountFound.accountNumber,
-      accountBalance: transaction.accountBalance,
-    };
+    const updatedBalance = { accountNumber: accountFound.accountNumber, accountBalance: transaction.accountBalance, };
     accounts.splice(itemIndex, 1, updatedBalance);
-    return res.status(200).json({
-      status: '200',
-      message: 'account Updated successfully',
-      updatedBalance,
-    });
+    return res.status(200).json({ status: '200', message: 'account Updated successfully', updatedBalance });
   }
 
   static debitAccount(req, res) {
     const accountNumber = parseInt(req.params.accountNumber, 10);
-    let accountFound;
-    let itemIndex;
+    let accountFound; let itemIndex;
     accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) {
-        accountFound = account;
-        itemIndex = index;
-      }
+      if (account.accountNumber === accountNumber) { accountFound = account; itemIndex = index }
     });
 
     let balanceFound;
     transactions.map((accountb) => {
-      if (accountb.accountBalance) {
-        balanceFound = accountb;
-      }
+      if (accountb.accountBalance) { balanceFound = accountb }
     });
 
     if (!accountFound) res.status(404).json({ status: '404', message: 'account number not found' });
@@ -95,20 +74,11 @@ class TransactionsController {
     };
 
     transactions.push(transaction);
-    res.status(200).json({
-      status: '200', transactions, message: 'account debited successfully',
-    });
+    res.status(200).json({ status: '200', transactions, message: 'account debited successfully' });
 
-    const updatedBalance = {
-      accountNumber: accountFound.accountNumber,
-      accountBalance: transaction.accountBalance,
-    };
+    const updatedBalance = { accountNumber: accountFound.accountNumber, accountBalance: transaction.accountBalance, };
     accounts.splice(itemIndex, 1, updatedBalance);
-    return res.status(200).json({
-      status: '200',
-      message: 'account Updated successfully',
-      updatedBalance,
-    });
+    return res.status(200).json({ status: '200', message: 'account Updated successfully', updatedBalance });
   }
 }
 export default TransactionsController;

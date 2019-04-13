@@ -13,7 +13,6 @@ class AccountsController {
       res.status(404).json({ status: '404', message: 'All fied are required ' });
       return;
     }
-
     accounts.forEach((val) => {
       const accountData = req.body;
       if (val.accountNumber === accountData.accountNumber) res.status(404).json({ status: '404', message: ' Already this account is exist' });
@@ -36,28 +35,17 @@ class AccountsController {
 
   static updateAccount(req, res) {
     const accountNumber = parseInt(req.params.accountNumber, 10);
-    let accountFound;
-    let itemIndex;
+    let accountFound; let itemIndex;
     accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) {
-        accountFound = account;
-        itemIndex = index;
-      }
+      if (account.accountNumber === accountNumber) { accountFound = account; itemIndex = index }
     });
 
     if (!accountFound) res.status(404).json({ status: '404', message: 'account number not found' });
     if (!req.body.status) res.status(400).json({ status: '400', message: 'status is required' });
 
-    const updatedAccount = {
-      accountNumber: accountFound.accountNumber,
-      status: req.body.status,
-    };
+    const updatedAccount = { accountNumber: accountFound.accountNumber, status: req.body.status };
     accounts.splice(itemIndex, 1, updatedAccount);
-    return res.status(200).json({
-      status: '200',
-      message: 'account Updated successfully',
-      updatedAccount,
-    });
+    return res.status(200).json({ status: '200', message: 'account Updated successfully', updatedAccount });
   }
 
   static deleteAccount(req, res) {

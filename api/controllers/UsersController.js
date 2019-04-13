@@ -29,9 +29,7 @@ class UsersController {
       password: req.body.password,
     };
     users.push(user);
-    res.status(200).json({
-      status: '200', users,
-    });
+    res.status(200).json({ status: '200', users });
   }
 
   static signin(req, res) {
@@ -39,10 +37,7 @@ class UsersController {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({
-        status: 'fail',
-        message: 'Email and password are required',
-      });
+      res.status(400).json({ status: 'fail', message: 'Email and password are required' });
     } else {
       const findUsers = users.find(Users => Users.email === req.body.email && Users.password === req.body.password);
       if (findUsers) res.status(200).json({ status: '200', data: findUsers, message: 'Welcome you are successful login' });

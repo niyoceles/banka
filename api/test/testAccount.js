@@ -12,7 +12,6 @@ chai.should();
 
 describe('Create Account', () => {
   describe('POST /api/v1/accounts', () => {
-    // test 3
     it('should display \'Sorry, this account already exists\'', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)

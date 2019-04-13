@@ -18,7 +18,6 @@ _chai.default.should(); // chai.expect();
 
 describe('Create Account', function () {
   describe('POST /api/v1/accounts', function () {
-    // test 3
     it('should display \'Sorry, this account already exists\'', function (done) {
       _chai.default.request(_app.default).post("".concat(baseUrl, "/accounts")).send({
         accountNumber: 1554972750164,
