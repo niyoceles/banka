@@ -11,11 +11,11 @@ chai.should();
 // chai.expect();
 describe('Credit a Bank Account with POST', () => {
   describe('POST / Account number not found ', () => {
-    it('Should return a 404 status', (done) => {
+    it('Should return a 401 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/transactions/:accountNumber/credit`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });
@@ -24,12 +24,12 @@ describe('Credit a Bank Account with POST', () => {
       const badAccount = {
         accountNumber: '',
       };
-      it('Should return a 404 status', (done) => {
+      it('Should return a 401 status', (done) => {
         chai.request(app)
           .post(`${baseUrl}/transactions/:accountNumber/credit`)
           .send(badAccount)
           .end((err, res) => {
-            res.should.have.status(404);
+            res.should.have.status(401);
             done();
           });
       });
@@ -43,7 +43,7 @@ describe('Debit a Bank Account with POST', () => {
       chai.request(app)
         .post(`${baseUrl}/transactions/:accountNumber/debit`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });
@@ -57,7 +57,7 @@ describe('Debit a Bank Account with POST', () => {
           .post(`${baseUrl}/transactions/:accountNumber/debit`)
           .send(badAccount)
           .end((err, res) => {
-            res.should.have.status(404);
+            res.should.have.status(401);
             done();
           });
       });
