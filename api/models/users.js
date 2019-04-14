@@ -7,7 +7,9 @@ const users = [
     phone: '+250783067644',
     userName: 'niyoceles',
     password: 'celes123',
+    type: 'client',
     isAdmin: true,
+    location: 'Kigali',
   },
   {
     id: 2,
@@ -17,7 +19,9 @@ const users = [
     phone: '+2507888888',
     userName: 'mafi',
     password: '12345',
+    type: 'staff',
     isAdmin: false,
+    location: 'Kigali',
   },
   {
     id: 3,
@@ -27,7 +31,9 @@ const users = [
     phone: '+2507899999',
     userName: 'kalisa',
     password: 'alex123',
+    type: 'staff',
     isAdmin: false,
+    location: 'Kigali',
   },
 ];
 
