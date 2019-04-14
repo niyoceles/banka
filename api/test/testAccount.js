@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import AccountController from '../controllers/AccountController';
 
 const baseUrl = '/api/v1';
 
@@ -132,5 +133,14 @@ describe('DELETE', () => {
           });
       });
     });
+  });
+});
+// TEST CONSTROLLER
+describe('Testing methods[function] for AccountsController', () => {
+  it('should be a function', (done) => {
+    AccountController.getSingleAccount.should.be.a('function');
+    AccountController.createAccount.should.be.a('function');
+    AccountController.updateAccount.should.be.a('function');
+    done();
   });
 });
