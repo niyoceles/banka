@@ -28,7 +28,7 @@ class AccountsController {
   static createAccount(req, res) {
     if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.type) {
       res.status(404).json({
-        status: '404', message: 'All fied are required '
+        status: '404', message: 'All fied are required ',
       });
       return;
     }
@@ -92,7 +92,7 @@ class AccountsController {
 
   static deleteAccount(req, res) {
     const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10)
+      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
     });
 
     if (!findAccounts) {

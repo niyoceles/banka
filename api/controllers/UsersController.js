@@ -24,15 +24,16 @@ class UsersController {
 
   static async signup(req, res) {
     if (!req.body.firstName || !req.body.lastName
-      || !req.body.email || !req.body.userName || !req.body.phone || !req.body.password) {
+      || !req.body.email || !req.body.userName
+      || !req.body.phone || !req.body.password
+      || !req.body.isAdmin || !req.body.location) {
       res.status(404).json({
         status: '404',
         message: 'All field are required ',
       });
       return;
     }
-
-    const text = `INSERT INTO
+    const inserData = `INSERT INTO
             users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
@@ -65,7 +66,7 @@ class UsersController {
         });
       }
 
-      const newUser = await db.query(text, values);
+      const newUser = await db.query(inserData, values);
 
       if (newUser.rows.length > 0) {
         newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
