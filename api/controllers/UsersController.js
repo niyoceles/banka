@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import users from '../models/users';
+import db from '../models';
 
 dotenv.config();
 
@@ -21,44 +22,68 @@ class UsersController {
     });
   }
 
-  static signup(req, res) {
+  static async signup(req, res) {
     if (!req.body.firstName || !req.body.lastName
-      || !req.body.email || !req.body.userName || !req.body.phone || !req.body.password) {
+      || !req.body.email || !req.body.userName
+      || !req.body.phone || !req.body.password
+      || !req.body.isAdmin || !req.body.location) {
       res.status(404).json({
         status: '404',
         message: 'All field are required ',
       });
       return;
     }
+    const inserData = `INSERT INTO
+            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
 
-    users.forEach((val) => {
-      const userData = req.body;
-      if (val.email === userData.email) {
-        res.status(404).json({
-          message: ' Already have an account!',
+    const values = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.userName,
+      req.body.password,
+      req.body.phone,
+      req.body.email,
+      req.body.type,
+      req.body.isAdmin,
+      req.body.location,
+    ];
+
+    try {
+      let checkUser = '';
+
+      if (req.body.email) {
+        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
+      } else {
+        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 AND password=$2', [req.body.userName, req.body.password]);
+      }
+
+      if (checkUser.rows.length > 0) {
+        res.status(200).json({
+          status: 200,
+          error: 'Sorry, this account already exists',
         });
       }
-    });
-    // new user Object with generating id auto increment
-    const user = {
-      id: users.length + 1,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      phone: req.body.phone,
-      userName: req.body.userName,
-      password: req.body.password,
-      isAdmin: false,
-    };
-    users.push(user);
-    const token = jwt.sign({ email: user.email, isAdmin: user.isAdmin }, process.env.SECRET_KEY, {
-      expiresIn: 86400, // expires in 24 hours
-    });
-    res.status(200).json({
-      status: '200',
-      users,
-      token,
-    });
+
+      const newUser = await db.query(inserData, values);
+
+      if (newUser.rows.length > 0) {
+        newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
+        const token = jwt.sign({
+          email: req.body.email,
+          isAdmin: req.body.isAdmin,
+        }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+
+        res.status(201).json({
+          status: 201,
+          data: newUser.rows[0],
+          token,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static signin(req, res) {
@@ -85,7 +110,7 @@ class UsersController {
         });
       }
       res.status(404).json({
-        message: 'Sorry you are not registered! or your email and password are not match',
+        message: 'Sorry you are not createdDate! or your email and password are not match',
       });
     }
   }
