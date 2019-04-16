@@ -1,0 +1,54 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/allTests.js",
+    "test-local": "mocha --require @babel/register api/test/allTests.js",
+    "compile": "./node_modules/.bin/babel ./api -d ./build",
+    "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
+    "start": "babel-node  api/server.js",
+    "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
+    "cover": "set NODE_ENV=test&& istanbul cover ./node_modules/mocha/bin/_mocha -- --require @babel/register api/test/allTests.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "createTables": "babel-node ./api/models/db dropTables && babel-node ./api/models/db createTables"
+  },
+  "author": "Celestin NIYONSABA",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "make-runnable": "^1.3.6",
+    "morgan": "^1.9.1",
+    "pg": "^7.9.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0"
+  },
+  "keywords": [],
+  "description": "Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money.\r #Required Features\r 1. User (client) can sign up.\r 2. User (client) can login.\r 3. User (client) can create an account.\r 4. User (client) can view account transaction history.\r 5. User (client) can view a specific account transaction.\r 6. Staff (cashier) can debit user (client) account.\r 7. Staff (cashier) can credit user (client) account.\r 8. Admin/staff can view all user accounts.\r 9. Admin/staff can view a specific user account.\r 10. Admin/staff can activate or deactivate an account.\r 11. Admin/staff can delete a specific user account.\r 12. Admin can create staff and admin user accounts.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niyoceles/banka.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niyoceles/banka/issues"
+  },
+  "homepage": "https://github.com/niyoceles/banka#readme"
+}
