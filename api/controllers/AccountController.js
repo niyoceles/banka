@@ -3,14 +3,12 @@ import accounts from '../models/accounts';
 class AccountsController {
   // Get a single Accounts
   static getSingleAccount(req, res) {
-    if (req.decodedToken.isAdmin === true) {
-      return res.status(401).json({
-        message: 'Sorry you are not allowed to access this route',
-      });
-    }
-    const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
-    });
+    // if (req.decodedToken.isAdmin === true) {
+    //   return res.status(401).json({
+    //     message: 'Sorry you are not allowed to access this route',
+    //   });
+    // }
+    const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber, 10));
     if (!findAccounts) {
       res.status(404).json({
         status: '404',
