@@ -3,7 +3,7 @@ import accounts from '../models/accounts';
 class AccountsController {
   // Get a single Accounts
   static getSingleAccount(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.isAdmin === true) {
       return res.status(401).json({
         message: 'Sorry you are not allowed to access this route',
       });
@@ -26,15 +26,27 @@ class AccountsController {
   }
 
   static createAccount(req, res) {
-    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.type) {
-      res.status(404).json({
-        status: '404', message: 'All fied are required '
+    if (!req.body.firstName) {
+      res.status(400).json({
+        status: '400', message: 'First name field is required ',
+      });
+    } else if (!req.body.lastName) {
+      res.status(400).json({
+        status: '400', message: 'Last name field is required ',
+      });
+    } else if (!req.body.email) {
+      res.status(400).json({
+        status: '400', message: 'email field is required ',
+      });
+    } else if (!req.body.type) {
+      res.status(400).json({
+        status: '400', message: 'type field required ',
       });
       return;
     }
     accounts.forEach((val) => {
       const accountData = req.body;
-      if (val.accountNumber === accountData.accountNumber && val.accountNumber === accountData.accountNumber) {
+      if (val.firstName === accountData.firstName && val.type === accountData.type && val.lastName === accountData.lastName) {
         res.status(404).json({
           status: '404',
           message: ' Already this account is exist',
@@ -56,7 +68,8 @@ class AccountsController {
     accounts.push(account);
     res.status(200).json({
       status: '200',
-      accounts,
+      account,
+      message: 'Your account has been created.',
     });
   }
 

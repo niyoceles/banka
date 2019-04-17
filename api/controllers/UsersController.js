@@ -22,11 +22,35 @@ class UsersController {
   }
 
   static signup(req, res) {
-    if (!req.body.firstName || !req.body.lastName
-      || !req.body.email || !req.body.userName || !req.body.phone || !req.body.password) {
-      res.status(404).json({
-        status: '404',
-        message: 'All field are required ',
+    if (!req.body.firstName) {
+      res.status(400).json({
+        status: '400',
+        message: 'first name are required ',
+      });
+    } else if (!req.body.lastName) {
+      res.status(400).json({
+        status: '400',
+        message: 'last name are required ',
+      });
+    } else if (!req.body.email) {
+      res.status(400).json({
+        status: '400',
+        message: 'Email name are required ',
+      });
+    } else if (!req.body.userName) {
+      res.status(400).json({
+        status: '400',
+        message: 'username name are required ',
+      });
+    } else if (!req.body.phone) {
+      res.status(400).json({
+        status: '400',
+        message: 'phone name are required ',
+      });
+    } else if (!req.body.password) {
+      res.status(400).json({
+        status: '400',
+        message: 'password name are required ',
       });
       return;
     }
@@ -35,6 +59,7 @@ class UsersController {
       const userData = req.body;
       if (val.email === userData.email) {
         res.status(404).json({
+          status: '404',
           message: ' Already have an account!',
         });
       }
@@ -56,19 +81,25 @@ class UsersController {
     });
     res.status(200).json({
       status: '200',
-      users,
+      message: 'You are successfull registerd',
+      data: user,
       token,
     });
-  }
+  };
 
   static signin(req, res) {
     // get sign data from the request body
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (!email) {
       res.status(400).json({
-        status: 'fail',
-        message: 'Email and password are required',
+        status: '400',
+        message: 'Email field is required',
+      });
+    } else if (!password) {
+      res.status(400).json({
+        status: '400',
+        message: 'password is required',
       });
     } else {
       const findUsers = users.find(Users => Users.email === req.body.email
@@ -85,6 +116,7 @@ class UsersController {
         });
       }
       res.status(404).json({
+        status: '404',
         message: 'Sorry you are not registered! or your email and password are not match',
       });
     }
