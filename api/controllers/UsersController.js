@@ -85,7 +85,7 @@ class UsersController {
       data: user,
       token,
     });
-  };
+  }
 
   static signin(req, res) {
     // get sign data from the request body

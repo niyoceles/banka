@@ -1,9 +1,12 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import UsersController from '../controllers/UsersController';
 
+const { getSingleUser, signup, signin } = UsersController;
 const baseUrl = '/api/v1';
 // Configure chai
+const { expect } = chai;
 chai.use(chaiHttp);
 chai.should();
 
@@ -107,4 +110,35 @@ describe('/POST signUp User with Invalid Data', () => {
       });
   });
 
+});
+
+// TEST CONSTROLLER
+describe('Testing methods[function] for UsersController', () => {
+  it('should be a function', (done) => {
+    UsersController.getSingleUser.should.be.a('function');
+    UsersController.signup.should.be.a('function');
+    UsersController.signin.should.be.a('function');
+    done();
+  });
+});
+
+describe('Test Transaction', () => {
+  describe('function getSingleUser', () => {
+    it('should be equal to getSingleUser ', (done) => {
+      expect(getSingleUser).to.equal(getSingleUser);
+      done();
+    });
+  });
+  describe('function signup', () => {
+    it('should be equal to signup', (done) => {
+      expect(signup).to.equal(signup);
+      done();
+    });
+  });
+  describe('function signin ', () => {
+    it('should be equal to signin', (done) => {
+      expect(signin).to.equal(signin);
+      done();
+    });
+  });
 });
