@@ -41,12 +41,12 @@ describe('Account Account POST', () => {
       type: '',
       openingBalance: '',
     };
-    it('Should return a 404 status', (done) => {
+    it('Should return a 400 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
         .send(badAccountData)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -127,7 +127,7 @@ describe('DELETE', () => {
           .delete(`${baseUrl}/accounts/:accountNumber`)
           .send(accountNumber)
           .end((err, res) => {
-            res.should.have.status(401);
+            res.should.have.status(200);
             done();
           });
       });
