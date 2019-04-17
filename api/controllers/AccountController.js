@@ -61,7 +61,7 @@ class AccountsController {
       lastName: req.body.lastName,
       email: req.body.email,
       type: req.body.type,
-      status: 'Deactivate',
+      status: 'Dormant',
       openingBalance: req.body.openingBalance,
       openingDate: date.toString(),
     };
