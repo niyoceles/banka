@@ -18,7 +18,6 @@ class TransactionsController {
     });
   }
 
-
   static creditAccount(req, res) {
     const accountNumberCdt = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
@@ -40,12 +39,6 @@ class TransactionsController {
         message: 'account number not found',
       });
     }
-    if (!balanceFound) {
-      res.status(404).json({
-        status: '404',
-        message: 'account number not found',
-      });
-    }
     // generating  auto increment after credit account
     let accontBalance = (req.body.amount);
     const addingAmount = (accontBalance += accontBalance) / 2;
@@ -58,11 +51,18 @@ class TransactionsController {
       accountBalance: balanceFound.accountBalance + addingAmount,
     };
 
+    if (!req.body.amount) {
+      res.status(400).json({
+        status: '400',
+        message: 'amount field is required',
+      });
+    }
+
     transactions.push(transaction);
     res.status(200).json({
       status: '200',
-      transactions,
-      message: 'account Credited successfully',
+      transaction,
+      message: 'accountd Credited successfully',
     });
 
     const updatedBalance = {
@@ -98,12 +98,6 @@ class TransactionsController {
         message: 'account number not found',
       });
     }
-    if (!balanceFound) {
-      res.status(404).json({
-        status: '404',
-        message: 'account number not found',
-      });
-    }
     // setting how debit will reduce the balance account
     let accontBalance = (req.body.amount);
     const addingAmount = (accontBalance += accontBalance) / 2;
@@ -116,10 +110,17 @@ class TransactionsController {
       accountBalance: balanceFound.accountBalance - addingAmount,
     };
 
+    if (!req.body.amount) {
+      res.status(400).json({
+        status: '400',
+        message: 'amount field is required',
+      });
+    }
+
     transactions.push(transaction);
     res.status(200).json({
       status: '200',
-      transactions,
+      transaction,
       message: 'account debited successfully',
     });
 

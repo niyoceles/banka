@@ -6,6 +6,7 @@ const baseUrl = '/api/v1';
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
+
 describe('Sign Up', () => {
   describe('POST /api/v1/auth/signup', () => {
     // test 3
@@ -42,22 +43,6 @@ describe('Users POST', () => {
         .send(signInData)
         .end((err, res) => {
           res.should.have.status(400);
-          done();
-        });
-    });
-  });
-
-  describe('POST / Signin with Valid Data', () => {
-    const signInData = {
-      email: 'niyoceles3@gmail.com',
-      password: 'celes123',
-    };
-    it('Should return a 200 status', (done) => {
-      chai.request(app)
-        .post(`${baseUrl}/auth/signin`)
-        .send(signInData)
-        .end((err, res) => {
-          res.should.have.status(200);
           done();
         });
     });
@@ -111,4 +96,15 @@ describe('/POST signUp User with Invalid Data', () => {
         done();
       });
   });
+
+  it("it should return an error when token is not specified", done => {
+    chai.request(app)
+      .post(`${baseUrl}/auth/signup`)
+      .send({ email: "celestin", password: "celes123" }),// send data you need 
+      .end((err, res) => {
+        res.should.have.status(404); // test the response
+        done();
+      });
+  });
+
 });
