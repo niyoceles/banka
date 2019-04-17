@@ -8,9 +8,7 @@ class AccountsController {
     //     message: 'Sorry you are not allowed to access this route',
     //   });
     // }
-    const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
-    });
+    const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber, 10));
     if (!findAccounts) {
       res.status(404).json({
         status: '404',

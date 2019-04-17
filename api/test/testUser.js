@@ -30,6 +30,31 @@ describe('Sign Up', () => {
   });
 }); // end of Sign-up
 
+
+// describe('GET an User ', () => {
+//   it('Should return a 200 when single user record successful', (done) => {
+//     let findUsers = 4;
+//     chai.request(app)
+//       .get(`${baseUrl}/users/${findUsers}`)
+//       .end((err, res) => {
+//         res.should.have.status(200);
+//         done();
+//       });
+//   });
+// });
+
+// describe('GET User not found ', () => {
+//   it('Should return 404 ', (done) => {
+//     let findUsers = '9999999';
+//     chai.request(app)
+//       .get(`${baseUrl}/users/${findUsers}`)
+//       .end((err, res) => {
+//         res.should.have.status(404);
+//         done();
+//       });
+//   });
+// });
+
 describe('Users POST', () => {
   describe('POST / Signin with Invalid Data', () => {
     const signInData = {
@@ -102,7 +127,7 @@ describe('/POST signUp User with Invalid Data', () => {
       });
   });
 
-  it(' Sign up with incorrect data Should return 404 ', (done) => {
+  it(' Sign up with incorrect data Should return 401 ', (done) => {
     chai.request(app)
       .post(`${baseUrl}/auth/signup`)
       .send(signUpData)

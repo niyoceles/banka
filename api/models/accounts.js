@@ -19,6 +19,16 @@ const accounts = [
     openingBalance: 30000,
     openingDate: '2019/04/11',
   },
+  {
+    accountNumber: 1554972750166,
+    firstName: 'John',
+    lastName: 'MAFI',
+    email: 'maffi@gmail.com',
+    type: 'current',
+    status: 'Deactivate',
+    openingBalance: 30000,
+    openingDate: '2019/04/11',
+  },
 ];
 
 export default accounts;
