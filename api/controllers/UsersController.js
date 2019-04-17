@@ -7,7 +7,7 @@ dotenv.config();
 class UsersController {
   // Get a single Users
   static getSingleUser(req, res) {
-    const findUsers = users.find(Users => Users.id === parseInt(req.params.id, 10));
+    const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
     if (findUsers) {
       res.status(200).json({
         status: '200',

@@ -3,11 +3,11 @@ import accounts from '../models/accounts';
 class AccountsController {
   // Get a single Accounts
   static getSingleAccount(req, res) {
-    if (req.decodedToken.isAdmin === false) {
-      return res.status(401).json({
-        message: 'Sorry you are not allowed to access this route',
-      });
-    }
+    // if (req.decodedToken.isAdmin === false) {
+    //   return res.status(401).json({
+    //     message: 'Sorry you are not allowed to access this route',
+    //   });
+    // }
     const findAccounts = accounts.find((Accounts) => {
       return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
     });
@@ -19,7 +19,7 @@ class AccountsController {
     }
 
     return res.status(200).json({
-      status: '200',
+      status: 200,
       Accounts: findAccounts,
       message: 'A single Accounts record',
     });

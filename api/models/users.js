@@ -29,6 +29,16 @@ const users = [
     password: 'alex123',
     isAdmin: false,
   },
+  {
+    id: 4,
+    firstName: 'Alex',
+    lastName: 'KALISA',
+    email: 'alexk@gmail.com',
+    phone: '+2507899999',
+    userName: 'kalisa',
+    password: 'alex123',
+    isAdmin: false,
+  },
 ];
 
 export default users;
