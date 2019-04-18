@@ -1,0 +1,8 @@
+plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        ruby:
+          mass_threshold: 20
+        javascript:
