@@ -19,6 +19,11 @@ class TransactionsController {
   }
 
   static creditAccount(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.isAdmin === 'undefined') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, staff Only',
+      });
+    }
     const accountNumberCdt = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
     accounts.map((account, index) => {
@@ -78,6 +83,11 @@ class TransactionsController {
   }
 
   static debitAccount(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.isAdmin === 'undefined') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, is for Staff Only',
+      });
+    }
     const accountNumberDbt = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
     accounts.map((account, index) => {

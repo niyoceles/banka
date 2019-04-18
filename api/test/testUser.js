@@ -20,7 +20,6 @@ describe('Sign Up', () => {
           phone: '+250783067644',
           userName: 'niyoceles',
           password: 'celes123',
-          token: 'a41f8a8dbb67735da4d0f1ac100975ea3dc1409b022d4043d8584f0a18c3efbe',
         })
         .end((err, res) => {
           res.should.have.status(404);
@@ -87,8 +86,6 @@ describe('Users POST', () => {
   //       });
   //   });
   // });
-
-
 
   describe('/POST signUp User with Valid Data', () => {
     const signUpData = {

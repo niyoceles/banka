@@ -3,7 +3,7 @@ import accounts from '../models/accounts';
 class AccountsController {
   // Get a single Accounts
   static getSingleAccount(req, res) {
-    // if (req.decodedToken.isAdmin === true) {
+    // if (req.decodedToken.isAdmin === true || req.decodedToken.isAdmin === 'Unidefined') {
     //   return res.status(401).json({
     //     message: 'Sorry you are not allowed to access this route',
     //   });
@@ -24,6 +24,11 @@ class AccountsController {
   }
 
   static createAccount(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature is for Client only',
+      });
+    }
     if (!req.body.firstName) {
       res.status(400).json({
         status: '400', message: 'First name field is required ',
@@ -72,6 +77,11 @@ class AccountsController {
   }
 
   static updateAccount(req, res) {
+    if (req.decodedToken.isAdmin === false || req.decodedToken.isAdmin === 'undefined') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, is for Admin only ',
+      });
+    }
     const accountNumber = parseInt(req.params.accountNumber, 10);
     let accountFound; let itemIndex;
     accounts.map((account, index) => {
@@ -102,6 +112,11 @@ class AccountsController {
   }
 
   static deleteAccount(req, res) {
+    if (req.decodedToken.isAdmin === false || req.decodedToken.isAdmin === 'undefined') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, is for Admin only ',
+      });
+    }
     const findAccounts = accounts.find((Accounts) => {
       return Accounts.accountNumber === parseInt(req.params.accountNumber, 10)
     });
