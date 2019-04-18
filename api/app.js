@@ -33,6 +33,5 @@ app.use((error, req, res, next) => {
     },
   });
 });
-
 // Export our app for testing purposes
 export default app;
