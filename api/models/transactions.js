@@ -4,7 +4,7 @@ const transactions = [
     createdOn: '2019/04/11',
     accountNumber: 1554972750176,
     amount: 30000,
-    cashier: 1, // cashier that consumated the transaction
+    cashier: 1,
     transactionType: 'credit',
     oldBalance: 20000,
     newBalance: '50000',
@@ -14,7 +14,7 @@ const transactions = [
     createdOn: '2019/04/11',
     accountNumber: 1554972750177,
     amount: 30000,
-    cashier: 1, // cashier that consumated the transaction
+    cashier: 1,
     oldBalance: 20009,
     newBalance: '50000',
   },

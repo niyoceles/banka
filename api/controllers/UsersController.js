@@ -23,20 +23,48 @@ class UsersController {
   }
 
   static async signup(req, res) {
-    if (!req.body.firstName || !req.body.lastName
-      || !req.body.email || !req.body.userName
-      || !req.body.phone || !req.body.password
-      || !req.body.isAdmin || !req.body.location) {
+    if (!req.body.firstName) {
       res.status(404).json({
         status: '404',
-        message: 'All field are required ',
+        message: 'First name field is required ',
+      });
+    } else if (!req.body.lastName) {
+      res.status(404).json({
+        status: '404',
+        message: 'Last name is required ',
+      });
+    } else if (!req.body.email) {
+      res.status(404).json({
+        status: '404',
+        message: 'Email is required ',
+      });
+    } else if (!req.body.userName) {
+      res.status(404).json({
+        status: '404',
+        message: 'Username is required ',
+      });
+    } else if (!req.body.phone) {
+      res.status(404).json({
+        status: '404',
+        message: 'Phone is required ',
+      });
+    } else if (!req.body.password) {
+      res.status(404).json({
+        status: '404',
+        message: 'Password are required ',
+      });
+    } else if (!req.body.isAdmin) {
+      res.status(404).json({
+        status: '404',
+        message: 'Type of user is required ',
+      });
+    } else if (!req.body.location) {
+      res.status(404).json({
+        status: '404',
+        message: 'Location is required ',
       });
       return;
     }
-    const inserData = `INSERT INTO
-            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
 
     const values = [
       req.body.firstName,
@@ -49,6 +77,11 @@ class UsersController {
       req.body.isAdmin,
       req.body.location,
     ];
+
+    const inserData = `INSERT INTO
+            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
 
     try {
       let checkUser = '';

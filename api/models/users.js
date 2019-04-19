@@ -10,7 +10,7 @@ const users = [
     type: 'staff',
     isAdmin: true,
     location: 'Kigali',
-    createdDate: '2019/04/11'
+    createdDate: '2019/04/11',
   },
   {
     id: 2,
