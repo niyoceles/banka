@@ -45,6 +45,7 @@ const deleteAccountForm = document.querySelector('#deleteAccountForm');
 
 // on user create  bank account
 const createBankAccount = document.querySelector('#createBankAccount');
+const createBankAccountLink = document.querySelector('#createBankAccountLink');
 const createBankActivateForm = document.querySelector('#createBankAccountForm');
 //check if an element is in DOM
 //  @parameter element 
@@ -240,5 +241,12 @@ elementExist(deleteAccountLink, () => {
   deleteAccountLink.addEventListener('click', () => {
     openModal(); // open the modal 
     onDeleteAccount(); // with delete an account link modal
+  });
+});
+
+elementExist(createBankAccountLink, () => {
+  createBankAccountLink.addEventListener('click', () => {
+    openModal(); // open the modal
+    onCreateBankAccount(); // with  create bank account 
   });
 });
