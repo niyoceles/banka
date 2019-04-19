@@ -1,9 +1,12 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import UsersController from '../controllers/UsersController';
 
+const { getSingleUser, signup, signin } = UsersController;
 const baseUrl = '/api/v1';
 // Configure chai
+const { expect } = chai;
 chai.use(chaiHttp);
 chai.should();
 describe('Sign Up', () => {
@@ -72,22 +75,6 @@ describe('Users POST', () => {
     });
   });
 
-  describe('POST / Signin with Valid Data', () => {
-    const signInData = {
-      email: 'niyoceles3@gmail.com',
-      password: 'celes123',
-    };
-    it('Should return a 200 status', (done) => {
-      chai.request(app)
-        .post(`${baseUrl}/auth/signin`)
-        .send(signInData)
-        .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-    });
-  });
-
   describe('/POST signUp User with Valid Data', () => {
     const signUpData = {
       id: 1,
@@ -135,5 +122,36 @@ describe('/POST signUp User with Invalid Data', () => {
         res.body.should.be.a('object');
         done();
       });
+  });
+});
+
+// TEST CONSTROLLER
+describe('Testing methods[function] for UsersController', () => {
+  it('should be a function', (done) => {
+    UsersController.getSingleUser.should.be.a('function');
+    UsersController.signup.should.be.a('function');
+    UsersController.signin.should.be.a('function');
+    done();
+  });
+});
+
+describe('Test Transaction', () => {
+  describe('function getSingleUser', () => {
+    it('should be equal to getSingleUser ', (done) => {
+      expect(getSingleUser).to.equal(getSingleUser);
+      done();
+    });
+  });
+  describe('function signup', () => {
+    it('should be equal to signup', (done) => {
+      expect(signup).to.equal(signup);
+      done();
+    });
+  });
+  describe('function signin ', () => {
+    it('should be equal to signin', (done) => {
+      expect(signin).to.equal(signin);
+      done();
+    });
   });
 });

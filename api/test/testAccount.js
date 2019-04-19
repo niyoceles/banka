@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import AccountController from '../controllers/AccountController';
 
 const baseUrl = '/api/v1';
 
@@ -123,11 +124,11 @@ describe('GET AccountNumber not found ', () => {
 
 describe('Account PATCH', () => {
   describe('PATCH / Account number not found ', () => {
-    it('Should return a 404 status', (done) => {
+    it('Should return a 401 status', (done) => {
       chai.request(app)
         .patch(`${baseUrl}/accounts/:accountNumber`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });
@@ -167,12 +168,12 @@ describe('DELETE', () => {
     const accountData = {
       accountNumber: '',
     };
-    it('Should return a 404 status', (done) => {
+    it('Should return a 401 status', (done) => {
       chai.request(app)
         .delete(`${baseUrl}/accounts/:accountNumber`)
         .send(accountData)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });
@@ -197,10 +198,19 @@ describe('DELETE', () => {
           .delete(`${baseUrl}/accounts/:accountNumber`)
           .send(accountNumber)
           .end((err, res) => {
-            res.should.have.status(404);
+            res.should.have.status(401);
             done();
           });
       });
     });
+  });
+});
+// TEST CONSTROLLER
+describe('Testing methods[function] for AccountsController', () => {
+  it('should be a function', (done) => {
+    AccountController.getSingleAccount.should.be.a('function');
+    AccountController.createAccount.should.be.a('function');
+    AccountController.updateAccount.should.be.a('function');
+    done();
   });
 });
