@@ -128,7 +128,7 @@ class AccountsController {
 
   static deleteAccount(req, res) {
     const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10)
+      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
     });
 
     if (!findAccounts) {
