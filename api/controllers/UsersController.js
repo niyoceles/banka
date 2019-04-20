@@ -71,7 +71,7 @@ class UsersController {
       req.body.firstName,
       req.body.lastName,
       req.body.userName,
-      bcrypt.hashSync(req.body.password, 8),
+      bcrypt.hashSync(req.body.password),
       req.body.phone,
       req.body.email,
       req.body.type,
