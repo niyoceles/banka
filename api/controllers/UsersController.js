@@ -24,43 +24,43 @@ class UsersController {
 
   static async signup(req, res) {
     if (!req.body.firstName) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'First name field is required ',
       });
     } else if (!req.body.lastName) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Last name is required ',
       });
     } else if (!req.body.email) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Email is required ',
       });
     } else if (!req.body.userName) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Username is required ',
       });
     } else if (!req.body.phone) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Phone is required ',
       });
     } else if (!req.body.password) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Password are required ',
       });
     } else if (!req.body.isAdmin) {
-      res.status(404).json({
+      res.status(400).json({
         status: '404',
         message: 'Type of user is required ',
       });
     } else if (!req.body.location) {
-      res.status(404).json({
-        status: '404',
+      res.status(400).json({
+        status: '400',
         message: 'Location is required ',
       });
       return;
@@ -116,35 +116,6 @@ class UsersController {
       }
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  static signin(req, res) {
-    // get sign data from the request body
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      res.status(400).json({
-        status: 'fail',
-        message: 'Email and password are required',
-      });
-    } else {
-      const findUsers = users.find(Users => Users.email === req.body.email
-        && Users.password === req.body.password);
-      if (findUsers) {
-        const token = jwt.sign({ email, isAdmin: findUsers.isAdmin }, process.env.SECRET_KEY, {
-          expiresIn: 86400, // expires in 24 hours
-        });
-        res.status(200).json({
-          status: '200',
-          data: findUsers,
-          token,
-          message: 'Welcome you are successful login',
-        });
-      }
-      res.status(404).json({
-        message: 'Sorry you are not createdDate! or your email and password are not match',
-      });
     }
   }
 }
