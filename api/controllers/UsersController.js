@@ -85,7 +85,6 @@ class UsersController {
 
     try {
       let checkUser = '';
-
       if (req.body.email) {
         checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
       } else {
@@ -116,6 +115,55 @@ class UsersController {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async signin(req, res) {
+    // get sign data from the request body
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({
+        status: '400',
+        message: 'Email and password are required',
+      });
+    } else {
+
+      try {
+        let checkUser = '';
+
+        if (req.body.email) {
+          checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
+        } else {
+          checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 AND password=$2', [req.body.userName, req.body.password]);
+        }
+
+        if (checkUser.rows.length > 0) {
+          res.status(200).json({
+            status: 200,
+            error: 'Welcome Successful login',
+          });
+        }
+
+        // const newUser = await db.query(inserData, values);
+
+        if (checkUser.rows.length > 0) {
+          checkUser.rows[0].createdDate = new Date(checkUser.rows[0].createdDate).toDateString();
+          const token = jwt.sign({
+            email: req.body.email,
+            isAdmin: req.body.isAdmin,
+          }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+
+          res.status(201).json({
+            status: 201,
+            data: checkUser.rows[0],
+            token,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
     }
   }
 }
