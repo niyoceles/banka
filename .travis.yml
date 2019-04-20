@@ -15,5 +15,12 @@ script:
   - npm run test
   - npm run coverage
 # after_success: npm run coverage
+services:
+  - postgresql
+before_script:
+  - travis_wait 30 yarn install
+  - "psql -c 'create database banka;' -U postgres"
+  - travis_wait npm install
+  - node build/models/database.js
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
