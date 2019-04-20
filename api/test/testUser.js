@@ -22,51 +22,69 @@ describe('Sign-up', () => {
 
   describe('Sign Up', () => {
     describe('POST /api/v1/auth/signup', () => {
-      // test 3
+      it('should display \' Account Successful registered\'', (done) => {
+        chai.request(app)
+          .post(`${baseUrl}/auth/signup`)
+          .send({
+            firstName: 'Celestin',
+            lastName: 'NIYONSABA',
+            phone: '+250783067644',
+            email: 'niyoceles3@gmail.com',
+            userName: 'niyoceles',
+            password: 'celes123',
+            type: 'staff',
+            isAdmin: true,
+            location: 'Kigali',
+          })
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            done();
+          });
+      });
+
       it('should display \'Sorry, this account already exists\'', (done) => {
         chai.request(app)
           .post(`${baseUrl}/auth/signup`)
           .send({
             firstName: 'Celestin',
             lastName: 'NIYONSABA',
-            userName: 'niyoceles',
             phone: '+250783067644',
-            email: 'niyoceles3gmail.cm',
+            email: 'niyoceles3@gmail.com',
+            userName: 'niyoceles',
+            password: 'celes123',
             type: 'staff',
             isAdmin: true,
             location: 'Kigali',
           })
           .end((err, res) => {
-            expect(res.status).to.equal(400);
-            // expect(Object.keys(res.body.data).length).to.be.above(0);
+            expect(res.status).to.equal(200);
             done();
           });
       });
     });
   });
-  // describe('/POST signUp User with Valid Data', () => {
-  //   const signUpData = {
-  //     firstName: 'Celestinzzzzzzzzzz',
-  //     lastName: 'NIYONSABAxxxxxxxx',
-  //     userName: 'niyocelesxxxxxxxx',
-  //     phone: '+2507830676442',
-  //     email: 'niyoceles3gmail.comq',
-  //     type: 'staff',
-  //     isAdmin: false,
-  //     location: 'Kigali',
-  //   };
-  //   it('User successful registered Should return a 201 status', (done) => {
-  //     chai.request(app)
-  //       .post(`${baseUrl}/auth/signup`)
-  //       .send(signUpData)
-  //       .end((err, res) => {
-  //         // res.body.should.be.a('object');
-  //         res.should.have.status(201);
-  //         done();
-  //       });
-  //   });
-  // });
-  // 
+  describe('/POST signUp User with Invalid Data', () => {
+    const signUpData = {
+      lastName: 'NIYONSABAxxxxxxxx',
+      userName: 'niyocelesxxxxxxxx',
+      phone: '2507830676442',
+      email: 'niyoceles@gmail.com',
+      password: 'celeeeee123',
+      type: 'staff',
+      isAdmin: false,
+      location: 'Kigali',
+    };
+    it('User signup registered Should return a 400 status', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/auth/signup`)
+        .send(signUpData)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
 
   // describe('GET an User ', () => {
   //   it('Should return a 200 when single user record successful', (done) => {
@@ -91,63 +109,51 @@ describe('Sign-up', () => {
   //       });
   //   });
   // });
-
-  // describe('Users POST', () => {
-  // describe('POST / Signin with Invalid Data', () => {
-  //   const signInData = {
-  //     email: '',
-  //     password: '',
-  //   };
-  //   it('Should return a 400 status', (done) => {
-  //     chai.request(app)
-  //       .post(`${baseUrl}/auth/signin`)
-  //       .send(signInData)
-  //       .end((err, res) => {
-  //         res.should.have.status(400);
-  //         done();
-  //       });
-  //   });
-  // });
-
-  // describe('POST / Signin with Valid Data', () => {
-  //   const signInData = {
-  //     email: 'niyoceles3@gmail.com',
-  //     password: 'celes123',
-  //   };
-  //   it('Should return a 200 status', (done) => {
-  //     chai.request(app)
-  //       .post(`${baseUrl}/auth/signin`)
-  //       .send(signInData)
-  //       .end((err, res) => {
-  //         res.should.have.status(200);
-  //         done();
-  //       });
-  //   });
-  // });
-
-  describe('/POST signUp User with Invalid Data', () => {
-    const signUpData = {
-      firstName: '',
-      lastName: '',
+});
+describe('Users Signin POST', () => {
+  describe('POST / Signin with Invalid Data', () => {
+    const signInData = {
       email: '',
-      phone: '',
+      password: '',
     };
-    it('Required data Should return a 400 status', (done) => {
+    it('Should return a 400 status', (done) => {
       chai.request(app)
-        .post(`${baseUrl}/auth/signup`)
-        .send(signUpData)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
         .end((err, res) => {
           res.should.have.status(400);
           done();
         });
     });
+  });
 
-    it(' Sign up with incorrect data Should return 401 ', (done) => {
+  describe('POST / Signin with wrong Email or password', () => {
+    const signInData = {
+      email: 'niyocelesz@zzzzzzz',
+      password: 'celes123',
+    };
+    it('Should return a 400 status', (done) => {
       chai.request(app)
-        .post(`${baseUrl}/auth/signup`)
-        .send(signUpData)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
         .end((err, res) => {
-          res.body.should.be.a('object');
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
+
+  describe('POST / Signin Successful Login', () => {
+    const signInData = {
+      email: 'niyoceles3@gmail.com',
+      password: 'celes123',
+    };
+    it('Should return a 200 status', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
+        .end((err, res) => {
+          res.should.have.status(200);
           done();
         });
     });

@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import users from '../models/users';
 import db from '../models';
-import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -71,7 +71,7 @@ class UsersController {
       req.body.firstName,
       req.body.lastName,
       req.body.userName,
-      bcrypt.hashSync(req.body.password, 8),
+      bcrypt.hashSync(req.body.password),
       req.body.phone,
       req.body.email,
       req.body.type,
@@ -86,6 +86,7 @@ class UsersController {
 
     try {
       let checkUser = '';
+
       if (req.body.email) {
         checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
       } else {
@@ -129,42 +130,43 @@ class UsersController {
         message: 'Email and password are required',
       });
     } else {
-
       try {
-        let checkUser = '';
+        const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [req.body.email]);
 
-        if (req.body.email) {
-          checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
-        } else {
-          checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 AND password=$2', [req.body.userName, req.body.password]);
+        if (rows.length > 0) {
+          for (let i = 0; i < rows.length; i += 1) {
+            if (bcrypt.compareSync(req.body.password, rows[i].password)) {
+              const isAdmin = !!rows[i].isAdmin;
+              const token = jwt.sign({
+                userId: rows[i].id,
+                isAdmin,
+              }, process.env.SECRET_KEY, {
+                  expiresIn: 86400, // expires in 24 hours
+                });
+              return res.status(200).json({
+                status: 200,
+                data: {
+                  id: rows[i].id,
+                  firstName: rows[i].firstName,
+                  lastName: rows[i].lastName,
+                  email: rows[i].email,
+                  phone: rows[i].phone,
+                  userName: rows[i].userName,
+                  isAdmin: rows[i].isAdmin,
+                },
+                token,
+              });
+            }
+          }
         }
 
-        if (checkUser.rows.length > 0) {
-          res.status(200).json({
-            status: 200,
-            error: 'Welcome Successful login',
-          });
-        }
-
-        // const newUser = await db.query(inserData, values);
-
-        if (checkUser.rows.length > 0) {
-          checkUser.rows[0].createdDate = new Date(checkUser.rows[0].createdDate).toDateString();
-          const token = jwt.sign({
-            email: req.body.email,
-            isAdmin: req.body.isAdmin,
-          }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
-
-          res.status(201).json({
-            status: 201,
-            data: checkUser.rows[0],
-            token,
-          });
-        }
+        return res.status(400).json({
+          status: 400,
+          error: 'Sorry, your username or password is incorrect',
+        });
       } catch (error) {
         console.log(error);
       }
-
     }
   }
 }
