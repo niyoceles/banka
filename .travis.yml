@@ -1,6 +1,8 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=f832d4a72486dfcbb351b642b79f71b397851349e87551ba3ae3042e1a6d6070
+    - SECRET_KEY=12345
+    - DATABASE_URL_test=postgres://postgres@localhost:5432/banka_test
 language: node_js
 node_js:
  - "stable"
@@ -18,9 +20,13 @@ script:
 services:
   - postgresql
 before_script:
-  - travis_wait 30 yarn install
-  - "psql -c 'create database banka;' -U postgres"
-  - travis_wait npm install
-  - node build/models/database.js
+  - psql -c 'CREATE DATABASE banka_test;' -U postgres
+  - NODE_ENV=test npm run createTables
+  - npm install --save-dev coveralls
+  - npm install --save-dev istanbul@1.1.0-alpha.1
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - coveralls < ./coverage/lcov.info
