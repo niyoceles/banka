@@ -138,7 +138,7 @@ class UsersController {
             if (bcrypt.compareSync(req.body.password, rows[i].password)) {
               const isAdmin = !!rows[i].isAdmin;
               const token = jwt.sign({
-                userId: rows[i].id,
+                email: rows[i].email,
                 isAdmin,
               }, process.env.SECRET_KEY, {
                   expiresIn: 86400, // expires in 24 hours
