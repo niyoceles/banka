@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import users from '../models/users';
 import db from '../models';
-import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -117,6 +117,56 @@ class UsersController {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async signin(req, res) {
+    // get sign data from the request body
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({
+        status: '400',
+        message: 'Email and password are required',
+      });
+    } else {
+      try {
+        const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [req.body.email]);
+
+        if (rows.length > 0) {
+          for (let i = 0; i < rows.length; i += 1) {
+            if (bcrypt.compareSync(req.body.password, rows[i].password)) {
+              const isAdmin = !!rows[i].isAdmin;
+              const token = jwt.sign({
+                email: rows[i].email,
+                isAdmin,
+              }, process.env.SECRET_KEY, {
+                  expiresIn: 86400, // expires in 24 hours
+                });
+              return res.status(200).json({
+                status: 200,
+                data: {
+                  id: rows[i].id,
+                  firstName: rows[i].firstName,
+                  lastName: rows[i].lastName,
+                  email: rows[i].email,
+                  phone: rows[i].phone,
+                  userName: rows[i].userName,
+                  isAdmin: rows[i].isAdmin,
+                },
+                token,
+              });
+            }
+          }
+        }
+
+        return res.status(400).json({
+          status: 400,
+          error: 'Sorry, your username or password is incorrect',
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }
