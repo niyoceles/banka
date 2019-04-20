@@ -1,13 +1,14 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import users from '../models/users';
+import db from '../models';
 
 dotenv.config();
 
 class UsersController {
   // Get a single Users
   static getSingleUser(req, res) {
-    const findUsers = users.find(Users => Users.id === parseInt(req.params.id, 10));
+    const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
     if (findUsers) {
       res.status(200).json({
         status: '200',
@@ -21,104 +22,100 @@ class UsersController {
     });
   }
 
-  static signup(req, res) {
+  static async signup(req, res) {
     if (!req.body.firstName) {
       res.status(400).json({
         status: '400',
-        message: 'first name are required ',
+        message: 'First name field is required ',
       });
     } else if (!req.body.lastName) {
       res.status(400).json({
         status: '400',
-        message: 'last name are required ',
+        message: 'Last name is required ',
       });
     } else if (!req.body.email) {
       res.status(400).json({
         status: '400',
-        message: 'Email name are required ',
+        message: 'Email is required ',
       });
     } else if (!req.body.userName) {
       res.status(400).json({
         status: '400',
-        message: 'username name are required ',
+        message: 'Username is required ',
       });
     } else if (!req.body.phone) {
       res.status(400).json({
         status: '400',
-        message: 'phone name are required ',
+        message: 'Phone is required ',
       });
     } else if (!req.body.password) {
       res.status(400).json({
         status: '400',
-        message: 'password name are required ',
+        message: 'Password are required ',
+      });
+    } else if (!req.body.isAdmin) {
+      res.status(400).json({
+        status: '404',
+        message: 'Type of user is required ',
+      });
+    } else if (!req.body.location) {
+      res.status(400).json({
+        status: '400',
+        message: 'Location is required ',
       });
       return;
     }
 
-    users.forEach((val) => {
-      const userData = req.body;
-      if (val.email === userData.email) {
-        res.status(404).json({
-          status: '404',
-          message: ' Already have an account!',
-        });
+    const values = [
+      req.body.firstName,
+      req.body.lastName,
+      req.body.userName,
+      req.body.password,
+      req.body.phone,
+      req.body.email,
+      req.body.type,
+      req.body.isAdmin,
+      req.body.location,
+    ];
+
+    const inserData = `INSERT INTO
+            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
+
+    try {
+      let checkUser = '';
+
+      if (req.body.email) {
+        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
+      } else {
+        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 AND password=$2', [req.body.userName, req.body.password]);
       }
-    });
-    // new user Object with generating id auto increment
-    const user = {
-      id: users.length + 1,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      phone: req.body.phone,
-      userName: req.body.userName,
-      password: req.body.password,
-      isAdmin: false,
-    };
-    users.push(user);
-    const token = jwt.sign({ email: user.email, isAdmin: user.isAdmin }, process.env.SECRET_KEY, {
-      expiresIn: 86400, // expires in 24 hours
-    });
-    res.status(200).json({
-      status: '200',
-      message: 'You are successfull registerd',
-      data: user,
-      token,
-    });
-  }
 
-  static signin(req, res) {
-    // get sign data from the request body
-    const { email, password } = req.body;
-
-    if (!email) {
-      res.status(400).json({
-        status: '400',
-        message: 'Email field is required',
-      });
-    } else if (!password) {
-      res.status(400).json({
-        status: '400',
-        message: 'password is required',
-      });
-    } else {
-      const findUsers = users.find(Users => Users.email === req.body.email
-        && Users.password === req.body.password);
-      if (findUsers) {
-        const token = jwt.sign({ email, isAdmin: findUsers.isAdmin }, process.env.SECRET_KEY, {
-          expiresIn: 86400, // expires in 24 hours
-        });
+      if (checkUser.rows.length > 0) {
         res.status(200).json({
-          status: '200',
-          data: findUsers,
-          token,
-          message: 'Welcome you are successful login',
+          status: 200,
+          error: 'Sorry, this account already exists',
         });
       }
-      res.status(404).json({
-        status: '404',
-        message: 'Sorry you are not registered! or your email and password are not match',
-      });
+
+      const newUser = await db.query(inserData, values);
+
+      if (newUser.rows.length > 0) {
+        newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
+        const token = jwt.sign({
+          email: req.body.email,
+          isAdmin: req.body.isAdmin,
+        }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+
+        res.status(201).json({
+          status: 201,
+          data: newUser.rows[0],
+          token,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
