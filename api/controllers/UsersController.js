@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import users from '../models/users';
 import db from '../models';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -70,7 +71,7 @@ class UsersController {
       req.body.firstName,
       req.body.lastName,
       req.body.userName,
-      req.body.password,
+      bcrypt.hashSync(req.body.password, 8),
       req.body.phone,
       req.body.email,
       req.body.type,
