@@ -62,7 +62,7 @@ const createTables = () => {
   const accountsTable = `CREATE TABLE IF NOT EXISTS
       accounts(
         id SERIAL PRIMARY KEY,
-        "accountNumber" INT NOT NULL,
+        "accountNumber" BIGINT NOT NULL,
         owner INT NOT NULL REFERENCES users(id),
         type VARCHAR(50) NOT NULL,
         status VARCHAR(50) NOT NULL,
