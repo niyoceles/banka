@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/accounts', checkToken, Account.createAccount);
 // router.get('/account/:accountNumber', Account.getSingleAccount);
-router.patch('/accounts/:accountNumber', Account.updateAccount);
+router.patch('/accounts/:accountNumber', checkToken, Account.updateAccount);
 router.delete('/accounts/:accountNumber', Account.deleteAccount);
 
 export default router;

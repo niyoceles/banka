@@ -125,48 +125,50 @@ describe('GET AccountNumber not found ', () => {
 });
 
 
-describe('Account PATCH', () => {
-  describe('PATCH / Account number not found ', () => {
-    it('Should return a 400 status', (done) => {
-      chai.request(app)
-        .patch(`${baseUrl}/accounts/:11111`)
-        .set('access-token', token)
-        .end((err, res) => {
-          res.should.have.status(404);
-          done();
-        });
-    });
+// describe('Account PATCH', () => {
+//   it('Account number found ', (done) => {
+//     const accountNumber = '1555780168843';
+//     chai.request(app)
+//       .patch(`${baseUrl}/accounts/${accountNumber}`)
+//       .set('access-token', token)
+//       .end((err, res) => {
+//         res.should.have.status(200);
+//         done();
+//       });
+//   });
+// });
 
-    it('Account number not found', (done) => {
-      const accountNumber = '1554972750176';
-      chai.request(app)
-        .patch(`${baseUrl}/accounts/${accountNumber}`)
-        .set('access-token', token)
-        .end((err, res) => {
-          res.should.have.status(400);
-          done();
-        });
-    });
 
-    describe('PATCH / Activate or deactivate with Invalid Data', () => {
-      const badAccount = {
-        accountNumber: '',
-        status: '',
-      };
-      it('Should return a 404 status', (done) => {
-        chai.request(app)
-          .post(`${baseUrl}/accounts/:accountNumber`)
-          .set('access-token', token)
-          .send(badAccount)
-          .end((err, res) => {
-            res.should.have.status(404);
-            done();
-          });
+describe('PATCH / Account number error found ', () => {
+  it('Should return a 404 status', (done) => {
+    const accountNumber = '15557';
+    chai.request(app)
+      .patch(`${baseUrl}/accounts/${accountNumber}`)
+      .set('access-token', token)
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
       });
-    });
   });
 });
 
+describe('PATCH / Activate or deactivate with Invalid Data', () => {
+
+  it('Should return a 404 status', (done) => {
+    const accountNumber = '1555780168843';
+    const statusData = {
+      status: '',
+    };
+    chai.request(app)
+      .patch(`${baseUrl}/accounts/${accountNumber}`)
+      .set('access-token', token)
+      .send(statusData)
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      });
+  });
+});
 
 describe('DELETE', () => {
   describe('DELETE / Account deleted with Invalid ', () => {
