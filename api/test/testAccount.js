@@ -172,40 +172,35 @@ describe('PATCH / Activate or deactivate with Invalid Data', () => {
 
 describe('DELETE', () => {
   describe('DELETE / Account deleted with Invalid ', () => {
-    const accountData = {
-      accountNumber: '',
-    };
+    const accountNumber = '';
     it('Should return a 404 status', (done) => {
       chai.request(app)
-        .delete(`${baseUrl}/accounts/:accountNumber`)
+        .delete(`${baseUrl}/accounts/${accountNumber}`)
         .set('access-token', token)
-        .send(accountData)
         .end((err, res) => {
           res.should.have.status(404);
           done();
         });
     });
 
-    // it('Should return a 200 when account deleted status', (done) => {
-    //   const accountNumber = '1554972750164';
-    //   chai.request(app)
-    //     .delete(`${baseUrl}/accounts/${accountNumber}`)
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       done();
-    //     });
-    // });
+    it('Should return a 200 when account deleted status', (done) => {
+      const accountNumber = '1555780168843';
+      chai.request(app)
+        .delete(`${baseUrl}/accounts/${accountNumber}`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
 
 
     describe('DELETE / Delete account Successful', () => {
-      const accountNumber = {
-        accountNumber: '1554972750176',
-      };
-      it('Should return a 200 status', (done) => {
+      const accountNumber = '1555780168843';
+      it('Should return a 404 status', (done) => {
         chai.request(app)
-          .delete(`${baseUrl}/accounts/:accountNumber`)
+          .delete(`${baseUrl}/accounts/${accountNumber}`)
           .set('access-token', token)
-          .send(accountNumber)
           .end((err, res) => {
             res.should.have.status(404);
             done();

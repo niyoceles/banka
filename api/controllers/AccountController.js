@@ -138,24 +138,34 @@ class AccountsController {
     }
   }
 
-  static deleteAccount(req, res) {
-    const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
-    });
+  static async deleteAccount(req, res) {
+    const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
+    RETURNING *`;
 
-    if (!findAccounts) {
-      res.status(404).json({
-        status: '404',
-        message: 'Account number is not found',
-      });
+    try {
+      let checkAccount = '';
+      if (req.params.accountNumber) {
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      }
+
+      if (checkAccount.rows < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'Sorry, this Account is not found',
+        });
+      }
+
+      const deletingAccount = await db.query(updateData);
+
+      if (deletingAccount.rows.length > 0) {
+        res.status(201).json({
+          status: 201,
+          message: 'Account has been Deleted',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    const index = accounts.indexOf(findAccounts);
-    accounts.splice(index, 1);
-    res.status(200).json({
-      status: '200',
-      message: 'Account successfully deleted',
-    });
   }
 }
 export default AccountsController;
