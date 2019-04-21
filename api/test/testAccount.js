@@ -9,11 +9,41 @@ const baseUrl = '/api/v1';
 chai.use(chaiHttp);
 chai.should();
 
+let token = '';
+
+// accounts table
+// before(async () => {
+//   try {
+//     await db.query('TRUNCATE accounts CASCADE; ALTER SEQUENCE id RESTART WITH 1;');
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
 describe('Create Account', () => {
+
+  describe('POST / Signin Successful Login', () => {
+    const signInData = {
+      email: 'niyoceles3@gmail.com',
+      password: 'celes123',
+    };
+    it('Should return a 200 status', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/auth/signin`)
+        .send(signInData)
+        .end((err, res) => {
+          res.should.have.status(200);
+          token = res.body.token;
+          done();
+        });
+    });
+  });
+
   describe('POST /api/v1/accounts', () => {
     it('should display Account created Successful', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
+        .set('access-token', token)
         .send({
           accountNumber: 1555780168843,
           owner: 1,
@@ -31,6 +61,7 @@ describe('Create Account', () => {
     it('should display \'Sorry, this account already exists\'', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
+        .set('access-token', token)
         .send({
           accountNumber: 1555780168843,
           owner: 1,
@@ -59,6 +90,7 @@ describe('Account Account POST', () => {
     it('Should return a 400 status', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
+        .set('access-token', token)
         .send(badAccountData)
         .end((err, res) => {
           res.should.have.status(400);
@@ -98,6 +130,7 @@ describe('Account PATCH', () => {
     it('Should return a 400 status', (done) => {
       chai.request(app)
         .patch(`${baseUrl}/accounts/:11111`)
+        .set('access-token', token)
         .end((err, res) => {
           res.should.have.status(404);
           done();
@@ -108,6 +141,7 @@ describe('Account PATCH', () => {
       const accountNumber = '1554972750176';
       chai.request(app)
         .patch(`${baseUrl}/accounts/${accountNumber}`)
+        .set('access-token', token)
         .end((err, res) => {
           res.should.have.status(400);
           done();
@@ -122,6 +156,7 @@ describe('Account PATCH', () => {
       it('Should return a 404 status', (done) => {
         chai.request(app)
           .post(`${baseUrl}/accounts/:accountNumber`)
+          .set('access-token', token)
           .send(badAccount)
           .end((err, res) => {
             res.should.have.status(404);
@@ -141,6 +176,7 @@ describe('DELETE', () => {
     it('Should return a 404 status', (done) => {
       chai.request(app)
         .delete(`${baseUrl}/accounts/:accountNumber`)
+        .set('access-token', token)
         .send(accountData)
         .end((err, res) => {
           res.should.have.status(404);
@@ -166,6 +202,7 @@ describe('DELETE', () => {
       it('Should return a 200 status', (done) => {
         chai.request(app)
           .delete(`${baseUrl}/accounts/:accountNumber`)
+          .set('access-token', token)
           .send(accountNumber)
           .end((err, res) => {
             res.should.have.status(404);
