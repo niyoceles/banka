@@ -1,5 +1,5 @@
 import userTest from './testUser';
-import accountTest from './testAccount';
 import transactionTest from './testTransaction';
+import accountTest from './testAccount';
 
-export default { userTest, accountTest, transactionTest };
+export default { userTest, transactionTest, accountTest };
