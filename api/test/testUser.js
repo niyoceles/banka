@@ -8,10 +8,11 @@ const baseUrl = '/api/v1';
 chai.use(chaiHttp);
 chai.should();
 const { expect } = chai;
+let token = '';
 
 
 describe('Sign-up', () => {
-  // clear users table
+  // users table
   before(async () => {
     try {
       await db.query('TRUNCATE users CASCADE; ALTER SEQUENCE id RESTART WITH 1;');
@@ -85,30 +86,6 @@ describe('Sign-up', () => {
         });
     });
   });
-
-  // describe('GET an User ', () => {
-  //   it('Should return a 200 when single user record successful', (done) => {
-  //     let findUsers = 4;
-  //     chai.request(app)
-  //       .get(`${baseUrl}/users/${findUsers}`)
-  //       .end((err, res) => {
-  //         res.should.have.status(200);
-  //         done();
-  //       });
-  //   });
-  // });
-
-  // describe('GET User not found ', () => {
-  //   it('Should return 404 ', (done) => {
-  //     let findUsers = '9999999';
-  //     chai.request(app)
-  //       .get(`${baseUrl}/users/${findUsers}`)
-  //       .end((err, res) => {
-  //         res.should.have.status(404);
-  //         done();
-  //       });
-  //   });
-  // });
 });
 describe('Users Signin POST', () => {
   describe('POST / Signin with Invalid Data', () => {
@@ -154,6 +131,7 @@ describe('Users Signin POST', () => {
         .send(signInData)
         .end((err, res) => {
           res.should.have.status(200);
+          token = res.body.token;
           done();
         });
     });
