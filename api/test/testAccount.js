@@ -11,13 +11,13 @@ chai.should();
 
 describe('Create Account', () => {
   describe('POST /api/v1/accounts', () => {
-    it('should display \'Sorry, this account already exists\'', (done) => {
+    it('should display Account created Successful', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
         .send({
           accountNumber: 1555780168843,
           owner: 1,
-          type: 'savings',
+          type: 'current',
           phone: '0783067644',
           email: 'niyoceles3@gmail.com',
           balance: '20000',
@@ -28,12 +28,13 @@ describe('Create Account', () => {
         });
     });
 
-    it('should display account created when user create an account', (done) => {
+    it('should display \'Sorry, this account already exists\'', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
         .send({
+          accountNumber: 1555780168843,
           owner: 1,
-          type: 'current',
+          type: 'savings',
           phone: '0783067644',
           email: 'niyoceles3@gmail.com',
           balance: '20000',
