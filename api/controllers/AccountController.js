@@ -96,34 +96,46 @@ class AccountsController {
     }
   }
 
-  static updateAccount(req, res) {
-    const accountNumber = parseInt(req.params.accountNumber, 10);
-    let accountFound; let itemIndex;
-    accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) {
-        accountFound = account; itemIndex = index;
-      }
-    });
-
-    if (!accountFound) {
-      res.status(404).json({
-        status: '404',
-        message: 'account number not found',
-      });
-    }
+  static async updateAccount(req, res) {
     if (!req.body.status) {
       res.status(400).json({
-        status: '400',
-        message: 'status is required',
+        status: '400', message: 'Status field is required ',
       });
+      return;
     }
-    const updatedAccount = { accountNumber: accountFound.accountNumber, status: req.body.status };
-    accounts.splice(itemIndex, 1, updatedAccount);
-    return res.status(200).json({
-      status: '200',
-      message: 'account Updated successfully',
-      updatedAccount,
-    });
+
+    const accountStatusValue = [
+      req.body.status,
+    ];
+
+    const updateData = `UPDATE accounts SET "status"=$1 WHERE "accountNumber"=${req.params.accountNumber}
+    RETURNING id, "accountNumber", "owner", type, phone, status, email, balance, "createdOn"`;
+
+    try {
+      let checkAccount = '';
+      if (req.params.accountNumber) {
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      }
+
+      if (checkAccount.rows < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'Sorry, Not Found this Account',
+        });
+      }
+
+      const updateAccount = await db.query(updateData, accountStatusValue);
+
+      if (updateAccount.rows.length > 0) {
+        updateAccount.rows[0].createdOn = new Date(updateAccount.rows[0].createdOn).toDateString();
+        res.status(201).json({
+          status: 201,
+          data: updateAccount.rows[0],
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static deleteAccount(req, res) {
