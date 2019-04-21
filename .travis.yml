@@ -15,8 +15,8 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - npm run test
-  - npm run coverage
-# after_success: npm run coverage
+  # - npm run coverage
+after_success: npm run coverage
 services:
   - postgresql
 before_script:
