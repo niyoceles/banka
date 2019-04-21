@@ -48,20 +48,54 @@ describe('Credit a Bank Account with POST', () => {
         });
     });
   });
+
   describe('POST / Account number not found ', () => {
-    it('Should return a 404 status', (done) => {
-      const accountNumber = '1555780';
+    it('Should return a 400 status', (done) => {
+      const accountNumber = '1555835300494';
+      const creditData = {
+        amount: 2000,
+        reason: 'Monthly charges',
+        oldBalance: '2000',
+      };
+
       chai.request(app)
         .post(`${baseUrl}/transactions/${accountNumber}/credit`)
         .set('access-token', token)
+        .send(creditData)
         .end((err, res) => {
           res.should.have.status(400);
           done();
         });
     });
+    describe('POST / Account bad request', () => {
+      it('Should return a status', (done) => {
+        const accountNumber = '1555835300494';
+
+        chai.request(app)
+          .post(`${baseUrl}/transactions/${accountNumber}/credit`)
+          .set('access-token', token)
+          .end((err, res) => {
+            res.should.have.status(400);
+            done();
+          });
+      });
+    });
+    describe('POST / Account number not found ', () => {
+      it('Should return a 404 status', (done) => {
+        const accountNumber = '1555780';
+        chai.request(app)
+          .post(`${baseUrl}/transactions/${accountNumber}/credit`)
+          .set('access-token', token)
+          .end((err, res) => {
+            res.should.have.status(400);
+            done();
+          });
+      });
+    });
   });
 });
 
+// ////////////////////////DEBIT///////////////////////////////
 describe('Debit a Bank Account with POST', () => {
   describe('POST / without Authorized ', () => {
     it('Should return a 401 status', (done) => {
@@ -73,22 +107,68 @@ describe('Debit a Bank Account with POST', () => {
           done();
         });
     });
+  });
 
-    describe('POST / Debit account without required data', () => {
-      const badAccount = {
-        accountNumber: '',
-      };
-      it('Should return a 404 status', (done) => {
-        const accountNumber = '1555780';
-        chai.request(app)
-          .post(`${baseUrl}/transactions/${accountNumber}/debit`)
-          .set('access-token', token)
-          .send(badAccount)
-          .end((err, res) => {
-            res.should.have.status(404);
-            done();
-          });
-      });
+  describe('POST / Debit account without required data', () => {
+    const badAccount = {
+      accountNumber: '',
+    };
+    it('Should return a 400 status', (done) => {
+      const accountNumber = '1555780';
+      chai.request(app)
+        .post(`${baseUrl}/transactions/${accountNumber}/debit`)
+        .set('access-token', token)
+        .send(badAccount)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
     });
   });
+
+  describe('POST / Debit account without required data', () => {
+    it('Should return a 404 status', (done) => {
+      const accountNumber = '1555780';
+      chai.request(app)
+        .post(`${baseUrl}/transactions/${accountNumber}/debit`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
+  describe('POST / Account number not found ', () => {
+    it('Should return a 404 status', (done) => {
+      const accountNumber = '1555835300494';
+      const creditData = {
+        cashier: 1,
+        amount: 2000,
+        reason: 'Monthly charges',
+        oldBalance: '2000',
+      };
+
+      chai.request(app)
+        .post(`${baseUrl}/transactions/${accountNumber}/debit`)
+        .set('access-token', token)
+        .send(creditData)
+        .end((err, res) => {
+          res.should.have.status(201);
+          done();
+        });
+    });
+  });
+  // describe('POST / Account number found ', () => {
+  //   it('Should return a 404 status', (done) => {
+  //     const accountNumber = '1555835300494';
+
+  //     chai.request(app)
+  //       .post(`${baseUrl}/transactions/${accountNumber}/dedit`)
+  //       .set('access-token', token)
+  //       .end((err, res) => {
+  //         res.should.have.status(201);
+  //         done();
+  //       });
+  //   });
+  // });
 });
