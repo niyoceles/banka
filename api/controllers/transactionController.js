@@ -1,21 +1,37 @@
-import transactions from '../models/transactions';
 import db from '../models';
-// import accounts from '../models/users';
 
 class TransactionsController {
   // Get a single Transactions
-  static getSingleTransaction(req, res) {
-    const accNo = parseInt(req.params.accountNumber, 10);
-    const findTransactions = transactions.find(Transactions => Transactions.accountNumber === accNo);
-    if (!findTransactions) {
-      res.status(404).json({
-        message: 'Transactions Id is not found',
-      });
+  static async getSingleTransaction(req, res) {
+    try {
+      let checkTransaction = '';
+      if (!req.params.accountNumber) {
+        res.status(400).json({
+          status: 400,
+          message: 'Account number is required',
+        });
+      }
+      if (req.params.accountNumber) {
+        checkTransaction = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1',
+          [req.params.accountNumber]);
+      }
+
+      if (checkTransaction.rows.length > 0) {
+        checkTransaction.rows[0].createdOn = new Date(checkTransaction.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkTransaction.rows,
+          message: 'this is the Transaction of your Account',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Not found this Account',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-    res.status(200).json({
-      Transactions: findTransactions,
-      message: 'A single Transactions record',
-    });
   }
 
   static async creditAccount(req, res) {
@@ -33,21 +49,6 @@ class TransactionsController {
       });
       return;
     }
-
-    // let checkBalance = '';
-    // if (req.params.accountNumber) {
-    //   checkBalance = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
-    // }
-
-    // if (checkBalance.rows < 1) {
-    //   // checkBalance.rows[0].createdOn = new Date(checkBalance.rows[0].createdOn).toDateString();
-    //   // old = checkBalance.rows[0].oldBalance;
-
-    //   res.status(404).json({
-    //     status: 404,
-    //     error: 'Sorry, Not Found this Account',
-    //   });
-    // }
 
     const transactionValue = [
       'Credit',
@@ -106,21 +107,6 @@ class TransactionsController {
       });
       return;
     }
-
-    // let checkBalance = '';
-    // if (req.params.accountNumber) {
-    //   checkBalance = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
-    // }
-
-    // if (checkBalance.rows < 1) {
-    //   // checkBalance.rows[0].createdOn = new Date(checkBalance.rows[0].createdOn).toDateString();
-    //   // old = checkBalance.rows[0].oldBalance;
-
-    //   res.status(404).json({
-    //     status: 404,
-    //     error: 'Sorry, Not Found this Account',
-    //   });
-    // }
 
     const transactionValue = [
       'Debit',
