@@ -2,27 +2,32 @@ import accounts from '../models/accounts';
 import db from '../models';
 
 class AccountsController {
-  // // Get a single Accounts
-  // static getSingleAccount(req, res) {
-  //   // if (req.decodedToken.isAdmin === true) {
-  //   //   return res.status(401).json({
-  //   //     message: 'Sorry you are not allowed to access this route',
-  //   //   });
-  //   // }
-  //   const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber, 10));
-  //   if (!findAccounts) {
-  //     res.status(404).json({
-  //       status: '404',
-  //       message: 'Account Id is not found',
-  //     });
-  //   }
+  // GET specific account Details
+  static async getAccountDetails(req, res) {
+    try {
+      let checkAccountDetails = '';
+      if (req.params.accountNumber) {
+        checkAccountDetails = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1',
+          [req.params.accountNumber]);
+      }
 
-  //   return res.status(200).json({
-  //     status: '200',
-  //     Accounts: findAccounts,
-  //     message: 'A single Accounts record',
-  //   });
-  // }
+      if (checkAccountDetails.rows.length > 0) {
+        checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAccountDetails.rows[0],
+          message: 'Account Details successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Account Number Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async createAccount(req, res) {
     if (!req.body.owner) {
