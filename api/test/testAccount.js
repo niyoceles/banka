@@ -291,4 +291,3 @@ describe('GET ACCOUNT ALL  ACCOUNT TO THE SPECIFIC USER', () => {
     });
   });
 });
-});
