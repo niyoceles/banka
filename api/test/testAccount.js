@@ -211,7 +211,7 @@ describe('DELETE', () => {
 // /////////////////////////// GET ACCOUNT DETAILS //////////////////////
 describe('GET ACCOUNT DETAILS', () => {
   describe('GET / Get account details with Invalid ', () => {
-    const accountNumberEmpty = '';
+    const accountNumberEmpty = '99999-0';
     it('Should return a 404 status', (done) => {
       chai.request(app)
         .get(`${baseUrl}/accounts/${accountNumberEmpty}`)
