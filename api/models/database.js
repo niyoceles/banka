@@ -77,7 +77,7 @@ const createTables = () => {
         id SERIAL PRIMARY KEY,
         "createdOn" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         type VARCHAR(50) NOT NULL,
-        "accountNumber" INT NOT NULL REFERENCES accounts(id),
+        "accountNumber" BIGINT NOT NULL REFERENCES accounts(id),
         cashier INT NOT NULL REFERENCES users(id),
         amount DECIMAL(12,2) NOT NULL,
         "oldBalance" DECIMAL(12,2) NOT NULL,
