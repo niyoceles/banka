@@ -153,7 +153,7 @@ describe('Debit a Bank Account with POST', () => {
         .set('access-token', token)
         .send(creditData)
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(404);
           done();
         });
     });
