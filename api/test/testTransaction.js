@@ -189,7 +189,7 @@ describe('GET SPECIFIC ACCOUNT TRANSACTION', () => {
   });
   describe('GET / Valid input specific account transaction  ', () => {
     it('Should return a 401 status', (done) => {
-      const id = '12';
+      const id = '1';
       chai.request(app)
         .get(`${baseUrl}/transactions/${id}`)
         .set('access-token', token)
