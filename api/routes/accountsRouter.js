@@ -5,7 +5,7 @@ import checkToken from '../middlewares/checkToken';
 const router = Router();
 
 router.post('/accounts', checkToken, Account.createAccount);
-// router.get('/account/:accountNumber', Account.getSingleAccount);
+router.get('/accounts/:accountNumber', checkToken, Account.getAccountDetails);
 router.patch('/accounts/:accountNumber', checkToken, Account.updateAccount);
 router.delete('/accounts/:accountNumber', checkToken, Account.deleteAccount);
 
