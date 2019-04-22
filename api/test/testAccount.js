@@ -210,29 +210,29 @@ describe('DELETE', () => {
 });
 // /////////////////////////// GET ACCOUNT DETAILS //////////////////////
 describe('GET ACCOUNT DETAILS', () => {
-  describe('GET / Get account details ', () => {
+  describe('GET / Get Account Not found ', () => {
     const id = '1';
     it('Should return a 200 status', (done) => {
       chai.request(app)
         .get(`${baseUrl}/accounts/${id}`)
         .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(404);
           done();
         });
     });
+  });
 
-    describe('GET / Get account Details Account number not found', () => {
-      const accountNumber = '1555835300494';
-      it('Should return a  status', (done) => {
-        chai.request(app)
-          .get(`${baseUrl}/accounts/${accountNumber}`)
-          .set('access-token', token)
-          .end((err, res) => {
-            res.should.have.status(404);
-            done();
-          });
-      });
+  describe('GET / Get account Details Account number found', () => {
+    const accountNumber = '1555835300494';
+    it('Should return a  status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/accounts/${accountNumber}`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
     });
   });
 });
