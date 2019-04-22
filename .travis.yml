@@ -2,7 +2,11 @@ env:
   global:
     - CC_TEST_REPORTER_ID=051f5e9171413fcddea26572cdc3c04bf5d72d29c478a0f99938ac045e47b5b3
     - SECRET_KEY=12345
-    - DATABASE_URL_test=postgres://postgres@localhost:5432/banka_test
+    - DB_HOST = localhost
+    - DB_USER = postgres
+    - DB_NAME = banka
+    - DB_PASSWORD = admin
+    - DB_PORT = 5432
 language: node_js
 node_js:
  - "stable"
