@@ -1,28 +1,83 @@
-import accounts from '../models/accounts';
 import db from '../models';
 
 class AccountsController {
-  // // Get a single Accounts
-  // static getSingleAccount(req, res) {
-  //   // if (req.decodedToken.isAdmin === true) {
-  //   //   return res.status(401).json({
-  //   //     message: 'Sorry you are not allowed to access this route',
-  //   //   });
-  //   // }
-  //   const findAccounts = accounts.find(Accounts => Accounts.accountNumber === parseInt(req.params.accountNumber, 10));
-  //   if (!findAccounts) {
-  //     res.status(404).json({
-  //       status: '404',
-  //       message: 'Account Id is not found',
-  //     });
-  //   }
+  // GET All Bank Accounts
+  static async getAllBankAccounts(req, res) {
+    try {
+      let checkAllBankAccounts = '';
+      checkAllBankAccounts = await db.query('SELECT * FROM accounts');
+      if (checkAllBankAccounts.rows.length > 0) {
+        checkAllBankAccounts.rows[0].createdOn = new Date(checkAllBankAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllBankAccounts.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  //   return res.status(200).json({
-  //     status: '200',
-  //     Accounts: findAccounts,
-  //     message: 'A single Accounts record',
-  //   });
-  // }
+
+  // GET list of all account owned by user email
+  static async getAllAccountByUser(req, res) {
+    try {
+      let checkAllAccounts = '';
+      if (req.params.email) {
+        checkAllAccounts = await db.query('SELECT * FROM accounts WHERE email=$1',
+          [req.params.email]);
+      }
+
+      if (checkAllAccounts.rows.length > 0) {
+        checkAllAccounts.rows[0].createdOn = new Date(checkAllAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllAccounts.rows,
+          message: 'User Get all Accounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Email is Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // GET specific account Details
+  static async getAccountDetails(req, res) {
+    try {
+      let checkAccountDetails = '';
+      if (req.params.accountNumber) {
+        checkAccountDetails = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1',
+          [req.params.accountNumber]);
+      }
+
+      if (checkAccountDetails.rows.length > 0) {
+        checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAccountDetails.rows[0],
+          message: 'Account Details successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Account Number Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   static async createAccount(req, res) {
     if (!req.body.owner) {
