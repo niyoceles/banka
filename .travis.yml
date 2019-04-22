@@ -1,12 +1,12 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=051f5e9171413fcddea26572cdc3c04bf5d72d29c478a0f99938ac045e47b5b3
+    - CC_TEST_REPORTER_ID=f832d4a72486dfcbb351b642b79f71b397851349e87551ba3ae3042e1a6d6070
     - SECRET_KEY=12345
-    - DB_HOST = localhost
-    - DB_USER = postgres
-    - DB_NAME = banka
-    - DB_PASSWORD = admin
-    - DB_PORT = 5432
+    - DB_HOST=localhost
+    - DB_USER=postgres
+    - DB_NAME=banka
+    - DB_PASSWORD=admin
+    - DB_PORT=5432
 language: node_js
 node_js:
  - "stable"
