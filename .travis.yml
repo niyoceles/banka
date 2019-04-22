@@ -5,7 +5,7 @@ env:
     - DB_HOST=localhost
     - DB_USER=postgres
     - DB_NAME=banka
-    - DB_PASSWORD=admin
+    - DB_PASSWORD=
     - DB_PORT=5432
 language: node_js
 node_js:
@@ -24,8 +24,8 @@ after_success: npm run coverage
 services:
   - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE banka_test;' -U postgres
-  - NODE_ENV=test npm run createTables
+  - psql -c 'CREATE DATABASE banka;' -U postgres
+  - npm run createTables
   - npm install --save-dev coveralls
   - npm install --save-dev istanbul@1.1.0-alpha.1
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
