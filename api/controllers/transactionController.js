@@ -35,20 +35,26 @@ class TransactionsController {
       return;
     }
 
-    let checkBalance = '';
+    let checkAccount = '';
+    let checkTransaction = '';
     if (req.params.accountNumber) {
-      checkBalance = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      checkTransaction = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
     }
 
-    let old = '';
-    if (checkBalance.rows < 1) {
-      checkBalance.rows[0].createdOn = new Date(checkBalance.rows[0].createdOn).toDateString();
-      old = checkBalance.rows[0].oldBalance;
-
+    if (checkAccount.rows.length <= 0) {
       res.status(404).json({
         status: 404,
         error: 'Sorry, Not Found this Account',
       });
+    }
+
+    let oldBalance = checkAccount.rows[0].balance;
+    let newBalance = oldBalance + req.body.amount;
+
+    if (checkTransaction.rows.length > 0) {
+      oldBalance = checkTransaction.rows[checkTransaction.rows.length - 1].newBalance;
+      newBalance = parseFloat(oldBalance, 10) + parseFloat(req.body.amount, 10);
     }
 
     const transactionValue = [
@@ -56,8 +62,8 @@ class TransactionsController {
       req.params.accountNumber,
       req.body.cashier,
       req.body.amount,
-      req.body.oldBalance,
-      (req.body.oldBalance + req.body.amount),
+      oldBalance,
+      newBalance,
       req.body.reason,
     ];
 
@@ -81,8 +87,9 @@ class TransactionsController {
 
       const addTransaction = await db.query(insertTransaction, transactionValue);
 
-      if (addTransaction.rows.length > 0) {
+      if (addTransaction.rows.length >= 0) {
         addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
+        addTransaction.rows[0].accountNumber = checkAccount.rows[0].accountNumber;
         res.status(201).json({
           status: 201,
           data: addTransaction.rows[0],
