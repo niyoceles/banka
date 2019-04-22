@@ -1,7 +1,33 @@
-import accounts from '../models/accounts';
 import db from '../models';
 
 class AccountsController {
+  // GET list of all account owned by user email
+  static async getAllAccountByUser(req, res) {
+    try {
+      let checkAllAccounts = '';
+      if (req.params.email) {
+        checkAllAccounts = await db.query('SELECT * FROM accounts WHERE email=$1',
+          [req.params.email]);
+      }
+
+      if (checkAllAccounts.rows.length > 0) {
+        checkAllAccounts.rows[0].createdOn = new Date(checkAllAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllAccounts.rows,
+          message: 'User Get all Accounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Email is Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // GET specific account Details
   static async getAccountDetails(req, res) {
     try {
