@@ -19,7 +19,7 @@ class TransactionsController {
     });
   }
 
-  static async creditAccount(req, res) {
+  static requiredField(req, res) {
     if (!req.body.cashier) {
       res.status(400).json({
         status: '400', message: 'cashier field is required ',
@@ -32,8 +32,11 @@ class TransactionsController {
       res.status(400).json({
         status: '400', message: 'Amount field is required ',
       });
-      return;
     }
+  }
+
+  static async creditAccount(req, res) {
+    TransactionsController.requiredField(req, res);
 
     let checkAccount = '';
     let checkTransaction = '';
