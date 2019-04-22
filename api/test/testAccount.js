@@ -236,3 +236,33 @@ describe('GET ACCOUNT DETAILS', () => {
     });
   });
 });
+
+// /////////////////////////// GET ADMIN CAN VIEW LIST OF ACCOUNT BY SPECIFIC USER //////////////////////
+describe('GET ACCOUNT LIST OF ACCOUNT TO THE SPECIFIC USER', () => {
+  describe('GET / Get the account of he user with Invalid ', () => {
+    const emailEmpty = '';
+    it('Should return a 404 status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/user/${emailEmpty}/accounts`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
+    describe('GET / Get Get acounts of the user successful', () => {
+      const email = 'niyoceles3@gmail.com';
+      it('Should return a  status 200', (done) => {
+        chai.request(app)
+          .get(`${baseUrl}/user/${email}/accounts`)
+          .set('access-token', token)
+          .end((err, res) => {
+            res.should.have.status(200);
+            done();
+          });
+      });
+    });
+  });
+});
+
