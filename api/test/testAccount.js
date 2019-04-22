@@ -210,14 +210,14 @@ describe('DELETE', () => {
 });
 // /////////////////////////// GET ACCOUNT DETAILS //////////////////////
 describe('GET ACCOUNT DETAILS', () => {
-  describe('GET / Get account details with Invalid ', () => {
-    const accountNumberEmpty = '99999-0';
-    it('Should return a 404 status', (done) => {
+  describe('GET / Get account details ', () => {
+    const id = '1';
+    it('Should return a 200 status', (done) => {
       chai.request(app)
-        .get(`${baseUrl}/accounts/${accountNumberEmpty}`)
+        .get(`${baseUrl}/accounts/${id}`)
         .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(200);
           done();
         });
     });
