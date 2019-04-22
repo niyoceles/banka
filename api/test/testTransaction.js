@@ -187,14 +187,14 @@ describe('GET SPECIFIC ACCOUNT TRANSACTION', () => {
         });
     });
   });
-  describe('GET / Valid input specific account transaction  ', () => {
-    it('Should return a 401 status', (done) => {
-      const id = '1';
+  describe('GET / id not found account transaction  ', () => {
+    it('Should return a 404 status', (done) => {
+      const id = '0';
       chai.request(app)
         .get(`${baseUrl}/transactions/${id}`)
         .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(404);
           done();
         });
     });
