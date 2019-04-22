@@ -3,6 +3,7 @@ import Account from '../controllers/AccountController';
 import checkToken from '../middlewares/checkToken';
 
 const router = Router();
+router.get('/accounts', Account.getAllBankAccounts);
 router.get('/user/:email/accounts', checkToken, Account.getAllAccountByUser);
 router.post('/accounts', checkToken, Account.createAccount);
 router.get('/accounts/:accountNumber', checkToken, Account.getAccountDetails);

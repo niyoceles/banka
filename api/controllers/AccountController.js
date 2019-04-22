@@ -1,6 +1,30 @@
 import db from '../models';
 
 class AccountsController {
+  // GET All Bank Accounts
+  static async getAllBankAccounts(req, res) {
+    try {
+      let checkAllBankAccounts = '';
+      checkAllBankAccounts = await db.query('SELECT * FROM accounts');
+      if (checkAllBankAccounts.rows.length > 0) {
+        checkAllBankAccounts.rows[0].createdOn = new Date(checkAllBankAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllBankAccounts.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
     try {

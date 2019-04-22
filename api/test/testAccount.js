@@ -266,3 +266,29 @@ describe('GET ACCOUNT LIST OF ACCOUNT TO THE SPECIFIC USER', () => {
   });
 });
 
+// /////////////////////////// GET STAFF/ADMIN VIEW ALL BANK ACCOUNT //////////////////////
+describe('GET ACCOUNT ALL  ACCOUNT TO THE SPECIFIC USER', () => {
+  describe('GET / Get all bank account  with Invalid ', () => {
+    it('Should return a 404 status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/accountsxyx`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
+    describe('GET / Get All bank account successful', () => {
+      it('Should return a  status 200', (done) => {
+        chai.request(app)
+          .get(`${baseUrl}/accounts`)
+          .set('access-token', token)
+          .end((err, res) => {
+            res.should.have.status(200);
+            done();
+          });
+      });
+    });
+  });
+});
