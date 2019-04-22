@@ -125,7 +125,7 @@ class AccountsController {
         checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1 OR email=$2 AND type=$3', [req.body.accountNumber, req.body.email, req.body.type]);
       }
 
-      if (checkAccount.rows.length > 0) {
+      if (checkAccount.rows > 1) {
         res.status(200).json({
           status: 200,
           error: 'Sorry, this account already exists',
