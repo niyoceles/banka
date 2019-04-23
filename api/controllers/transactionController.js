@@ -140,16 +140,13 @@ class TransactionsController {
     // setting how debit will reduce the balance account
     let accontBalance = (req.body.amount);
     const addingAmount = (accontBalance += accontBalance) / 2;
-    const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     const transaction = {
       transactionId: transactions.length + 1,
       accountNumber: accountFound.accountNumber,
-      createdOn: date.toString(),
       amount: req.body.amount,
       cashier: req.body.cashier,
       transactionType: req.body.transactionType,
-      oldBalance: balanceFound.accountBalance,
-      newBalance: balanceFound.accountBalance - addingAmount,
+      accountBalance: balanceFound.accountBalance - addingAmount,
     };
 
     if (!req.body.amount) {

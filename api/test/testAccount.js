@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
-import AccountController from '../controllers/AccountController';
 
 const baseUrl = '/api/v1';
 
