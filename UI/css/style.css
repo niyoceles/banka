@@ -199,9 +199,6 @@ button#goto-activate {
   background-color: rgb(57, 145, 76);
 }
 
-
-
-
 /* Center the image and position the close button */
 
 .img-close {
@@ -209,7 +206,6 @@ button#goto-activate {
     margin: 24px 0 12px 0;
     position: relative;
 }
-
 
 /* The Modal (background) */
 
