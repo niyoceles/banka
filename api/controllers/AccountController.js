@@ -24,6 +24,28 @@ class AccountsController {
     }
   }
 
+  static async getAllActiveBankAccounts(req, res) {
+    try {
+      let checkAllActiveBankAccount = '';
+      checkAllActiveBankAccount = await db.query('SELECT * FROM accounts WHERE status="Active"');
+      if (checkAllActiveBankAccount.rows.length >= 0) {
+        checkAllActiveBankAccount.rows[0].createdOn = new Date(checkAllActiveBankAccount.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllActiveBankAccount.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Active Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async getAllDormantBankAccounts(req, res) {
     try {
       let checkAllDormantBankAccount = '';
