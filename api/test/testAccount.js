@@ -53,7 +53,7 @@ describe('Create Account', () => {
           balance: '20000',
         })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           done();
         });
     });
@@ -71,7 +71,7 @@ describe('Create Account', () => {
           balance: '20000',
         })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           done();
         });
     });
