@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import users from '../models/users';
 import db from '../models';
 
@@ -8,7 +9,7 @@ dotenv.config();
 class UsersController {
   // Get a single Users
   static getSingleUser(req, res) {
-    const findUsers = users.find(Users => Users.id === parseInt(req.params.id, 10));
+    const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
     if (findUsers) {
       res.status(200).json({
         status: '200',
@@ -23,32 +24,65 @@ class UsersController {
   }
 
   static async signup(req, res) {
-    if (!req.body.firstName || !req.body.lastName
-      || !req.body.email || !req.body.userName
-      || !req.body.phone || !req.body.password
-      || !req.body.isAdmin || !req.body.location) {
-      res.status(404).json({
+    if (!req.body.firstName) {
+      res.status(400).json({
+        status: '400',
+        message: 'First name field is required ',
+      });
+    } else if (!req.body.lastName) {
+      res.status(400).json({
+        status: '400',
+        message: 'Last name is required ',
+      });
+    } else if (!req.body.email) {
+      res.status(400).json({
+        status: '400',
+        message: 'Email is required ',
+      });
+    } else if (!req.body.userName) {
+      res.status(400).json({
+        status: '400',
+        message: 'Username is required ',
+      });
+    } else if (!req.body.phone) {
+      res.status(400).json({
+        status: '400',
+        message: 'Phone is required ',
+      });
+    } else if (!req.body.password) {
+      res.status(400).json({
+        status: '400',
+        message: 'Password are required ',
+      });
+    } else if (!req.body.isAdmin) {
+      res.status(400).json({
         status: '404',
-        message: 'All field are required ',
+        message: 'Type of user is required ',
+      });
+    } else if (!req.body.location) {
+      res.status(400).json({
+        status: '400',
+        message: 'Location is required ',
       });
       return;
     }
-    const inserData = `INSERT INTO
-            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
 
     const values = [
       req.body.firstName,
       req.body.lastName,
       req.body.userName,
-      req.body.password,
+      bcrypt.hashSync(req.body.password),
       req.body.phone,
       req.body.email,
       req.body.type,
       req.body.isAdmin,
       req.body.location,
     ];
+
+    const inserData = `INSERT INTO
+            users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
 
     try {
       let checkUser = '';
@@ -86,32 +120,53 @@ class UsersController {
     }
   }
 
-  static signin(req, res) {
+  static async signin(req, res) {
     // get sign data from the request body
     const { email, password } = req.body;
 
     if (!email || !password) {
       res.status(400).json({
-        status: 'fail',
+        status: '400',
         message: 'Email and password are required',
       });
     } else {
-      const findUsers = users.find(Users => Users.email === req.body.email
-        && Users.password === req.body.password);
-      if (findUsers) {
-        const token = jwt.sign({ email, isAdmin: findUsers.isAdmin }, process.env.SECRET_KEY, {
-          expiresIn: 86400, // expires in 24 hours
+      try {
+        const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [req.body.email]);
+
+        if (rows.length > 0) {
+          for (let i = 0; i < rows.length; i += 1) {
+            if (bcrypt.compareSync(req.body.password, rows[i].password)) {
+              const isAdmin = !!rows[i].isAdmin;
+              const token = jwt.sign({
+                email: rows[i].email,
+                isAdmin,
+              }, process.env.SECRET_KEY, {
+                  expiresIn: 86400, // expires in 24 hours
+                });
+              return res.status(200).json({
+                status: 200,
+                data: {
+                  id: rows[i].id,
+                  firstName: rows[i].firstName,
+                  lastName: rows[i].lastName,
+                  email: rows[i].email,
+                  phone: rows[i].phone,
+                  userName: rows[i].userName,
+                  isAdmin: rows[i].isAdmin,
+                },
+                token,
+              });
+            }
+          }
+        }
+
+        return res.status(400).json({
+          status: 400,
+          error: 'Sorry, your username or password is incorrect',
         });
-        res.status(200).json({
-          status: '200',
-          data: findUsers,
-          token,
-          message: 'Welcome you are successful login',
-        });
+      } catch (error) {
+        console.log(error);
       }
-      res.status(404).json({
-        message: 'Sorry you are not createdDate! or your email and password are not match',
-      });
     }
   }
 }

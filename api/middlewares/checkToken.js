@@ -5,7 +5,7 @@ const checkToken = (req, res, next) => {
 
   if (!token) {
     return res.status(401).json({
-      error: 'Please, sign-in!',
+      error: 'Please, Authentication is required!',
     });
   }
 

@@ -1,113 +1,226 @@
-import accounts from '../models/accounts';
+import db from '../models';
 
 class AccountsController {
-  // Get a single Accounts
-  static getSingleAccount(req, res) {
-    if (req.decodedToken.isAdmin === false) {
-      return res.status(401).json({
-        message: 'Sorry you are not allowed to access this route',
-      });
+  // GET All Bank Accounts
+  static async getAllBankAccounts(req, res) {
+    try {
+      let checkAllBankAccounts = '';
+      checkAllBankAccounts = await db.query('SELECT * FROM accounts');
+      if (checkAllBankAccounts.rows.length > 0) {
+        checkAllBankAccounts.rows[0].createdOn = new Date(checkAllBankAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllBankAccounts.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-    const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
-    });
-    if (!findAccounts) {
-      res.status(404).json({
-        status: '404',
-        message: 'Account Id is not found',
-      });
-    }
-
-    return res.status(200).json({
-      status: '200',
-      Accounts: findAccounts,
-      message: 'A single Accounts record',
-    });
   }
 
-  static createAccount(req, res) {
-    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.type) {
-      res.status(404).json({
-        status: '404', message: 'All fied are required ',
+
+  // GET list of all account owned by user email
+  static async getAllAccountByUser(req, res) {
+    try {
+      let checkAllAccounts = '';
+      if (req.params.email) {
+        checkAllAccounts = await db.query('SELECT * FROM accounts WHERE email=$1',
+          [req.params.email]);
+      }
+
+      if (checkAllAccounts.rows.length > 0) {
+        checkAllAccounts.rows[0].createdOn = new Date(checkAllAccounts.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAllAccounts.rows,
+          message: 'User Get all Accounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Email is Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // GET specific account Details
+  static async getAccountDetails(req, res) {
+    try {
+      let checkAccountDetails = '';
+      if (req.params.accountNumber) {
+        checkAccountDetails = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1',
+          [req.params.accountNumber]);
+      }
+
+      if (checkAccountDetails.rows.length > 0) {
+        checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkAccountDetails.rows[0],
+          message: 'Account Details successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Account Number Not found',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async createAccount(req, res) {
+    if (!req.body.owner) {
+      res.status(400).json({
+        status: '400', message: 'Owner id field is required ',
+      });
+    } else if (!req.body.type) {
+      res.status(400).json({
+        status: '400', message: 'Type field is required ',
+      });
+    } else if (!req.body.phone) {
+      res.status(400).json({
+        status: '400', message: 'Phone field is required ',
+      });
+    } else if (!req.body.email) {
+      res.status(400).json({
+        status: '400', message: 'Email field required ',
+      });
+    } else if (!req.body.balance) {
+      res.status(400).json({
+        status: '400', message: 'Balance field required ',
       });
       return;
     }
-    accounts.forEach((val) => {
-      const accountData = req.body;
-      if (val.accountNumber === accountData.accountNumber && val.accountNumber === accountData.accountNumber) {
-        res.status(404).json({
-          status: '404',
-          message: ' Already this account is exist',
+
+    // const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    const accountValue = [
+      Date.now(),
+      req.body.owner,
+      req.body.type,
+      'Dormant',
+      req.body.phone,
+      req.body.email,
+      req.body.balance,
+    ];
+
+    const inserData = `INSERT INTO
+    accounts("accountNumber", owner, type, status, phone, email, balance)
+    VALUES($1, $2, $3, $4, $5, $6, $7)
+    returning id, "accountNumber", "owner", type, phone, email, balance, "createdOn"`;
+
+    try {
+      let checkAccount = '';
+      if (req.body.email) {
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1 OR email=$2 AND type=$3', [req.body.accountNumber, req.body.email, req.body.type]);
+      }
+
+      if (checkAccount.rows > 1) {
+        res.status(200).json({
+          status: 200,
+          error: 'Sorry, this account already exists',
         });
       }
-    });
-    const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
-    const account = {
-      // generating bank account by using date function
-      accountNumber: Date.now(),
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      type: req.body.type,
-      status: 'Deactivate',
-      openingBalance: req.body.openingBalance,
-      openingDate: date.toString(),
-    };
-    accounts.push(account);
-    res.status(200).json({
-      status: '200',
-      accounts,
-    });
+
+      const newAccount = await db.query(inserData, accountValue);
+
+      if (newAccount.rows.length > 0) {
+        newAccount.rows[0].createdOn = new Date(newAccount.rows[0].createdOn).toDateString();
+        // const token = jwt.sign({
+        //   email: req.body.email,
+        // }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+
+        res.status(201).json({
+          status: 201,
+          data: newAccount.rows[0],
+          // token,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  static updateAccount(req, res) {
-    const accountNumber = parseInt(req.params.accountNumber, 10);
-    let accountFound; let itemIndex;
-    accounts.map((account, index) => {
-      if (account.accountNumber === accountNumber) {
-        accountFound = account; itemIndex = index;
-      }
-    });
-
-    if (!accountFound) {
-      res.status(404).json({
-        status: '404',
-        message: 'account number not found',
-      });
-    }
+  static async updateAccount(req, res) {
     if (!req.body.status) {
       res.status(400).json({
-        status: '400',
-        message: 'status is required',
+        status: '400', message: 'Status field is required ',
       });
+      return;
     }
-    const updatedAccount = { accountNumber: accountFound.accountNumber, status: req.body.status };
-    accounts.splice(itemIndex, 1, updatedAccount);
-    return res.status(200).json({
-      status: '200',
-      message: 'account Updated successfully',
-      updatedAccount,
-    });
+
+    const accountStatusValue = [
+      req.body.status,
+    ];
+
+    const updateData = `UPDATE accounts SET "status"=$1 WHERE "accountNumber"=${req.params.accountNumber}
+    RETURNING id, "accountNumber", "owner", type, phone, status, email, balance, "createdOn"`;
+
+    try {
+      let checkAccount = '';
+      if (req.params.accountNumber) {
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      }
+
+      if (checkAccount.rows < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'Sorry, Not Found this Account',
+        });
+      }
+
+      const updateAccount = await db.query(updateData, accountStatusValue);
+
+      if (updateAccount.rows.length > 0) {
+        updateAccount.rows[0].createdOn = new Date(updateAccount.rows[0].createdOn).toDateString();
+        res.status(201).json({
+          status: 201,
+          data: updateAccount.rows[0],
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  static deleteAccount(req, res) {
-    const findAccounts = accounts.find((Accounts) => {
-      return Accounts.accountNumber === parseInt(req.params.accountNumber, 10);
-    });
+  static async deleteAccount(req, res) {
+    const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
+    RETURNING *`;
 
-    if (!findAccounts) {
-      res.status(404).json({
-        status: '404',
-        message: 'Account number is not found',
-      });
+    try {
+      let checkAccount = '';
+      if (req.params.accountNumber) {
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      }
+
+      if (checkAccount.rows < 1) {
+        res.status(404).json({
+          status: 404,
+          error: 'Sorry, this Account is not found',
+        });
+      }
+
+      const deletingAccount = await db.query(updateData);
+
+      if (deletingAccount.rows.length > 0) {
+        res.status(201).json({
+          status: 201,
+          message: 'Account has been Deleted',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    const index = accounts.indexOf(findAccounts);
-    accounts.splice(index, 1);
-    res.status(200).json({
-      status: '200',
-      message: 'Account successfully deleted',
-    });
   }
 }
 export default AccountsController;
