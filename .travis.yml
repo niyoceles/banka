@@ -1,6 +1,12 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=856bd52a77738b5d3e574527d4dad443b989aa57bdd3b74c167ce532ffc2a0aa
+    - CC_TEST_REPORTER_ID=f832d4a72486dfcbb351b642b79f71b397851349e87551ba3ae3042e1a6d6070
+    - SECRET_KEY=12345
+    - DB_HOST=localhost
+    - DB_USER=postgres
+    - DB_NAME=banka
+    - DB_PASSWORD=
+    - DB_PORT=5432
 language: node_js
 node_js:
  - "stable"
@@ -13,7 +19,18 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - npm run test
-  - npm run coverage
-# after_success: npm run coverage
+  # - npm run coverage
+after_success: npm run coverage
+services:
+  - postgresql
+before_script:
+  - psql -c 'CREATE DATABASE banka;' -U postgres
+  - npm run createTables
+  - npm install --save-dev coveralls
+  - npm install --save-dev istanbul@1.1.0-alpha.1
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - coveralls < ./coverage/lcov.info
