@@ -139,8 +139,8 @@ describe('GET AccountNumber not found ', () => {
 // });
 
 
-describe('PATCH / Account number error found ', () => {
-  it('Should return a 404 status', (done) => {
+describe('PATCH / Account number error  ', () => {
+  it('Should return a 400 status', (done) => {
     const accountNumber = '15557';
     chai.request(app)
       .patch(`${baseUrl}/accounts/${accountNumber}`)
@@ -154,7 +154,7 @@ describe('PATCH / Account number error found ', () => {
 
 describe('PATCH / Activate or deactivate with Invalid Data', () => {
 
-  it('Should return a 404 status', (done) => {
+  it('Should return a 400 status', (done) => {
     const accountNumber = '1555780168843';
     const statusData = {
       status: '',

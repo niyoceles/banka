@@ -29,7 +29,7 @@ describe('Credit a Bank Account with POST', () => {
   });
 
   describe('POST / Account number not found ', () => {
-    it('Should return a 404 status', (done) => {
+    it('Should return a 400 status', (done) => {
       const accountNumber = '1555780';
       const badData = {
         cashier: '',
@@ -49,7 +49,7 @@ describe('Credit a Bank Account with POST', () => {
     });
   });
   describe('POST / Account number not found ', () => {
-    it('Should return a 404 status', (done) => {
+    it('Should return a 400 status', (done) => {
       const accountNumber = '1555780';
       chai.request(app)
         .post(`${baseUrl}/transactions/${accountNumber}/credit`)

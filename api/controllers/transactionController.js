@@ -19,24 +19,7 @@ class TransactionsController {
     });
   }
 
-  // static requiredField(req, res) {
-  //   if (!req.body.cashier) {
-  //     res.status(400).json({
-  //       status: '400', message: 'cashier field is required ',
-  //     });
-  //   } else if (!req.body.reason) {
-  //     res.status(400).json({
-  //       status: '400', message: 'reason field required ',
-  //     });
-  //   } else if (!req.body.amount) {
-  //     res.status(400).json({
-  //       status: '400', message: 'Amount field is required ',
-  //     });
-  //   }
-  // }
-
-  static async creditAccount(req, res) {
-    // TransactionsController.requiredField(req, res);
+  static requiredField(req, res) {
     if (!req.body.cashier) {
       res.status(400).json({
         status: '400', message: 'cashier field is required ',
@@ -50,7 +33,10 @@ class TransactionsController {
         status: '400', message: 'Amount field is required ',
       });
     }
+  }
 
+  static async creditAccount(req, res) {
+    TransactionsController.requiredField(req, res);
     let checkAccount = '';
     let checkTransaction = '';
     if (req.params.accountNumber) {
@@ -89,7 +75,6 @@ class TransactionsController {
   returning id, "accountNumber", "createdOn", type, cashier, amount, "oldBalance", "newBalance", reason`;
 
     try {
-      let checkAccount = '';
       if (req.params.accountNumber) {
         checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
       }
