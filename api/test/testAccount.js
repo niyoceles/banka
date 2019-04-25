@@ -208,3 +208,86 @@ describe('DELETE', () => {
     });
   });
 });
+// /////////////////////////// GET ACCOUNT DETAILS //////////////////////
+describe('GET ACCOUNT DETAILS', () => {
+  describe('GET / Get Account Not found ', () => {
+    const id = '1';
+    it('Should return a 200 status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/accounts/${id}`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+
+  describe('GET / Get account Details Account not number found', () => {
+    const accountNumber = '15558';
+    it('Should return a  status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/accounts/${accountNumber}`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+});
+
+// /////////////////////////// GET ADMIN CAN VIEW LIST OF ACCOUNT BY SPECIFIC USER //////////////////////
+describe('GET ACCOUNT LIST OF ACCOUNT TO THE SPECIFIC USER', () => {
+  describe('GET / Get the account of he user with Invalid ', () => {
+    const emailEmpty = '';
+    it('Should return a 404 status', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/user/${emailEmpty}/accounts`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+
+    describe('GET / Get Get acounts of the user successful', () => {
+      const email = 'niyoceles3@gmail.com';
+      it('Should return a  status 200', (done) => {
+        chai.request(app)
+          .get(`${baseUrl}/user/${email}/accounts`)
+          .set('access-token', token)
+          .end((err, res) => {
+            res.should.have.status(200);
+            done();
+          });
+      });
+    });
+  });
+});
+
+// /////////////////////////// GET STAFF/ADMIN VIEW ALL BANK ACCOUNT //////////////////////
+describe('GET ACCOUNT ALL  ACCOUNT TO THE SPECIFIC USER', () => {
+  // describe('GET / Get all bank account  with Invalid ', () => {
+  //   it('Should return a 404 status', (done) => {
+  //     chai.request(app)
+  //       .get(`${baseUrl}/accountsxyx`)
+  //       .set('access-token', token)
+  //       .end((err, res) => {
+  //         res.should.have.status(404);
+  //         done();
+  //       });
+  //   });
+
+  describe('GET / Get All bank account successful', () => {
+    it('Should return a  status 200', (done) => {
+      chai.request(app)
+        .get(`${baseUrl}/accounts`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+  });
+});
