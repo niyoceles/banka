@@ -1,7 +1,5 @@
 import transactions from '../models/transactions';
-import accounts from '../models/accounts';
 import db from '../models';
-// import accounts from '../models/users';
 
 class TransactionsController {
   // Get a single Transactions
@@ -19,24 +17,34 @@ class TransactionsController {
     });
   }
 
-  // static requiredField(req, res) {
-  //   if (!req.body.cashier) {
-  //     res.status(400).json({
-  //       status: '400', message: 'cashier field is required ',
-  //     });
-  //   } else if (!req.body.reason) {
-  //     res.status(400).json({
-  //       status: '400', message: 'reason field required ',
-  //     });
-  //   } else if (!req.body.amount) {
-  //     res.status(400).json({
-  //       status: '400', message: 'Amount field is required ',
-  //     });
-  //   }
-  // }
+  // GET specific account transaction
+  static async getSpecificTransaction(req, res) {
+    try {
+      let checkTransactionId = '';
+      if (req.params.id) {
+        checkTransactionId = await db.query('SELECT * FROM transactions WHERE id=$1',
+          [req.params.id]);
+      }
 
-  static async creditAccount(req, res) {
-    // TransactionsController.requiredField(req, res);
+      if (checkTransactionId.rows.length > 0) {
+        checkTransactionId.rows[0].createdOn = new Date(checkTransactionId.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkTransactionId.rows[0],
+          message: 'Transaction Get successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Transaction Id Not found this Account',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static requiredField(req, res) {
     if (!req.body.cashier) {
       res.status(400).json({
         status: '400', message: 'cashier field is required ',
@@ -50,7 +58,10 @@ class TransactionsController {
         status: '400', message: 'Amount field is required ',
       });
     }
+  }
 
+  static async creditAccount(req, res) {
+    TransactionsController.requiredField(req, res);
     let checkAccount = '';
     let checkTransaction = '';
     if (req.params.accountNumber) {
@@ -74,7 +85,7 @@ class TransactionsController {
     }
 
     const transactionValue = [
-      'Credit',
+      'credit',
       req.params.accountNumber,
       req.body.cashier,
       req.body.amount,
@@ -89,7 +100,6 @@ class TransactionsController {
   returning id, "accountNumber", "createdOn", type, cashier, amount, "oldBalance", "newBalance", reason`;
 
     try {
-      let checkAccount = '';
       if (req.params.accountNumber) {
         checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
       }
@@ -113,21 +123,6 @@ class TransactionsController {
       }
     } catch (error) {
       console.log(error);
-    }
-  }
-static requiredField(req, res) {
-    if (!req.body.cashier) {
-      res.status(400).json({
-        status: '400', message: 'cashier field is required ',
-      });
-    } else if (!req.body.reason) {
-      res.status(400).json({
-        status: '400', message: 'reason field required ',
-      });
-    } else if (!req.body.amount) {
-      res.status(400).json({
-        status: '400', message: 'Amount field is required ',
-      });
     }
   }
 
@@ -156,7 +151,7 @@ static requiredField(req, res) {
     }
 
     const transactionValue = [
-      'Debit',
+      'debit',
       req.params.accountNumber,
       req.body.cashier,
       req.body.amount,
