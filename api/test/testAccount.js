@@ -65,13 +65,13 @@ describe('Create Account', () => {
         .send({
           accountNumber: 1555780168843,
           owner: 1,
-          type: 'savings',
+          type: 'current',
           phone: '0783067644',
           email: 'niyoceles3@gmail.com',
           balance: '20000',
         })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(200);
           done();
         });
     });
