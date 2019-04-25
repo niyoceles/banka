@@ -5,7 +5,7 @@
   "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha --require @babel/register api/test/allTests.js",
     "test-local": "mocha --require @babel/register api/test/allTests.js",
-    "compile": "./node_modules/.bin/babel ./api -d ./build",
+    "build": "./node_modules/.bin/babel ./api -d ./build",
     "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
     "start": "babel-node  api/server.js",
     "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
