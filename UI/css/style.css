@@ -124,7 +124,7 @@ h3{
 /* Set a style for all buttons */
 
 button {
-    background-color: #3f51b5;
+    background-color: #26815b;
     padding: 14px 30px;
     margin: 4px 1px;
     border: none;
@@ -134,6 +134,7 @@ button {
     letter-spacing: 2px;
     font-size: 15px;
     font-family: Arial;
+    color: white;
 }
 
 button:hover {
@@ -142,13 +143,17 @@ button:hover {
 
 button.get-stared-link{
     float: left;
-    color: white;
-    margin-left: 50px;
+    margin-left: 70px;
 }
 
-.get-stared-link:hover {
-  color: black;
+button.createBankAccountLink{
+  float: left;
+  margin-left: 80px;
 }
+
+/* .get-stared-link:hover {
+  color: black;
+} */
 button.ifyou {
     float: left;
 }
@@ -194,9 +199,6 @@ button#goto-activate {
   background-color: rgb(57, 145, 76);
 }
 
-
-
-
 /* Center the image and position the close button */
 
 .img-close {
@@ -204,7 +206,6 @@ button#goto-activate {
     margin: 24px 0 12px 0;
     position: relative;
 }
-
 
 /* The Modal (background) */
 
@@ -370,6 +371,11 @@ button.cancelbtn {
       height: calc(100vh - 50px);
       height: 250px;
     }
+
+    button.createBankAccountLink{
+      float: right;
+      /* margin-left: 20%; */
+    }
   }
 
   /* style of the tables */
@@ -467,5 +473,81 @@ h4{
   }
   .modal-content{
     width: 90%;
+  }
+  button.createBankAccountLink{
+    float: left;
+    margin-right: 15%; 
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .navbar > .navbar-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .navbar > .navbar-btn > label {
+    display: inline-block;
+    width: 50px;
+    height: 27px;
+    padding: 16px;
+  }
+  .navbar > .navbar-btn > label:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .navbar > .navbar-btn > label > span {
+    display: block;
+    width: 25px;
+    height: 13px;
+    border-top: 2px solid #eee;
+  }
+  .navbar > .navbar-links {
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: rgb(59, 58, 61);
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 56px;
+    left: 0px;
+  }
+  .navbar > .navbar-links > a {
+    display: block;
+    width: 100%;
+  }
+  .navbar > #navbar-check:not(:checked) + .navbar-links {
+    height: 0px;
+  }
+  .navbar > #navbar-check:checked + .navbar-links {
+    height: calc(100vh - 50px);
+    height: 250px;
+  }
+
+  #main-section .panel{
+    width: 100%;
+    margin-left: -10px;
+  }
+  #main-section .panel2{
+    width: 100%;
+    margin-left: -10px;
+  }
+
+  #main-section .panel img{
+    width: 70%;
+    height: 160px;
+    border-radius: 8px;
+    margin: auto;
+  }
+  #main-section .panel-user{
+    width: 100%;
+    margin-left: -10px;
+  }
+  .modal-content{
+    width: 90%;
+  }
+  button.createBankAccountLink{
+    float: left;
+    margin-left: 30%;
   }
 }
