@@ -24,28 +24,37 @@ class AccountsController {
     }
   }
 
-  static async getAllDormantBankAccounts(req, res) {
+  static async getAllActiveByStatus(req, res) {
     try {
-      let checkAllDormantBankAccount = '';
-      checkAllDormantBankAccount = await db.query('SELECT * FROM accounts WHERE status="Dormant"');
-      if (checkAllDormantBankAccount.rows.length > 0) {
-        checkAllDormantBankAccount.rows[0].createdOn = new Date(checkAllDormantBankAccount.rows[0].createdOn).toDateString();
+      let checkStatusAccount = '';
+      if (req.query.status === 'active' || req.query.status === 'dormant') {
+        checkStatusAccount = await db.query('SELECT * FROM accounts WHERE status=$1',
+          [req.query.status]);
+      } else {
+        res.status(404).json({
+          status: 404,
+          data: checkStatusAccount.rows,
+          message: 'Your Query is written wrong',
+        });
+      }
+
+      if (checkStatusAccount.rows.length >= 0) {
+        checkStatusAccount.rows[0].createdOn = new Date(checkStatusAccount.rows[0].createdOn).toDateString();
         res.status(200).json({
           status: 200,
-          data: checkAllDormantBankAccount.rows,
+          data: checkStatusAccount.rows,
           message: 'Get all BankAccounts successful!',
         });
       } else {
         res.status(404).json({
           status: 404,
-          error: 'There is no Any Account registered',
+          error: 'There is no Any Active Account registered',
         });
       }
     } catch (error) {
       console.log(error);
     }
   }
-
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {

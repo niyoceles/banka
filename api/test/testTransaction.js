@@ -113,14 +113,14 @@ describe('Debit a Bank Account with POST', () => {
     const badAccount = {
       accountNumber: '',
     };
-    it('Should return a 404 status', (done) => {
+    it('Should return a 400 status', (done) => {
       const accountNumber = '1555780';
       chai.request(app)
         .post(`${baseUrl}/transactions/${accountNumber}/debit`)
         .set('access-token', token)
         .send(badAccount)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -133,7 +133,7 @@ describe('Debit a Bank Account with POST', () => {
         .post(`${baseUrl}/transactions/${accountNumber}/debit`)
         .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
