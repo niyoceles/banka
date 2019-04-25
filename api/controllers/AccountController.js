@@ -111,35 +111,11 @@ class AccountsController {
   }
 
   static async createAccount(req, res) {
-    if (!req.body.owner) {
-      res.status(400).json({
-        status: '400', message: 'Owner id field is required ',
-      });
-    } else if (!req.body.type) {
-      res.status(400).json({
-        status: '400', message: 'Type field is required ',
-      });
-    } else if (!req.body.phone) {
-      res.status(400).json({
-        status: '400', message: 'Phone field is required ',
-      });
-    } else if (!req.body.email) {
-      res.status(400).json({
-        status: '400', message: 'Email field required ',
-      });
-    } else if (!req.body.balance) {
-      res.status(400).json({
-        status: '400', message: 'Balance field required ',
-      });
-      return;
-    }
-
-    // const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     const accountValue = [
       Date.now(),
       req.body.owner,
       req.body.type,
-      'Dormant',
+      'dormant',
       req.body.phone,
       req.body.email,
       req.body.balance,
@@ -183,9 +159,9 @@ class AccountsController {
   }
 
   static async updateAccount(req, res) {
-    if (!req.body.status) {
+    if (!req.query.status) {
       res.status(400).json({
-        status: '400', message: 'Status field is required ',
+        status: '400', message: 'Status must be active or deactive field is required  ',
       });
       return;
     }
