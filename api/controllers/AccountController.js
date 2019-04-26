@@ -3,6 +3,11 @@ import db from '../models';
 class AccountsController {
   // GET All Bank Accounts
   static async getAllBankAccounts(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
     try {
       let checkAllBankAccounts = '';
       checkAllBankAccounts = await db.query('SELECT * FROM accounts');
@@ -25,6 +30,11 @@ class AccountsController {
   }
 
   static async getAllActiveByStatus(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
     try {
       let checkStatusAccount = '';
       if (req.query.status === 'active' || req.query.status === 'dormant') {
@@ -58,6 +68,11 @@ class AccountsController {
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
     try {
       let checkAllAccounts = '';
       if (req.params.email) {
@@ -111,6 +126,11 @@ class AccountsController {
   }
 
   static async createAccount(req, res) {
+    if (req.decodedToken.type === 'staff') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, client Only',
+      });
+    }
     const accountValue = [
       Date.now(),
       req.body.owner,
@@ -159,12 +179,17 @@ class AccountsController {
   }
 
   static async updateAccount(req, res) {
-    if (!req.query.status) {
-      res.status(400).json({
-        status: '400', message: 'Status must be active or deactive field is required  ',
+    if (req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature',
       });
-      return;
     }
+    // if (!req.query.status) {
+    //   res.status(400).json({
+    //     status: '400', message: 'Status must be active or deactive field is required  ',
+    //   });
+    //   return;
+    // }
 
     const accountStatusValue = [
       req.body.status,
@@ -201,6 +226,11 @@ class AccountsController {
   }
 
   static async deleteAccount(req, res) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.type === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature for Admin only',
+      });
+    }
     const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
     RETURNING *`;
 
