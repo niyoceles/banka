@@ -40,7 +40,6 @@ class UsersController {
             users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
-
     try {
       let checkUser = '';
 
@@ -61,15 +60,15 @@ class UsersController {
 
       if (newUser.rows.length > 0) {
         newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
-        const token = jwt.sign({
-          email: req.body.email,
-          isAdmin: req.body.isAdmin,
-        }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+        // const token = jwt.sign({
+        //   email: req.body.email,
+        //   isAdmin: req.body.isAdmin,
+        // }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
 
         res.status(201).json({
           status: 201,
           data: newUser.rows[0],
-          token,
+          // token,
         });
       }
     } catch (error) {
@@ -85,9 +84,10 @@ class UsersController {
       if (rows.length > 0) {
         for (let i = 0; i < rows.length; i += 1) {
           if (bcrypt.compareSync(req.body.password, rows[i].password)) {
-            const isAdmin = !!rows[i].isAdmin;
+            const isAdmin = !!rows[i].isAdmin; //rows[i].isAdmin ? true : false
             const token = jwt.sign({
               email: rows[i].email,
+              type: rows[i].type,
               isAdmin,
             }, process.env.SECRET_KEY, {
                 expiresIn: 86400, // expires in 24 hours

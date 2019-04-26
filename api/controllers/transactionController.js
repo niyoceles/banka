@@ -3,18 +3,30 @@ import db from '../models';
 
 class TransactionsController {
   // Get a single Transactions
-  static getSingleTransaction(req, res) {
-    const accNo = parseInt(req.params.accountNumber, 10);
-    const findTransactions = transactions.find(Transactions => Transactions.accountNumber === accNo);
-    if (!findTransactions) {
-      res.status(404).json({
-        message: 'Transactions Id is not found',
-      });
+  static async getSingleTransaction(req, res) {
+    try {
+      let checkTransactionId = '';
+      if (req.params.id) {
+        checkTransactionId = await db.query('SELECT * FROM transactions WHERE id=$1',
+          [req.params.id]);
+      }
+
+      if (checkTransactionId.rows.length > 0) {
+        checkTransactionId.rows[0].createdOn = new Date(checkTransactionId.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkTransactionId.rows[0],
+          message: 'Transaction Get successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'Transaction Id Not found this Account',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-    res.status(200).json({
-      Transactions: findTransactions,
-      message: 'A single Transactions record',
-    });
   }
 
   // GET specific account transaction
@@ -45,6 +57,11 @@ class TransactionsController {
   }
 
   static async creditAccount(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, cashier Only',
+      });
+    }
     let checkAccount = '';
     let checkTransaction = '';
     if (req.params.accountNumber) {
@@ -110,6 +127,11 @@ class TransactionsController {
   }
 
   static async debitAccount(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, Cashier Only',
+      });
+    }
     let checkAccount = '';
     let checkTransaction = '';
     if (req.params.accountNumber) {
