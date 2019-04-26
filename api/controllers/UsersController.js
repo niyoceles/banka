@@ -40,7 +40,6 @@ class UsersController {
             users("firstName", "lastName", "userName", password, phone, email, type, "isAdmin", location)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             returning id, "firstName", "lastName", "userName", phone, email, type, "isAdmin", location, "createdDate"`;
-
     try {
       let checkUser = '';
 
