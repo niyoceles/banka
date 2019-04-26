@@ -7,7 +7,7 @@
     "test-local": "mocha --require @babel/register api/test/allTests.js",
     "build": "./node_modules/.bin/babel ./api -d ./build",
     "dev": "nodemon api/server.js --exec babel-node --presets @babel/preset-env",
-    "start": "npm run createTables && babel-node  api/server.js",
+    "start": "npm run createTables && babel-node api/server.js",
     "coverage": "npm run test && nyc report --reporter=text-lcov | coveralls",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "createTables": "babel-node ./api/models/database dropTables && babel-node ./api/models/database createTables"
