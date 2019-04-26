@@ -60,15 +60,15 @@ class UsersController {
 
       if (newUser.rows.length > 0) {
         newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
-        const token = jwt.sign({
-          email: req.body.email,
-          isAdmin: req.body.isAdmin,
-        }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
+        // const token = jwt.sign({
+        //   email: req.body.email,
+        //   isAdmin: req.body.isAdmin,
+        // }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
 
         res.status(201).json({
           status: 201,
           data: newUser.rows[0],
-          token,
+          // token,
         });
       }
     } catch (error) {
