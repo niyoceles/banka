@@ -12,15 +12,34 @@ const email = joi.string()
   .required()
   .label('Valid Email Address is required');
 
-const number = joi.number()
+const phoneNumber = joi.number()
   .required()
-  .label(' must a number and required');
+  .label('Phone number must a number and required');
 
-const accountSchema = joi.object().keys({
-  type: name,
+const userName = joi.string()
+  .required()
+  .label('Username is required');
+
+const password = joi.string()
+  .min(8)
+  .regex(/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/)
+  .required()
+  .label('At least one uppercase and lowercase letter, one digit, and special character required for valid password');
+
+const trueFalse = joi.boolean()
+  .required()
+  .label('choose True or False is required');
+
+
+const userSchema = joi.object().keys({
+  firstName: name,
+  lastName: name,
   email: email,
-  phone: number,
-  balance: number,
+  phone: phoneNumber,
+  userName: userName,
+  password: password,
+  isAdmin: trueFalse,
+  location: name,
 });
 
 export default () => {
@@ -32,7 +51,7 @@ export default () => {
 
   // return the validation middleware
   return (req, res, next) => {
-    return joi.validate(req.body, accountSchema, validationOptions, (err, data) => {
+    return joi.validate(req.body, userSchema, validationOptions, (err, data) => {
       if (err) {
         const errors = [];
         err.details.map((e) => {

@@ -10,9 +10,13 @@ class AccountsController {
     }
     try {
       let checkAllBankAccounts = '';
-      checkAllBankAccounts = await db.query('SELECT * FROM accounts');
+      checkAllBankAccounts = await db.query('SELECT * FROM accounts, users where users.id=owner');
       if (checkAllBankAccounts.rows.length > 0) {
         checkAllBankAccounts.rows[0].createdOn = new Date(checkAllBankAccounts.rows[0].createdOn).toDateString();
+        for (let i = 0; i < checkAllBankAccounts.rows.length; i += 1) {
+          delete checkAllBankAccounts.rows[i].password;
+          delete checkAllBankAccounts.rows[i].isAdmin;
+        }
         res.status(200).json({
           status: 200,
           data: checkAllBankAccounts.rows,
@@ -38,7 +42,7 @@ class AccountsController {
     try {
       let checkStatusAccount = '';
       if (req.query.status === 'active' || req.query.status === 'dormant') {
-        checkStatusAccount = await db.query('SELECT * FROM accounts WHERE status=$1',
+        checkStatusAccount = await db.query('SELECT * FROM accounts, users WHERE users.id=owner AND status=$1',
           [req.query.status]);
       } else {
         res.status(404).json({
@@ -50,6 +54,10 @@ class AccountsController {
 
       if (checkStatusAccount.rows.length >= 0) {
         checkStatusAccount.rows[0].createdOn = new Date(checkStatusAccount.rows[0].createdOn).toDateString();
+        for (let i = 0; i < checkStatusAccount.rows.length; i += 1) {
+          delete checkStatusAccount.rows[i].password;
+          delete checkStatusAccount.rows[i].isAdmin;
+        }
         res.status(200).json({
           status: 200,
           data: checkStatusAccount.rows,
@@ -100,15 +108,17 @@ class AccountsController {
 
   // GET specific account Details
   static async getAccountDetails(req, res) {
+
     try {
       let checkAccountDetails = '';
       if (req.params.accountNumber) {
-        checkAccountDetails = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1',
+        checkAccountDetails = await db.query('SELECT * FROM users, accounts WHERE users.id=owner AND "accountNumber"=$1',
           [req.params.accountNumber]);
       }
 
       if (checkAccountDetails.rows.length > 0) {
         checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
+        delete checkAccountDetails.rows[0].password;
         res.status(200).json({
           status: 200,
           data: checkAccountDetails.rows[0],
@@ -133,7 +143,7 @@ class AccountsController {
     }
     const accountValue = [
       Date.now(),
-      req.body.owner,
+      req.decodedToken.userId,
       req.body.type,
       'dormant',
       req.body.phone,
