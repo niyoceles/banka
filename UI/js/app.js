@@ -16,10 +16,10 @@ const activate = document.querySelector('#activate-user-account');
 const activateLink = document.querySelector('.activateLink');
 const activateModal = document.querySelector('#activateModal');
 
-// on desactivate 
-const desactivate = document.querySelector('#desactivate-user-account');
-const desactivateLink = document.querySelector('.desactivateLink');
-const desactivateModal = document.querySelector('#desactivateModal');
+// on deactivate 
+const deactivate = document.querySelector('#deactivate-user-account');
+const deactivateLink = document.querySelector('.deactivateLink');
+const deactivateModal = document.querySelector('#deactivateModal');
 
 // on create an admin/staff Account 
 const createAccount = document.querySelector('#createAccount');
@@ -72,19 +72,19 @@ const onSignIn = () => {
 //display the Activate modal page
 const onActivate = () => {
   activateModal.style.display = 'block';
-  desactivateModal.style.display = 'none';
+  deactivateModal.style.display = 'none';
   createAccountForm.style.display = 'none';
 };
-//display the Desactivate modal page
-const onDesactivate = () => {
-  desactivateModal.style.display = 'block';
+//display the deactivate modal page
+const ondeactivate = () => {
+  deactivateModal.style.display = 'block';
   activateModal.style.display = 'none';
   createAccountForm.style.display = 'none';
 };
-//display the Desactivate modal page
+//display the deactivate modal page
 const onCreateAccount = () => {
   createAccountForm.style.display = 'block';
-  desactivateModal.style.display = 'none';
+  deactivateModal.style.display = 'none';
   activateModal.style.display = 'none';
 };
 //display the credit account modal page
@@ -151,10 +151,10 @@ elementExist(activate, () => {
   });
 });
 
-elementExist(desactivate, () => {
-  desactivate.addEventListener('click', () => {
+elementExist(deactivate, () => {
+  deactivate.addEventListener('click', () => {
     openModal(); // open the modal
-    onDesactivate(); // with Desactivate modal
+    ondeactivate(); // with deactivate modal
   });
 });
 
@@ -223,10 +223,10 @@ elementExist(activateLink, () => {
   });
 });
 
-elementExist(desactivateLink, () => {
-  desactivateLink.addEventListener('click', () => {
+elementExist(deactivateLink, () => {
+  deactivateLink.addEventListener('click', () => {
     openModal(); // open the modal
-    onDesactivate(); // with Desactivate link modal
+    ondeactivate(); // with deactivate link modal
   });
 });
 
