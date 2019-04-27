@@ -17,7 +17,6 @@ const number = joi.number()
   .label(' must a number and required');
 
 const accountSchema = joi.object().keys({
-  owner: number,
   type: name,
   email: email,
   phone: number,
