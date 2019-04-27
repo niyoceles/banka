@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import cors from 'cors';
 import usersRouter from './routes/usersRouter';
 import accountsRouter from './routes/accountsRouter';
 import transactionsRouter from './routes/transactionsRouter';
@@ -12,6 +13,7 @@ const baseUrl = '/api/v1';
 // Configure app to user bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use(morgan('dev'));
 
 app.use(`${baseUrl}/auth`, usersRouter);
