@@ -3,6 +3,11 @@ import db from '../models';
 class AccountsController {
   // GET All Bank Accounts
   static async getAllBankAccounts(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
     try {
       let checkAllBankAccounts = '';
       checkAllBankAccounts = await db.query('SELECT * FROM accounts');
@@ -24,9 +29,50 @@ class AccountsController {
     }
   }
 
+  static async getAllActiveByStatus(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
+    try {
+      let checkStatusAccount = '';
+      if (req.query.status === 'active' || req.query.status === 'dormant') {
+        checkStatusAccount = await db.query('SELECT * FROM accounts WHERE status=$1',
+          [req.query.status]);
+      } else {
+        res.status(404).json({
+          status: 404,
+          data: checkStatusAccount.rows,
+          message: 'Your Query is written wrong',
+        });
+      }
+
+      if (checkStatusAccount.rows.length >= 0) {
+        checkStatusAccount.rows[0].createdOn = new Date(checkStatusAccount.rows[0].createdOn).toDateString();
+        res.status(200).json({
+          status: 200,
+          data: checkStatusAccount.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Active Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
+    if (req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, admin Only',
+      });
+    }
     try {
       let checkAllAccounts = '';
       if (req.params.email) {
@@ -80,35 +126,16 @@ class AccountsController {
   }
 
   static async createAccount(req, res) {
-    if (!req.body.owner) {
-      res.status(400).json({
-        status: '400', message: 'Owner id field is required ',
+    if (req.decodedToken.type === 'staff') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, client Only',
       });
-    } else if (!req.body.type) {
-      res.status(400).json({
-        status: '400', message: 'Type field is required ',
-      });
-    } else if (!req.body.phone) {
-      res.status(400).json({
-        status: '400', message: 'Phone field is required ',
-      });
-    } else if (!req.body.email) {
-      res.status(400).json({
-        status: '400', message: 'Email field required ',
-      });
-    } else if (!req.body.balance) {
-      res.status(400).json({
-        status: '400', message: 'Balance field required ',
-      });
-      return;
     }
-
-    // const date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
     const accountValue = [
       Date.now(),
       req.body.owner,
       req.body.type,
-      'Dormant',
+      'dormant',
       req.body.phone,
       req.body.email,
       req.body.balance,
@@ -152,12 +179,17 @@ class AccountsController {
   }
 
   static async updateAccount(req, res) {
-    if (!req.body.status) {
-      res.status(400).json({
-        status: '400', message: 'Status field is required ',
+    if (req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature',
       });
-      return;
     }
+    // if (!req.query.status) {
+    //   res.status(400).json({
+    //     status: '400', message: 'Status must be active or deactive field is required  ',
+    //   });
+    //   return;
+    // }
 
     const accountStatusValue = [
       req.body.status,
@@ -194,6 +226,11 @@ class AccountsController {
   }
 
   static async deleteAccount(req, res) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.type === false) {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature for Admin only',
+      });
+    }
     const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
     RETURNING *`;
 

@@ -45,7 +45,7 @@ const deleteAccountForm = document.querySelector('#deleteAccountForm');
 
 // on user create  bank account
 const createBankAccount = document.querySelector('#createBankAccount');
-const createBankAccountLink = document.querySelector('#createBankAccountLink');
+const createBankAccountLink = document.querySelector('.createBankAccountLink');
 const createBankActivateForm = document.querySelector('#createBankAccountForm');
 //check if an element is in DOM
 //  @parameter element 

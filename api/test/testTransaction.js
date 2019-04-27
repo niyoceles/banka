@@ -113,14 +113,14 @@ describe('Debit a Bank Account with POST', () => {
     const badAccount = {
       accountNumber: '',
     };
-    it('Should return a 404 status', (done) => {
+    it('Should return a 400 status', (done) => {
       const accountNumber = '1555780';
       chai.request(app)
         .post(`${baseUrl}/transactions/${accountNumber}/debit`)
         .set('access-token', token)
         .send(badAccount)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -133,7 +133,7 @@ describe('Debit a Bank Account with POST', () => {
         .post(`${baseUrl}/transactions/${accountNumber}/debit`)
         .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -177,12 +177,25 @@ describe('Debit a Bank Account with POST', () => {
 
 describe('GET SPECIFIC ACCOUNT TRANSACTION', () => {
   describe('GET / bad request ', () => {
-    it('Should return a 404 status', (done) => {
+    it('Should return a 401 status', (done) => {
+      const id = '00000';
+      chai.request(app)
+        .get(`${baseUrl}/transactions/${id}`)
+        .set('access-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
+  });
+
+  describe('GET / unauthorized ', () => {
+    it('Should return a 401 status', (done) => {
       const id = '12';
       chai.request(app)
         .get(`${baseUrl}/transactions/${id}`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });
