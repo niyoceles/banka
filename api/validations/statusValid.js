@@ -1,20 +1,12 @@
 import joi from 'joi';
 
-const email = joi.string()
-  .email({ minDomainAtoms: 2 })
+const name = joi.string()
   .lowercase()
   .required()
-  .label('Valid Email Address is required');
+  .label('Status shoud be active or deactive');
 
-const password = joi.string()
-  .min(8)
-  // .regex(/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{5,}$/)
-  .required()
-  .label('At least one uppercase and lowercase letter, one digit, and special character required for valid password');
-
-const userSchema = joi.object().keys({
-  email: email,
-  password: password,
+const accStatus = joi.object().keys({
+  status: name,
 });
 
 export default () => {
@@ -26,7 +18,7 @@ export default () => {
 
   // return the validation middleware
   return (req, res, next) => {
-    return joi.validate(req.body, userSchema, validationOptions, (err, data) => {
+    return joi.validate(req.body, accStatus, validationOptions, (err, data) => {
       if (err) {
         const errors = [];
         err.details.map((e) => {

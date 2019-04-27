@@ -1,27 +1,32 @@
-import transactions from '../models/transactions';
 import db from '../models';
 
 class TransactionsController {
   // Get a single Transactions
   static async getSingleTransaction(req, res) {
     try {
-      let checkTransactionId = '';
-      if (req.params.id) {
-        checkTransactionId = await db.query('SELECT * FROM transactions WHERE id=$1',
-          [req.params.id]);
+      let checkTransaction = '';
+      if (!req.params.accountNumber) {
+        res.status(400).json({
+          status: 400,
+          message: 'Account number is required',
+        });
+      }
+      if (req.params.accountNumber) {
+        checkTransaction = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1',
+          [req.params.accountNumber]);
       }
 
-      if (checkTransactionId.rows.length > 0) {
-        checkTransactionId.rows[0].createdOn = new Date(checkTransactionId.rows[0].createdOn).toDateString();
+      if (checkTransaction.rows.length > 0) {
+        checkTransaction.rows[0].createdOn = new Date(checkTransaction.rows[0].createdOn).toDateString();
         res.status(200).json({
           status: 200,
-          data: checkTransactionId.rows[0],
-          message: 'Transaction Get successful!',
+          data: checkTransaction.rows,
+          message: 'this is the Transaction of your Account',
         });
       } else {
         res.status(404).json({
           status: 404,
-          error: 'Transaction Id Not found this Account',
+          error: 'Not found this Account',
         });
       }
     } catch (error) {
@@ -31,6 +36,11 @@ class TransactionsController {
 
   // GET specific account transaction
   static async getSpecificTransaction(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, cashier Only',
+      });
+    }
     try {
       let checkTransactionId = '';
       if (req.params.id) {
@@ -87,7 +97,7 @@ class TransactionsController {
     const transactionValue = [
       'credit',
       req.params.accountNumber,
-      req.body.cashier,
+      req.decodedToken.userId,
       req.body.amount,
       oldBalance,
       newBalance,
@@ -157,7 +167,7 @@ class TransactionsController {
     const transactionValue = [
       'debit',
       req.params.accountNumber,
-      req.body.cashier,
+      req.decodedToken.userId,
       req.body.amount,
       oldBalance,
       newBalance,

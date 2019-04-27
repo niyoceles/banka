@@ -22,23 +22,16 @@ const userName = joi.string()
 
 const password = joi.string()
   .min(8)
-  // .regex(/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/)
+  .regex(/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/)
   .required()
   .label('At least one uppercase and lowercase letter, one digit, and special character required for valid password');
-
-const trueFalse = joi.boolean()
-  .required()
-  .label('choose True or False is required');
-
 
 const userSchema = joi.object().keys({
   firstName: name,
   lastName: name,
   email: email,
   phone: phoneNumber,
-  type: name,
   userName: userName,
-  isAdmin: trueFalse,
   password: password,
   location: name,
 });

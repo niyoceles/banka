@@ -10,7 +10,6 @@ const number = joi.number()
   .label(' must a number and required');
 
 const transactionSchema = joi.object().keys({
-  cashier: number,
   reason: allChar,
   amount: number,
 });
