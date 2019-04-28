@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import db from '../models';
 
 const baseUrl = '/api/v1';
 
@@ -10,11 +11,18 @@ chai.use(chaiHttp);
 chai.should();
 // chai.expect();
 let token = '';
+before(async () => {
+  try {
+    await db.query('TRUNCATE transactions CASCADE; ALTER SEQUENCE id RESTART WITH 1;');
+  } catch (error) {
+    console.log(error);
+  }
+});
 describe('Credit a Bank Account with POST', () => {
   describe('POST / Signin Successful Login', () => {
     const signInData = {
       email: 'niyoceles3@gmail.com',
-      password: 'celes123',
+      password: 'Celes@123',
     };
     it('Should return a 200 status', (done) => {
       chai.request(app)
