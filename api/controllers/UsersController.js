@@ -115,11 +115,11 @@ class UsersController {
   }
 
   static async adminCreateUser(req, res) {
-    if (req.decodedToken.isAdmin === false || req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        message: 'Not allowed to access this feature, Admin Only',
-      });
-    }
+    // if (req.decodedToken.isAdmin === false || req.decodedToken.type === 'client') {
+    //   return res.status(401).json({
+    //     message: 'Not allowed to access this feature, Admin Only',
+    //   });
+    // }
     const values = [
       req.body.firstName,
       req.body.lastName,
