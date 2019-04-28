@@ -12,13 +12,13 @@ chai.should();
 let token = '';
 
 // accounts table
-// before(async () => {
-//   try {
-//     await db.query('TRUNCATE accounts CASCADE; ALTER SEQUENCE id RESTART WITH 1;');
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+before(async () => {
+  try {
+    await db.query('TRUNCATE accounts CASCADE; ALTER SEQUENCE id RESTART WITH 1;');
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 describe('Create Account', () => {
 

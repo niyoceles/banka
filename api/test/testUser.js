@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import db from '../models';
+// import db from '../models';
 import app from '../app';
 
 const baseUrl = '/api/v1';
@@ -123,6 +123,7 @@ describe('Users Signin POST', () => {
         .send(signInData)
         .end((err, res) => {
           res.should.have.status(200);
+          console.log(res.body);
           token = res.body.token;
           done();
         });
