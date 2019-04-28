@@ -123,7 +123,7 @@ describe('Users Signin POST', () => {
         .send(signInData)
         .end((err, res) => {
           res.should.have.status(200);
-          console.log(res.body);
+          console.log('-----------------------', res.body);
           token = res.body.token;
           done();
         });
