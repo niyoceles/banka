@@ -33,8 +33,6 @@ describe('Sign-up', () => {
             email: 'niyoceles3@gmail.com',
             userName: 'niyoceles',
             password: 'celes123',
-            type: 'staff',
-            isAdmin: true,
             location: 'Kigali',
           })
           .end((err, res) => {

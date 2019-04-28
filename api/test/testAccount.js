@@ -46,7 +46,6 @@ describe('Create Account', () => {
         .set('access-token', token)
         .send({
           accountNumber: 1555780168843,
-          owner: 1,
           type: 'current',
           phone: '0783067644',
           email: 'niyoceles3@gmail.com',
@@ -64,7 +63,6 @@ describe('Create Account', () => {
         .set('access-token', token)
         .send({
           accountNumber: 1555780168843,
-          owner: 1,
           type: 'current',
           phone: '0783067644',
           email: 'niyoceles3@gmail.com',
