@@ -5,9 +5,10 @@ const allChar = joi.string()
   .required()
   .label('Only alphabetic and number characters are allowed');
 
-const number = joi.number()
+const number = joi.string()
   .required()
-  .label(' must a number and required');
+  .regex(/^[1-9]+\d*$/)
+  .label(' must a  positive number and required');
 
 const transactionSchema = joi.object().keys({
   reason: allChar,
