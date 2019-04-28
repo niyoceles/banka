@@ -36,7 +36,7 @@ describe('Sign-up', () => {
             location: 'Kigali',
           })
           .end((err, res) => {
-            expect(res.status).to.equal(200);
+            expect(res.status).to.equal(201);
             done();
           });
       });
