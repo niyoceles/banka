@@ -9,7 +9,7 @@ env:
     - DB_PORT=5432
 language: node_js
 node_js:
- - "stable"
+  - "stable"
 services:
   - postgresql
 cache:
@@ -22,10 +22,9 @@ addons:
     repo_token: nDJ8gGLCWBsyee7RvO0ocazAurzQKqYKQ
 after_success: npm run coverage
 before_script:
+  - npm install
   - psql -c 'CREATE DATABASE banka;' -U postgres
   - npm run createTables
-  - npm install --save-dev coveralls
-  - npm install --save-dev istanbul@1.1.0-alpha.1
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
