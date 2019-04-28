@@ -138,11 +138,10 @@ describe('Debit a Bank Account with POST', () => {
         });
     });
   });
-  describe('POST / Account number not found ', () => {
+  describe('POST / invalid Account number', () => {
     it('Should return a 404 status', (done) => {
-      const accountNumber = '1555835300494';
+      const accountNumber = '5835300494';
       const creditData = {
-        cashier: 1,
         amount: 2000,
         reason: 'Monthly charges',
         oldBalance: '2000',
@@ -153,7 +152,7 @@ describe('Debit a Bank Account with POST', () => {
         .set('access-token', token)
         .send(creditData)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(400);
           done();
         });
     });
@@ -176,14 +175,13 @@ describe('Debit a Bank Account with POST', () => {
 //////////////////GET SPECIFIC TRANSACTION //////////
 
 describe('GET SPECIFIC ACCOUNT TRANSACTION', () => {
-  describe('GET / bad request ', () => {
+  describe('GET / No auth', () => {
     it('Should return a 401 status', (done) => {
-      const id = '00000';
+      const id = '10000';
       chai.request(app)
         .get(`${baseUrl}/transactions/${id}`)
-        .set('access-token', token)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(401);
           done();
         });
     });

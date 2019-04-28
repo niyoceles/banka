@@ -52,15 +52,14 @@ describe('Create Account', () => {
           balance: '20000',
         })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(401);
           done();
         });
     });
 
-    it('should display \'Sorry, this account already exists\'', (done) => {
+    it('should display \'Sorry, No auth\'', (done) => {
       chai.request(app)
         .post(`${baseUrl}/accounts`)
-        .set('access-token', token)
         .send({
           accountNumber: 1555780168843,
           type: 'current',
@@ -69,7 +68,7 @@ describe('Create Account', () => {
           balance: '20000',
         })
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(401);
           done();
         });
     });
