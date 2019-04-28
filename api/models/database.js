@@ -12,29 +12,29 @@ pool.on('connect', () => {
   console.log('connected to the Database');
 });
 
-const dropTables = () => {
-  const accountsTable = 'DROP TABLE IF EXISTS accounts';
+// const dropTables = () => {
+//   const accountsTable = 'DROP TABLE IF EXISTS accounts';
 
-  const usersTable = 'DROP TABLE IF EXISTS users';
+//   const usersTable = 'DROP TABLE IF EXISTS users';
 
-  const transactionsTable = 'DROP TABLE IF EXISTS transactions';
+//   const transactionsTable = 'DROP TABLE IF EXISTS transactions';
 
-  const dropTablesQueries = ` ${transactionsTable}; ${accountsTable}; ${usersTable}`;
+//   const dropTablesQueries = ` ${transactionsTable}; ${accountsTable}; ${usersTable}`;
 
-  pool.query(dropTablesQueries)
-    .then((res) => {
-      console.log(res);
-      pool.end();
-    })
-    .catch((err) => {
-      console.log(err);
-      pool.end();
-    });
-  pool.on('remove', () => {
-    console.log('client removed');
-    process.exit(0);
-  });
-};
+//   pool.query(dropTablesQueries)
+//     .then((res) => {
+//       console.log(res);
+//       pool.end();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       pool.end();
+//     });
+//   pool.on('remove', () => {
+//     console.log('client removed');
+//     process.exit(0);
+//   });
+// };
 
 const createTables = () => {
   const usersTable = `CREATE TABLE IF NOT EXISTS
@@ -96,6 +96,6 @@ const createTables = () => {
   });
 };
 
-export { dropTables, createTables, pool };
+export { createTables, pool };
 
 require('make-runnable');
