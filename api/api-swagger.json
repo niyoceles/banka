@@ -1,0 +1,820 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money.",
+    "version": "1.0.0",
+    "title": "Banka",
+    "contact": {
+      "email": "niyoceles3@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "banka-apps.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    },
+    {
+      "name": "cashier",
+      "description": "Operations about Cashier"
+    },
+    {
+      "name": "admin/staff",
+      "description": "Operations about Admin/staff"
+    },
+    {
+      "name": "admin",
+      "description": "Operations about Admin"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User can create user account",
+        "description": "",
+        "operationId": "userSignup",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User successful registered",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signupUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Exist"
+          },
+          "201": {
+            "description": "Successful Created"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User signin",
+        "description": "User signin | Cashier and Admin by using email and password.",
+        "operationId": "signinUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signinUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Signin"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/account": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User can create bank Accountt",
+        "description": "",
+        "operationId": "userCreateAcc",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Account created successful",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateAccUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account Exist"
+          },
+          "201": {
+            "description": "Account Successful Created"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/transactions/{accountNumber}/transactions": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User (client) can view account transaction history",
+        "description": "Returns all transactions of an account",
+        "operationId": "getAccTransaction",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Account Transaction history Successful"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Account number not found"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "User (client) can view a specific account transaction",
+        "description": "Returns a specified single transaction",
+        "operationId": "getTransactId",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "ID of transaction",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get transaction successful"
+          },
+          "400": {
+            "description": "Invalid ID transaction"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Transaction id not found"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/transactions/{accountNumber}/credit": {
+      "post": {
+        "tags": [
+          "cashier"
+        ],
+        "summary": "Staff (cashier) can credit user (client) account",
+        "description": "Cashier credit bank account",
+        "operationId": "cashierCredit",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number of user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Account successful Credited",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/creditAccount"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account credited successful"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Account number not found"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/transactions/{accountNumber}/debit": {
+      "post": {
+        "tags": [
+          "cashier"
+        ],
+        "summary": "Staff (cashier) can debit user (client) account",
+        "description": "Cashier debit bank account",
+        "operationId": "cashierDebit",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Account successful Debited",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/debitAccount"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account debited successful"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Account number not found"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/accounts": {
+      "get": {
+        "tags": [
+          "admin/staff"
+        ],
+        "summary": "Admin/staff can view all user accounts",
+        "description": "Returns all user accounts",
+        "operationId": "getAllbankAcc",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful Get all user account"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/user/{user-email}/accounts": {
+      "get": {
+        "tags": [
+          "admin/staff"
+        ],
+        "summary": "Admin/staff can view a list of accounts owned by a specific user",
+        "description": "Returns list of accounts owned by a specific user",
+        "operationId": "getAcccountByUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "user-email",
+            "in": "path",
+            "description": "email of the user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Get all account of this email"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/accounts/{accountNumber}": {
+      "patch": {
+        "tags": [
+          "admin/staff"
+        ],
+        "summary": "Admin/staff can activate or deactivate an account",
+        "description": "Return activate or deactivate an account",
+        "operationId": "accountStatus",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Status of account",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/accountStatus"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Status successful Updated"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/v2/accounts": {
+      "get": {
+        "tags": [
+          "admin/staff"
+        ],
+        "summary": "Admin view all active or dormant bank account",
+        "description": "Returns all bank account by status ",
+        "operationId": "getAllbankbyStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status must be dormant or active",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful Get all bank account"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/v2/account/{accountNumber}": {
+      "get": {
+        "tags": [
+          "admin/staff"
+        ],
+        "summary": "Admin/Staff view account details",
+        "description": "Returns account details",
+        "operationId": "getAccountDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number to view a details",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful Get user account details"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/auth/user": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin can create staff and admin user accounts",
+        "description": "",
+        "operationId": "adminCreateStaff",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Staff User successful created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/adminCreateUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Staff/admin user created Successful"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Not logged in"
+          },
+          "500": {
+            "description": "Failed to authenticate token"
+          },
+          "default": {
+            "description": "Error message"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    },
+    "/account/{accountNumber}": {
+      "delete": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Admin/staff can delete a specific user account",
+        "description": "Returns deleted specific user account",
+        "operationId": "deleteBankAcc",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "Account number to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account successful deleted"
+          },
+          "400": {
+            "description": "Invalid account number"
+          },
+          "404": {
+            "description": "Account number not found"
+          }
+        },
+        "security": [
+          {
+            "userJWT": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "userJWT": {
+      "type": "apiKey",
+      "name": "access-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "signupUser": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "adminCreateUser": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "signinUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "CreateAccUser": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "creditAccount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "debitAccount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "accountStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
