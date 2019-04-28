@@ -27,15 +27,16 @@ describe('Sign-up', () => {
         chai.request(app)
           .post(`${baseUrl}/auth/signup`)
           .send({
+            email: 'niyoceles3@gmail.com',
             firstName: 'Celestin',
             lastName: 'NIYONSABA',
             phone: '+250783067644',
             userName: 'niyoceles',
-            password: 'celes123',
+            password: 'celes@123',
             location: 'Kigali',
           })
           .end((err, res) => {
-            expect(res.status).to.equal(400);
+            expect(res.status).to.equal(200);
             done();
           });
       });
@@ -64,7 +65,7 @@ describe('Sign-up', () => {
       userName: 'niyocelesxxxxxxxx',
       phone: '2507830676442',
       email: 'niyoceles@gmail.com',
-      password: 'celeee',
+      password: 'cele',
       location: 'Kigali',
     };
     it('User signup registered Should return a 400 status', (done) => {
@@ -115,7 +116,7 @@ describe('Users Signin POST', () => {
   describe('POST / Signin Successful Login', () => {
     const signInData = {
       email: 'niyoceles3@gmail.com',
-      password: 'celes123',
+      password: 'Celes@123',
     };
     it('Should return a 200 status', (done) => {
       chai.request(app)
@@ -123,7 +124,7 @@ describe('Users Signin POST', () => {
         .send(signInData)
         .end((err, res) => {
           res.should.have.status(200);
-          console.log('-----------------------', res.body);
+          // console.log('-----------------------', res.body);
           token = res.body.token;
           done();
         });
