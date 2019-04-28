@@ -18,17 +18,15 @@ cache:
 script:
   - npm run test
 addons:
-  code_climate:856bd52a77738b5d3e574527d4dad443b989aa57bdd3b74c167ce532ffc2a0aa
-    repo_token: nDJ8gGLCWBsyee7RvO0ocazAurzQKqYKQ
-after_success: npm run coverage
+  code_climate:
+    repo_token:
+      secure: "856bd52a77738b5d3e574527d4dad443b989aa57bdd3b74c167ce532ffc2a0aa"
+after_success: npm run coveralls
 before_script:
   - npm install
   - psql -c 'CREATE DATABASE banka;' -U postgres
   - npm run createTables
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - coveralls < ./coverage/lcov.info
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   
