@@ -23,13 +23,8 @@ Banka is a light-weight core banking application that powers banking operations 
 https://niyoceles.github.io/banka/UI/
 
 ## Documentation
-Documentation, find it [here](https://rwajon-sendit.herokuapp.com/api/v1/doc)
+Documentation, find it [here](https://banka-apps.herokuapp.com/api/v1/doc)
 
 # Author
 Celestin NIYONSABA
-
-<!-- # TEST REPORT
-[![Coverage Status](https://coveralls.io/repos/github/niyoceles/banka/badge.svg?branch=develop)](https://coveralls.io/github/niyoceles/banka?branch=develop)
-[![Build Status](https://travis-ci.com/niyoceles/banka.svg?branch=develop)](https://travis-ci.com/niyoceles/banka)
-[![Maintainability](https://api.codeclimate.com/v1/badges/cd2154c5f9d87e6e1375/maintainability)](https://codeclimate.com/github/niyoceles/banka/maintainability) -->
 
