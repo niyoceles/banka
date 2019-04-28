@@ -11,7 +11,7 @@ const userSignup = userValidSignup();
 
 
 const router = Router();
-router.get('/users/:id', User.getSingleUser);
+// router.get('/users/:id', User.getSingleUser);
 router.post('/user', createUser, User.adminCreateUser);
 router.post('/signup', userSignup, User.signup);
 router.post('/signin', User.signin);

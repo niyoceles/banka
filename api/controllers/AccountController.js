@@ -3,9 +3,9 @@ import db from '../models';
 class AccountsController {
   // GET All Bank Accounts
   static async getAllBankAccounts(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.type === 'client') {
       return res.status(401).json({
-        message: 'Not allowed to access this feature, admin Only',
+        message: 'Not allowed to access this feature, staff Only',
       });
     }
     try {
@@ -34,7 +34,7 @@ class AccountsController {
   }
 
   static async getAllActiveByStatus(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.type === 'client') {
       return res.status(401).json({
         message: 'Not allowed to access this feature, admin Only',
       });
@@ -76,9 +76,9 @@ class AccountsController {
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.type === 'client') {
       return res.status(401).json({
-        message: 'Not allowed to access this feature, admin Only',
+        message: 'Not allowed to access this feature, staff Only',
       });
     }
     try {
@@ -108,7 +108,6 @@ class AccountsController {
 
   // GET specific account Details
   static async getAccountDetails(req, res) {
-
     try {
       let checkAccountDetails = '';
       if (req.params.accountNumber) {
@@ -173,10 +172,6 @@ class AccountsController {
 
       if (newAccount.rows.length > 0) {
         newAccount.rows[0].createdOn = new Date(newAccount.rows[0].createdOn).toDateString();
-        // const token = jwt.sign({
-        //   email: req.body.email,
-        // }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
-
         res.status(201).json({
           status: 201,
           data: newAccount.rows[0],
@@ -236,9 +231,9 @@ class AccountsController {
   }
 
   static async deleteAccount(req, res) {
-    if (req.decodedToken.type === 'client' || req.decodedToken.type === false) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
       return res.status(401).json({
-        message: 'Not allowed to access this feature for Admin only',
+        message: 'Not allowed to access this feature, for Admin only',
       });
     }
     const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
