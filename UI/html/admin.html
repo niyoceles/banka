@@ -30,24 +30,15 @@
       <a href="../html/cashier.html">Cashier page</a>
       <a href="../html/admin.html">User Account</a>
       <a href="../html/admin-bank-account.html">Bank Account</a>
-      <a href="#" id="createAccount">Create Account</a>
+      <a id="createAccount">Create Account</a>
     </div>
   </div>
 
   <div class="container">
-    <h1>User Account</h1>
-    <table id="table">
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Password</th>
-        <th>Type</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-      <tr>
+    <h1> All User Account <button id="getapi" class="btn-submit">Get All User accounts</button></h1>
+    <div id="userAccount"></div>
+
+    <!-- <tr>
         <td>1</td>
         <td>celestin@gmail.com</td>
         <td>Celestin</td>
@@ -69,8 +60,52 @@
         <td><button id="goto-deactivate" class="deactivateLink">Deactivate</button>
           <button id="goto-activate" class="activateLink">Activate</button>
         </td>
-      </tr>
-    </table>
+      </tr> -->
+    <!-- <div id="tableAccount"></div> -->
+    <!-- <div id="userAccount"></div> -->
+    <script>
+      document.getElementById('getapi').addEventListener('click', getUserAccount);
+      function getUserAccount() {
+        fetch('http://localhost:4000/api/v1/auth/users')
+          .then((res) => res.json())
+          .then((data1) => {
+            let userAccount = `<h2>Users</h2>
+              <table id="table">
+                <tr>
+                  <th width="10">ID</th>
+                  <th width="10">First name</th>
+                  <th width="10">Last name</th>
+                  <th width=10>Email</th>
+                  <th width=10>Phone</th>
+                  <th width=10>Username</th>
+                  <th width=10>Location</th>
+                  <th width=10>Type of user</th>
+                  <th width="10">Create On</th>
+                </tr>`;
+            // data1.forEach(function (user){
+            for (var i = 0; i < data1.length; i++) {
+              userAccount += `
+                <table id="table">
+                <tr>
+                  <td width="10">${data1[i].id}</td>
+                  <td width="10">${data1[i].firstName}<td>
+                  <td width="10">${data1[i].lastName}</td>
+                  <td width=10>${data1[i].email}<td> 
+                  <td width="10">${data1[i].phone}</td> 
+                  <td width="10">${data1[i].userName}</td> 
+                  <td width="10">${data1[i].location}</td> 
+                  <td width="10">${data1[i].location}</td> 
+                  <td width="10">${data1[i].type}</td> 
+                  <td width="10">${data1[i].createdDate}</td> 
+                </tr>
+                </table>`;
+            };
+            document.getElementById('userAccount').innerHTML = userAccount;
+          });
+      }
+    </script>
+
+    <!-- </table> -->
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -100,15 +135,25 @@
           <label>Last Name</label>
           <input type="text" placeholder="Enter Last Name" id="lastname" required>
 
+          <label>Phone</label>
+          <input type="number" placeholder="Enter Phone number" id="phonenumber" required>
+
+          <label>Username</label>
+          <input type="text" placeholder="Enter Username" id="username" required>
+
           <label>Password</label>
           <input type="password" id="password" placeholder="Enter Password" required>
 
           <label>User Account type</label>
           <select name="account-type" id="account-type">
             <option value="">Select account type</option>
-            <option value="admin">Admin</option>
-            <option value="staff">Staff</option>
+            <option value="true">Admin</option>
+            <option value="false">Staff</option>
           </select>
+
+          <label>Location</label>
+          <input type="text" placeholder="Enter Location" id="location" required>
+
           <button type="submit" id="btnSignUp">Create User</button>
         </form>
       </div>
@@ -120,6 +165,8 @@
     </ul>
   </div>
   <script src="../js/app.js"></script>
+  <script src="../js/models/User.js"></script>
+  <script src="../js/controllers/adminController.js"></script>
 </body>
 
 </html>
