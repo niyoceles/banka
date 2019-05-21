@@ -23,7 +23,7 @@ Banka is a light-weight core banking application that powers banking operations 
 https://niyoceles.github.io/banka/UI/
 
 ## Documentation
-Documentation, find it [here](https://banka-apps.herokuapp.com/api/v1/doc)
+Documentation, find it [here](localhost:4000/api/v1/doc)
 
 # Author
 Celestin NIYONSABA
