@@ -43,18 +43,25 @@
                     <h3> Sign Up</h3>
                     <label>First name</label>
                     <input type="text" id="firstname" placeholder="Enter First name" required>
+                    <div class="error" id="firstname-error"></div>
                     <label>Last name</label>
                     <input type="text" placeholder="Enter Last name" id="lastname" required>
+                    <div class="error" id="lastname-error"></div>
                     <label>Email</label>
                     <input type="email" id="email" placeholder="Enter Email" required>
+                    <div class="error" id="email-error"></div>
                     <label>Phone Number</label>
                     <input type="number" placeholder="Enter Phone number" id="phonenumber" required>
+                    <div class="error" id="phone-error"></div>
                     <label>Username</label>
                     <input type="text" placeholder="Enter Username" id="username" required>
+                    <div class="error" id="username-error"></div>
                     <label>Password</label>
                     <input type="password" placeholder="Enter Password" id="password" required>
+                    <div class="error" id="password-error"></div>
                     <label>Location</label>
                     <input type="text" placeholder="Enter location" id="location" required>
+                    <div class="error" id="location-error"></div>
                     <button type="submit" id="btnSignUp">Sign Up</button>
                     <p class="signInlink">Are you a Member? <b>Sign In</b> </p>
                 </form>
@@ -73,145 +80,6 @@
 
     <div class="container">
         <h1>Welcome to Banka Application </h1>
-        <!-- <button id="btn-sign-in" class="btn-submit" name="submit">Sign-In</button>
-        <button id="getuser" class="btn-submit">Get user</button>
-        <button id="getapi" class="btn-submit">Get Api</button>
-        <div id="output"></div> -->
-
-        <script>
-            // document.getElementById('btn-sign-in').addEventListener('click', btnSignin);
-            // document.getElementById('getuser').addEventListener('click', getUsers);
-            // document.getElementById('getapi').addEventListener('click', getApi);
-            // document.getElementById('signInForm').addEventListener('submit', addSignin);
-            // document.getElementById('signUpForm').addEventListener('submit', addSignup);
-            // function btnSignin() {
-            //     fetch('sample.txt')
-            //         .then((res) => res.text())
-            //         .then((data) => {
-            //             document.getElementById('output').innerHTML = data;
-            //         })
-            //         .catch((error) => console.log(error))
-            // }
-
-            // function getUsers() {
-            //     fetch('user.json')
-            //         .then((res) => res.json())
-            //         .then((data) => {
-            //             let output = '<h2>Users</h2>';
-            //             data.forEach(function (users) {
-            //                 output += `
-            //                     <ul>
-            //                     <li>ID: ${users.id}</li>
-            //                     <li>first name: ${users.firstName}</li>
-            //                     <li>last name: ${users.lastName}</li>
-            //                     <li>email: ${users.email}</li>
-            //                     </ul >
-            //                     `;
-            //             });
-            //             document.getElementById('output').innerHTML = output;
-            //         });
-            // }
-
-            // function getApi() {
-            //     fetch('http://localhost:4000/api/v1/accounts')
-            //         .then((res) => res.json())
-            //         .then((data1) => {
-            //             let output = '<h2>Users</h2>';
-            //             data1.forEach(function (user) {
-            //                 output += `
-            //                     <ul>
-            //                     <li>ID: ${user.id}</li>
-            //                     <li>first name: ${user.phone}</li>
-            //                     <li>last name: ${user.type}</li>
-            //                     <li>email: ${user.email}</li>
-            //                     </ul >
-            //                     `;
-            //             });
-            //             document.getElementById('output').innerHTML = output;
-            //         });
-            // }
-            // function addSignin(e) {
-            //     e.preventDefault();
-            //     let token = '';
-
-            //     let email = document.getElementById('email1').value;
-            //     let password = document.getElementById('password1').value;
-            //     fetch('http://localhost:4000/api/v1/auth/signin', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Accept': 'application/json, text/plain, */*',
-            //             'access-token': token,
-            //             'Content-type': 'application/json'
-            //         },
-            //         body: JSON.stringify({ email: email, password: password })
-            //     })
-            //         .then((res) => res.json())
-            //         .then((data) => {
-            //             if (data.status === 200) {
-            //                 console.log('Successul')
-            //                 alert('You are successful Login');
-            //                 window.location.href = 'html/admin.html';
-
-            //             } else if (data.status === 'fail') {
-            //                 alert('Oops!!', `${data.message}`, 'error');
-            //                 email = '';
-            //                 password = '';
-            //             } else {
-            //                 alert('Oops!!', 'Internal server error', 'error');
-            //                 email = '';
-            //                 password = '';
-            //             }
-            //         })
-            //         .catch(function (err) {
-            //             return err;
-            //         });
-            // }
-
-            // function addSignup(e) {
-            //     e.preventDefault();
-
-            //     let firstname = document.getElementById('firstname').value;
-            //     let lastname = document.getElementById('lastname').value;
-            //     let email = document.getElementById('email').value;
-            //     let phonenumber = document.getElementById('phonenumber').value;
-            //     let username = document.getElementById('username').value;
-            //     let password = document.getElementById('password').value;
-            //     let location = document.getElementById('location').value;
-
-            //     fetch('http://localhost:4000/api/v1/auth/signup', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Accept': 'application/json, text/plain, */*',
-            //             'Content-type': 'application/json'
-            //         },
-            //         body: JSON.stringify({
-            //             firstName: firstname,
-            //             lastName: lastname,
-            //             phone: phonenumber,
-            //             email: email,
-            //             userName: username,
-            //             password: password,
-            //             location: location
-            //         })
-            //     })
-            //         .then((res) => res.json())
-            //         .then((data) => console.log(data))
-            //         .then((data) => {
-            //             if (json && json.status === 200) {
-            //                 alert('Successful!!', `${data.message}`, 'error');
-            //                 window.location.href = 'html/admin.html';
-            //             } else if (data.status === 400) {
-            //                 alert('Oops!!', `${data.message}`, 'error');
-            //                 // email = '';
-            //                 // password = '';
-            //             } else {
-            //                 alert('Oops!!', 'Internal server error', 'error');
-            //                 // email = '';
-            //                 // password = '';
-            //             }
-            //         });
-            // }
-        </script>
     </div>
     <!-- Updating homepage by adding the main section  -->
     <section id="main-section">
