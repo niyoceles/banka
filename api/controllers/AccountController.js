@@ -3,11 +3,11 @@ import db from '../models';
 class AccountsController {
   // GET All Bank Accounts
   static async getAllBankAccounts(req, res) {
-    if (req.decodedToken.isAdmin === false) {
-      return res.status(401).json({
-        message: 'Not allowed to access this feature, admin Only',
-      });
-    }
+    // if (req.decodedToken.type === 'client') {
+    //   return res.status(401).json({
+    //     message: 'Not allowed to access this feature, staff Only',
+    //   });
+    // }
     try {
       let checkAllBankAccounts = '';
       checkAllBankAccounts = await db.query('SELECT * FROM accounts, users where users.id=owner');
@@ -17,11 +17,12 @@ class AccountsController {
           delete checkAllBankAccounts.rows[i].password;
           delete checkAllBankAccounts.rows[i].isAdmin;
         }
-        res.status(200).json({
-          status: 200,
-          data: checkAllBankAccounts.rows,
-          message: 'Get all BankAccounts successful!',
-        });
+        res.json(checkAllBankAccounts.rows);
+        // res.status(200).json({
+        //   status: 200,
+        //   data: checkAllBankAccounts.rows,
+        //   message: 'Get all BankAccounts successful!',
+        // });
       } else {
         res.status(404).json({
           status: 404,
@@ -34,7 +35,7 @@ class AccountsController {
   }
 
   static async getAllActiveByStatus(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.type === 'client') {
       return res.status(401).json({
         message: 'Not allowed to access this feature, admin Only',
       });
@@ -76,9 +77,9 @@ class AccountsController {
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
-    if (req.decodedToken.isAdmin === false) {
+    if (req.decodedToken.type === 'client') {
       return res.status(401).json({
-        message: 'Not allowed to access this feature, admin Only',
+        message: 'Not allowed to access this feature, staff Only',
       });
     }
     try {
@@ -108,7 +109,6 @@ class AccountsController {
 
   // GET specific account Details
   static async getAccountDetails(req, res) {
-
     try {
       let checkAccountDetails = '';
       if (req.params.accountNumber) {
@@ -173,10 +173,6 @@ class AccountsController {
 
       if (newAccount.rows.length > 0) {
         newAccount.rows[0].createdOn = new Date(newAccount.rows[0].createdOn).toDateString();
-        // const token = jwt.sign({
-        //   email: req.body.email,
-        // }, process.env.SECRET_KEY, { expiresIn: 86400 /* expires in 24 hours */ });
-
         res.status(201).json({
           status: 201,
           data: newAccount.rows[0],
@@ -236,9 +232,9 @@ class AccountsController {
   }
 
   static async deleteAccount(req, res) {
-    if (req.decodedToken.type === 'client' || req.decodedToken.type === false) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
       return res.status(401).json({
-        message: 'Not allowed to access this feature for Admin only',
+        message: 'Not allowed to access this feature, for Admin only',
       });
     }
     const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
