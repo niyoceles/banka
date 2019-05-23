@@ -26,8 +26,8 @@
         </div>
         <input type="checkbox" id="navbar-check">
         <div class="navbar-links">
-            <a href="./html/cashier.html">Staff</a>
-            <a href="./html/user.html">User</a>
+            <!-- <a href="./html/cashier.html">Staff</a>
+            <a href="./html/user.html">User</a> -->
             <a id="sign-up">Sign Up</a>
             <a id="sign-in">Sign In</a>
         </div>
@@ -62,7 +62,10 @@
                     <label>Location</label>
                     <input type="text" placeholder="Enter location" id="location" required>
                     <div class="error" id="location-error"></div>
+                    <div class="error" id="connection-error"></div>
                     <button type="submit" id="btnSignUp">Sign Up</button>
+                    <div class="success" id="success-signup"></div>
+                    <div class="error" id="account-exist"></div>
                     <p class="signInlink">Are you a Member? <b>Sign In</b> </p>
                 </form>
                 <form class="animate" id="signInForm">
@@ -123,9 +126,8 @@
             <p>Banka Copyright &copy;2019 by Celestin NIYONSABA </p>
         </ul>
     </div>
-    <script src="js/app.js"></script>
-    <script src="js/models/User.js"></script>
-    <script src="js/controllers/indexController.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
