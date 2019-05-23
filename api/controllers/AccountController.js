@@ -3,11 +3,11 @@ import db from '../models';
 class AccountsController {
   // GET All Bank Accounts
   static async getAllBankAccounts(req, res) {
-    // if (req.decodedToken.type === 'client') {
-    //   return res.status(401).json({
-    //     message: 'Not allowed to access this feature, staff Only',
-    //   });
-    // }
+    if (req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, staff Only',
+      });
+    }
     try {
       let checkAllBankAccounts = '';
       checkAllBankAccounts = await db.query('SELECT * FROM accounts, users where users.id=owner');
@@ -17,12 +17,12 @@ class AccountsController {
           delete checkAllBankAccounts.rows[i].password;
           delete checkAllBankAccounts.rows[i].isAdmin;
         }
-        res.json(checkAllBankAccounts.rows);
-        // res.status(200).json({
-        //   status: 200,
-        //   data: checkAllBankAccounts.rows,
-        //   message: 'Get all BankAccounts successful!',
-        // });
+        // res.json(checkAllBankAccounts.rows);
+        res.status(200).json({
+          status: 200,
+          data: checkAllBankAccounts.rows,
+          message: 'Get all BankAccounts successful!',
+        });
       } else {
         res.status(404).json({
           status: 404,
@@ -90,7 +90,9 @@ class AccountsController {
       }
 
       if (checkAllAccounts.rows.length > 0) {
-        checkAllAccounts.rows[0].createdOn = new Date(checkAllAccounts.rows[0].createdOn).toDateString();
+        checkAllAccounts.rows[0]
+          .createdOn = new Date(checkAllAccounts.rows[0]
+            .createdOn).toDateString();
         res.status(200).json({
           status: 200,
           data: checkAllAccounts.rows,
@@ -190,12 +192,6 @@ class AccountsController {
         message: 'Not allowed to access this feature',
       });
     }
-    // if (!req.query.status) {
-    //   res.status(400).json({
-    //     status: '400', message: 'Status must be active or deactive field is required  ',
-    //   });
-    //   return;
-    // }
 
     const accountStatusValue = [
       req.body.status,
