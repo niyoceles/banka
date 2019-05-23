@@ -92,6 +92,12 @@ ul li:hover,
     margin-bottom: 25px;
 }
 
+.error{
+  color: rgb(180, 60, 60);
+  margin-top: -2%;
+  margin-bottom: 2%;
+}
+
 input[type],
 select,
 textarea {

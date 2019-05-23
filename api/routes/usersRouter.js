@@ -9,7 +9,6 @@ const createUser = createUserValid();
 const userSignup = userValidSignup();
 // const userSignin = userValidSignin();
 
-
 const router = Router();
 // router.get('/users/:id', User.getSingleUser);
 router.get('/users', checkToken, User.getAllUserAccounts);
