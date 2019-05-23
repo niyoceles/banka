@@ -1,5 +1,5 @@
-const btnClose = document.querySelector('.close'); //close button to all modal
-const modal = document.querySelector('#modal'); //all modal
+const btnClose = document.querySelector('.close'); // close button to all modal
+const modal = document.querySelector('#modal'); // all modal
 // on signup
 const signUp = document.querySelector('#sign-up');
 const getStarted = document.querySelector('.get-stared-link');
@@ -11,17 +11,17 @@ const signIn = document.querySelector('#sign-in');
 const signInLink = document.querySelector('.signInlink');
 const signInForm = document.querySelector('#signInForm');
 
-// on activate 
+// on activate
 const activate = document.querySelector('#activate-user-account');
 const activateLink = document.querySelector('.activateLink');
 const activateModal = document.querySelector('#activateModal');
 
-// on deactivate 
+// on deactivate
 const deactivate = document.querySelector('#deactivate-user-account');
 const deactivateLink = document.querySelector('.deactivateLink');
 const deactivateModal = document.querySelector('#deactivateModal');
 
-// on create an admin/staff Account 
+// on create an admin/staff Account
 const createAccount = document.querySelector('#createAccount');
 const createAccountForm = document.querySelector('#createAccountForm');
 
@@ -47,8 +47,8 @@ const deleteAccountForm = document.querySelector('#deleteAccountForm');
 const createBankAccount = document.querySelector('#createBankAccount');
 const createBankAccountLink = document.querySelector('.createBankAccountLink');
 const createBankActivateForm = document.querySelector('#createBankAccountForm');
-//check if an element is in DOM
-//  @parameter element 
+// check if an element is in DOM
+//  @parameter element
 // @parameter callback function to do action
 const elementExist = (element, doThis) => {
   if (typeof (element) !== 'undefined' && element != null) {
@@ -59,45 +59,45 @@ const elementExist = (element, doThis) => {
 const openModal = () => {
   modal.style.display = 'block';
 };
-//display the sign up modal page
+// display the sign up modal page
 const onSignUp = () => {
   signUpForm.style.display = 'block';
   signInForm.style.display = 'none';
 };
-//display the sign up modal page
+// display the sign up modal page
 const onSignIn = () => {
   signInForm.style.display = 'block';
   signUpForm.style.display = 'none';
 };
-//display the Activate modal page
+// display the Activate modal page
 const onActivate = () => {
   activateModal.style.display = 'block';
   deactivateModal.style.display = 'none';
   createAccountForm.style.display = 'none';
 };
-//display the deactivate modal page
+// display the deactivate modal page
 const ondeactivate = () => {
   deactivateModal.style.display = 'block';
   activateModal.style.display = 'none';
   createAccountForm.style.display = 'none';
 };
-//display the deactivate modal page
+// display the deactivate modal page
 const onCreateAccount = () => {
   createAccountForm.style.display = 'block';
   deactivateModal.style.display = 'none';
   activateModal.style.display = 'none';
 };
-//display the credit account modal page
+// display the credit account modal page
 const onCreditAccount = () => {
   creditAccountForm.style.display = 'block';
   debitAccountForm.style.display = 'none';
 };
-//display the debit account modal page
+// display the debit account modal page
 const onDebitAccount = () => {
   debitAccountForm.style.display = 'block';
   creditAccountForm.style.display = 'none';
 };
-//Display view account modal
+// Display view account modal
 const onViewAccount = () => {
   viewAccountTable.style.display = 'block';
   deleteAccountForm.style.display = 'none';
@@ -106,11 +106,11 @@ const onViewAccount = () => {
 const onDeleteAccount = () => {
   deleteAccountForm.style.display = 'block';
   viewAccountTable.style.display = 'none';
-}
+};
 // display create bank modal
 const onCreateBankAccount = () => {
   createBankActivateForm.style.display = 'block';
-}
+};
 // closing modal
 elementExist(btnClose, () => {
   btnClose.addEventListener('click', () => {
@@ -118,9 +118,9 @@ elementExist(btnClose, () => {
   });
 });
 
-///////////////////////////////////////////////////////
-////OPENING THE MODAL AND THEN CALL BACK FUNCTION ////
-/////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+// //OPENING THE MODAL AND THEN CALL BACK FUNCTION ////
+// ///////////////////////////////////////////////////
 elementExist(signUp, () => {
   signUp.addEventListener('click', () => {
     openModal();
@@ -189,22 +189,22 @@ elementExist(viewAccount, () => {
 elementExist(deleteAccount, () => {
   deleteAccount.addEventListener('click', () => {
     openModal(); // open the modal
-    onDeleteAccount(); // with delete an account 
+    onDeleteAccount(); // with delete an account
   });
 });
 
 elementExist(createBankAccount, () => {
   createBankAccount.addEventListener('click', () => {
     openModal(); // open the modal
-    onCreateBankAccount(); // with  create bank account 
+    onCreateBankAccount(); // with  create bank account
   });
 });
-//////////////////////////////////
-////// LINKS/////////////////////
-///////////////////////////////
+// ////////////////////////////////
+// //// LINKS/////////////////////
+// /////////////////////////////
 elementExist(signUpLink, () => {
   signUpLink.addEventListener('click', () => {
-    openModal(); // open the modal  
+    openModal(); // open the modal
     onSignUp(); // with Sign up form link
   });
 });
@@ -233,13 +233,13 @@ elementExist(deactivateLink, () => {
 elementExist(viewAccountLink, () => {
   viewAccountLink.addEventListener('click', () => {
     openModal(); // open the modal
-    onViewAccount();  // with view account link modal
+    onViewAccount(); // with view account link modal
   });
 });
 
 elementExist(deleteAccountLink, () => {
   deleteAccountLink.addEventListener('click', () => {
-    openModal(); // open the modal 
+    openModal(); // open the modal
     onDeleteAccount(); // with delete an account link modal
   });
 });
@@ -247,6 +247,17 @@ elementExist(deleteAccountLink, () => {
 elementExist(createBankAccountLink, () => {
   createBankAccountLink.addEventListener('click', () => {
     openModal(); // open the modal
-    onCreateBankAccount(); // with  create bank account 
+    onCreateBankAccount(); // with  create bank account
   });
 });
+
+document.querySelector('#signOut').addEventListener('click', UserSignOut);
+function UserSignOut(e) {
+  if (localStorage.getItem('token')) {
+    localStorage.removeItem('token');
+  }
+  if (localStorage.getItem('isloggedIn')) {
+    localStorage.removeItem('isloggedIn');
+  }
+  window.location.replace('../index.html');
+}
