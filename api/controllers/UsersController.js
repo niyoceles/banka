@@ -23,6 +23,38 @@ class UsersController {
     });
   }
 
+  static async getAllUserAccounts(req, res) {
+    if (req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, staff Only',
+      });
+    }
+    try {
+      let checkUserAccounts = '';
+      checkUserAccounts = await db.query('SELECT * FROM users');
+      if (checkUserAccounts.rows.length > 0) {
+        checkUserAccounts.rows[0].createdDate = new Date(checkUserAccounts.rows[0].createdDate).toDateString();
+        for (let i = 0; i < checkUserAccounts.rows.length; i += 1) {
+          delete checkUserAccounts.rows[i].password;
+          delete checkUserAccounts.rows[i].isAdmin;
+        }
+        // res.json(checkUserAccounts.rows);
+        res.status(200).json({
+          status: 200,
+          data: checkUserAccounts.rows,
+          message: 'Get all BankAccounts successful!',
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'There is no Any Account registered',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async signup(req, res) {
     const values = [
       req.body.firstName,
@@ -60,10 +92,18 @@ class UsersController {
 
       if (newUser.rows.length > 0) {
         newUser.rows[0].createdDate = new Date(newUser.rows[0].createdDate).toDateString();
+        const token = jwt.sign({
+          userId: newUser.rows[0].id,
+          email: newUser.rows[0].email,
+          type: newUser.rows[0].type,
+          isAdmin: newUser.rows[0].isAdmin,
+        }, process.env.SECRET_KEY, {
+            expiresIn: 86400, // expires in 24 hours
+          });
         res.status(201).json({
           status: 201,
           data: newUser.rows[0],
-          // token,
+          token,
         });
       }
     } catch (error) {
@@ -97,7 +137,8 @@ class UsersController {
                 email: rows[i].email,
                 phone: rows[i].phone,
                 userName: rows[i].userName,
-                // isAdmin: rows[i].isAdmin,
+                type: rows[i].type,
+                isAdmin: rows[i].isAdmin,
               },
               token,
             });
@@ -107,7 +148,7 @@ class UsersController {
 
       return res.status(400).json({
         status: 400,
-        error: 'Sorry, your username or password is incorrect',
+        error: 'Sorry, your email or password is incorrect',
       });
     } catch (error) {
       console.log(error);

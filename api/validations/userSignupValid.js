@@ -17,8 +17,9 @@ const phoneNumber = joi.number()
   .label('Phone number must a number and required');
 
 const userName = joi.string()
+  .regex(/^[a-zA-Z]{5,10}$/)
   .required()
-  .label('Username is required');
+  .label('Username should be required and at least 5 to 10 characters.');
 
 const password = joi.string()
   .min(8)

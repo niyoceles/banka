@@ -17,6 +17,7 @@ class AccountsController {
           delete checkAllBankAccounts.rows[i].password;
           delete checkAllBankAccounts.rows[i].isAdmin;
         }
+        // res.json(checkAllBankAccounts.rows);
         res.status(200).json({
           status: 200,
           data: checkAllBankAccounts.rows,
@@ -89,7 +90,9 @@ class AccountsController {
       }
 
       if (checkAllAccounts.rows.length > 0) {
-        checkAllAccounts.rows[0].createdOn = new Date(checkAllAccounts.rows[0].createdOn).toDateString();
+        checkAllAccounts.rows[0]
+          .createdOn = new Date(checkAllAccounts.rows[0]
+            .createdOn).toDateString();
         res.status(200).json({
           status: 200,
           data: checkAllAccounts.rows,
@@ -189,12 +192,6 @@ class AccountsController {
         message: 'Not allowed to access this feature',
       });
     }
-    // if (!req.query.status) {
-    //   res.status(400).json({
-    //     status: '400', message: 'Status must be active or deactive field is required  ',
-    //   });
-    //   return;
-    // }
 
     const accountStatusValue = [
       req.body.status,
