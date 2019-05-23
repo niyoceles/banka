@@ -16,8 +16,8 @@ function accountCreate(e) {
   const email = document.getElementById('email').value;
   const balance = document.getElementById('opening-balance').value;
 
-  // const urlAccount = 'http://localhost:4000/api/v1/account';
-  const urlAccount = 'https://banka-apps.herokuapp.com/api/v1/account';
+  const urlAccount = 'http://localhost:4000/api/v1/account';
+  // const urlAccount = 'https://banka-apps.herokuapp.com/api/v1/account';
   const createAcErrorType = document.querySelector('#create-ac-error-type');
   const createAcErrorEmail = document.querySelector('#create-ac-error-email');
   const createAcErrorPhone = document.querySelector('#create-ac-error-phone');
@@ -50,23 +50,20 @@ function accountCreate(e) {
       if (response.status === 400) {
         if (response.error[0].field === 'type') {
           createAcErrorType.innerHTML = `${response.error[0].message}`;
-          return firstNameError;
+          return createAcErrorType;
         }
         if (response.error[0].field === 'phone') {
           createAcErrorPhone.innerHTML = `${response.error[0].message}`;
-          return firstNameError;
+          return createAcErrorPhone;
         }
         if (response.error[0].field === 'email') {
           createAcErrorEmail.innerHTML = `${response.error[0].message}`;
-          return firstNameError;
+          return createAcErrorEmail;
         }
         if (response.error[0].field === 'balance') {
           createAcErrorBalance.innerHTML = `${response.error[0].message}`;
-          return firstNameError;
+          return createAcErrorBalance;
         }
-        setTimeout(() => {
-          createAcError.innerHTML = `${response.error[0].message} ${response.error.message}`;
-        }, 3000);
       }
     })
     .catch(err => console.log(err));
