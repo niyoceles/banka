@@ -12,9 +12,10 @@ const email = joi.string()
   .required()
   .label('Valid Email Address is required');
 
-const phoneNumber = joi.number()
+const phoneNumber = joi.string()
+  .regex(/^[0-9]{10,12}$/)
   .required()
-  .label('Phone number must a number and required');
+  .label('Phone number must be required and at least 10 number or 12.');
 
 const userName = joi.string()
   .regex(/^[a-zA-Z]{5,10}$/)
