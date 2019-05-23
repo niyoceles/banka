@@ -12,14 +12,20 @@ const email = joi.string()
   .required()
   .label('Valid Email Address is required');
 
-const number = joi.number()
+const phoneNumber = joi.string()
+  .regex(/^[0-9]{10,12}$/)
   .required()
-  .label(' must a number and required');
+  .label('Phone number must be required and at least 10 number or 12.');
+
+const number = joi.string()
+  .required()
+  .regex(/^[1-9]+\d*$/)
+  .label(' must be required and a positive number');
 
 const accountSchema = joi.object().keys({
   type: name,
   email: email,
-  phone: number,
+  phone: phoneNumber,
   balance: number,
 });
 
