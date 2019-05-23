@@ -97,6 +97,11 @@ ul li:hover,
   margin-top: -2%;
   margin-bottom: 2%;
 }
+.success{
+  color: rgb(57, 145, 76);
+  margin-top: -2%;
+  margin-bottom: 2%;
+  }
 
 input[type],
 select,
