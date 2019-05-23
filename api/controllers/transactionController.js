@@ -17,7 +17,7 @@ class TransactionsController {
       }
 
       if (checkTransaction.rows.length > 0) {
-        checkTransaction.rows[0].createdOn = new Date(checkTransaction.rows[0].createdOn).toDateString();
+        // checkTransaction.rows[0].createdOn = new Date(checkTransaction.rows[0].createdOn).toDateString();
         res.status(200).json({
           status: 200,
           data: checkTransaction.rows,
@@ -49,7 +49,7 @@ class TransactionsController {
       }
 
       if (checkTransactionId.rows.length > 0) {
-        checkTransactionId.rows[0].createdOn = new Date(checkTransactionId.rows[0].createdOn).toDateString();
+        // checkTransactionId.rows[0].createdOn = new Date(checkTransactionId.rows[0].createdOn).toDateString();
         res.status(200).json({
           status: 200,
           data: checkTransactionId.rows[0],
@@ -124,7 +124,7 @@ class TransactionsController {
       const addTransaction = await db.query(insertTransaction, transactionValue);
 
       if (addTransaction.rows.length >= 0) {
-        addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
+        // addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
         addTransaction.rows[0].accountNumber = checkAccount.rows[0].accountNumber;
         res.status(201).json({
           status: 201,
@@ -194,7 +194,7 @@ class TransactionsController {
       const addTransaction = await db.query(insertTransaction, transactionValue);
 
       if (addTransaction.rows.length >= 0) {
-        addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
+        // addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
         addTransaction.rows[0].accountNumber = checkAccount.rows[0].accountNumber;
         res.status(201).json({
           status: 201,
