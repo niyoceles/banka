@@ -1,5 +1,5 @@
 document.getElementById('signUpForm').addEventListener('submit', userSignup);
-
+document.getElementById('signInForm').addEventListener('submit', userSignin);
 
 const { token } = localStorage;
 
@@ -16,7 +16,7 @@ function userSignup(e) {
   const userName = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const location = document.getElementById('location').value;
-  // Successful 
+  // Successful
   const successfullSignup = document.querySelector('#success-signup');
   // errors
   const connectionError = document.querySelector('#connection-error');
@@ -91,5 +91,56 @@ function userSignup(e) {
     })
     .catch((err) => {
       connectionError.innerHTML = 'Error of Connection, Please check your internet connection and try again';
+    });
+}
+
+function userSignin(e) {
+  e.preventDefault();
+  const email = document.getElementById('email1').value;
+  const password = document.getElementById('password1').value;
+
+  // const urlSignin = 'https://banka-apps.herokuapp.com/api/v1/auth/signin';
+  const urlSignin = 'http://localhost:4000/api/v1/auth/signin';
+
+  const incorrectEmailPassword = document.querySelector('#incorrect-error');
+  const successfulLogin = document.querySelector('#success-login');
+  const connectionErrorLogin = document.querySelector('#connection-error-login');
+
+  fetch(urlSignin, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'access-token': token,
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(res => res.json())
+    .then((response) => {
+      if (response.status === 200) {
+        successfulLogin.innerHTML = `Welcome to Banka ${response.data.type} ${response.data.firstName}!`;
+        setTimeout(() => {
+          if (response.data.type === 'client') {
+            window.location = './html/user.html'; return window.location;
+          }
+          if (response.data.isAdmin = false) {
+            window.location = './html/cashier.html'; return window.location;
+          }
+          if (response.data.isAdmin = true) {
+            window.location = './html/admin.html'; return window.location;
+          }
+        }, 3000);
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userDetails', JSON.stringify(response.data));
+        localStorage.setItem('isloggedIn', true);
+      }
+      if (response.status === 400) {
+        setTimeout(() => {
+          incorrectEmailPassword.innerHTML = `${response.error}`;
+        }, 3000);
+      }
+    })
+    .catch((err) => {
+      connectionErrorLogin.innerHTML = 'Error of Connection, Please check your internet connection and try again';
     });
 }
