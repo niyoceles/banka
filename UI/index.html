@@ -74,7 +74,10 @@
                     <input type="email" placeholder="Enter Email" name="email" id="email1" required>
                     <label>Password</label>
                     <input type="password" placeholder="Enter Password" name="password" id="password1" required>
-                    <input type="submit" id="btn-sign-in" class="btn-submit" name="submit" value="Submit">
+                    <div class="error" id="incorrect-error"></div>
+                    <div class="error" id="connection-error-login"></div>
+                    <button type="submit" id="btn-sign-in" class="btn-submit">Sign In </button>
+                    <div class="success" id="success-login"></div>
                     <p class="signUplink">Not yet a Member? <b>Sign Up </b> </p>
                 </form>
             </div>
