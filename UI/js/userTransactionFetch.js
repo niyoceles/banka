@@ -10,7 +10,6 @@ function accountTransaction(e) {
   // const urlTransaction = `http://localhost:4000/api/v1/transactions/${accountNumber}/transactions`;
   const urlTransaction = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNumber}/transactions`;
 
-  const connectionErrorTransaction = document.querySelector('#error-connection-transaction');
   const token = localStorage.getItem('token');
 
   fetch(urlTransaction, {
@@ -65,6 +64,6 @@ function accountTransaction(e) {
       }
     })
     .catch((err) => {
-      connectionErrorTransaction.innerHTML = 'Error of Connection, Please check your internet connection and try again';
+      document.getElementById('transactions').innerHTML = '<h3 style="color: brown">Error of Connection, Please check your internet connection and try again </h3>';
     });
 }
