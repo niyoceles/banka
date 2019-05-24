@@ -250,14 +250,3 @@ elementExist(createBankAccountLink, () => {
     onCreateBankAccount(); // with  create bank account
   });
 });
-
-document.querySelector('#signOut').addEventListener('click', UserSignOut);
-function UserSignOut(e) {
-  if (localStorage.getItem('token')) {
-    localStorage.removeItem('token');
-  }
-  if (localStorage.getItem('isloggedIn')) {
-    localStorage.removeItem('isloggedIn');
-  }
-  window.location.replace('../index.html');
-}

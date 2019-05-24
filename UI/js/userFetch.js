@@ -1,10 +1,21 @@
 function setSession() {
   if (!localStorage.getItem('isloggedIn')) {
     alert('Please Sign in');
-    window.location = '../index.html'; return window.location;
+    window.location = './index.html'; return window.location;
   }
 }
 setSession();
+
+document.querySelector('#signOut').addEventListener('click', UserSignOut);
+function UserSignOut(e) {
+  if (localStorage.getItem('token')) {
+    localStorage.removeItem('token');
+  }
+  if (localStorage.getItem('isloggedIn')) {
+    localStorage.removeItem('isloggedIn');
+  }
+  window.location.replace('../index.html');
+}
 
 document.getElementById('createBankAccountForm').addEventListener('submit', accountCreate);
 
@@ -16,12 +27,13 @@ function accountCreate(e) {
   const email = document.getElementById('email').value;
   const balance = document.getElementById('opening-balance').value;
 
-  const urlAccount = 'http://localhost:4000/api/v1/account';
-  // const urlAccount = 'https://banka-apps.herokuapp.com/api/v1/account';
+  // const urlAccount = 'http://localhost:4000/api/v1/account';
+  const urlAccount = 'https://banka-apps.herokuapp.com/api/v1/account';
   const createAcErrorType = document.querySelector('#create-ac-error-type');
   const createAcErrorEmail = document.querySelector('#create-ac-error-email');
   const createAcErrorPhone = document.querySelector('#create-ac-error-phone');
   const createAcErrorBalance = document.querySelector('#create-ac-error-amount');
+  const connectionErrorAccount = document.querySelector('#error-connection-ac');
   const successfulCreateAc = document.querySelector('#success-account');
   const token = localStorage.getItem('token');
 
@@ -66,5 +78,7 @@ function accountCreate(e) {
         }
       }
     })
-    .catch(err => console.log(err));
+    .catch((err) => {
+      connectionErrorAccount.innerHTML = 'Error of Connection, Please check your internet connection and try again';
+    });
 }
