@@ -27,7 +27,6 @@
     <input type="checkbox" id="navbar-check">
     <div class="navbar-links">
       <a id="signOut">Logout</a>
-      <a href="../html/cashier.html">Cashier page</a>
       <a href="../html/admin.html">User Account</a>
       <a href="../html/admin-bank-account.html">Bank Account</a>
       <a href="#" id="createAccount">Create Account</a>
@@ -35,8 +34,10 @@
   </div>
 
   <div class="container">
-    <h1>User Account</h1>
-    <table id="table">
+    <h1>All User Accounts</h1>
+    <div id="userAccount"></div>
+
+    <!-- <table id="table">
       <tr>
         <th>ID</th>
         <th>Email</th>
@@ -70,7 +71,7 @@
           <button id="goto-activate" class="activateLink">Activate</button>
         </td>
       </tr>
-    </table>
+    </table> -->
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -121,6 +122,7 @@
   </div>
   <script src="../js/app.js"></script>
   <script src="../js/checkUser.js"></script>
+  <script src="../js/admin.js"></script>
 </body>
 
 </html>
