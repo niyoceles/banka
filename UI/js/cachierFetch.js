@@ -54,6 +54,9 @@ function checkTransactionId(e) {
       if (response.status === 404) {
         document.getElementById('transaction').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
       }
+      if (response.status === 401) {
+        document.getElementById('transaction').innerHTML = `<h3 style="color: brown">${response.message} </h3>`;
+      }
     })
     .catch((err) => {
       connectionErrorTransactionId.innerHTML = 'Error of Connection, Please check your internet connection and try again';

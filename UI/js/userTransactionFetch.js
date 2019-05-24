@@ -60,6 +60,9 @@ function accountTransaction(e) {
       if (response.status === 404) {
         document.getElementById('transactions').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
       }
+      if (response.status === 401) {
+        document.getElementById('transactions').innerHTML = `<h3 style="color: brown">${response.message} </h3>`;
+      }
     })
     .catch((err) => {
       connectionErrorTransaction.innerHTML = 'Error of Connection, Please check your internet connection and try again';
