@@ -38,6 +38,7 @@ class TransactionsController {
   static async getSpecificTransaction(req, res) {
     if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, cashier Only',
       });
     }
@@ -69,6 +70,7 @@ class TransactionsController {
   static async creditAccount(req, res) {
     if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, cashier Only',
       });
     }
@@ -139,6 +141,7 @@ class TransactionsController {
   static async debitAccount(req, res) {
     if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, Cashier Only',
       });
     }
