@@ -51,32 +51,28 @@
           <h3>Credit Account</h3>
 
           <label>Account Number</label>
-          <input type="number" placeholder="Enter Account number" id="account-no" required>
+          <input type="number" placeholder="Enter Account number" id="account-no-ct" required>
 
-          <label>Account Name</label>
-          <input type="text" placeholder="Enter Account Names" id="account-name" required>
           <label>Amount</label>
-          <input type="text" placeholder="Enter Amount" id="account-amount" required>
-
+          <input type="text" placeholder="Enter Amount" id="account-amount-ct" required>
 
           <label>Reason/Motif</label>
-          <input type="text" placeholder="Enter Reason" id="motif" required>
+          <input type="text" placeholder="Enter Reason" id="credit-reason" required>
           <button type="submit" id="credit">Credit</button>
         </form>
         <form class="animate" id="debitAccountForm">
           <h3> Debit Account</h3>
           <label>Account Number</label>
-          <input type="number" placeholder="Enter Account number" id="account-no" required>
-
-          <label>Account Name</label>
-          <input type="text" placeholder="Enter Account Names" id="account-name" required>
-
+          <input type="number" placeholder="Enter Account number" id="account-no-db" required>
+          <div class="error" id="account-no-error-db"></div>
           <label>Amount</label>
-          <input type="text" placeholder="Enter Amount" id="account-amount" required>
-
+          <input type="text" placeholder="Enter Amount" id="account-amount-db" required>
+          <div class="error" id="amount-error-db"></div>
           <label>Reason/Motif</label>
-          <input type="text" placeholder="Enter Reason" id="motif" required>
+          <input type="text" placeholder="Enter Reason" id="debit-reason" required>
+          <div class="error" id="reason-error-db"></div>
           <button type="submit" id="debit">Debit</button>
+          <div class="success" id="success-debit"></div>
         </form>
       </div>
     </div>

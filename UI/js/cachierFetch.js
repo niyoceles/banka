@@ -1,4 +1,5 @@
 document.getElementById('transactionIdAccountForm').addEventListener('submit', checkTransactionId);
+document.getElementById('debitAccountForm').addEventListener('submit', createDebitAccount);
 
 function checkTransactionId(e) {
   e.preventDefault();
@@ -60,5 +61,55 @@ function checkTransactionId(e) {
     })
     .catch((err) => {
       connectionErrorTransactionId.innerHTML = 'Error of Connection, Please check your internet connection and try again';
+    });
+}
+
+// User Debit account
+function createDebitAccount(e) {
+  e.preventDefault();
+  const accountNumber = document.getElementById('account-no-db').value;
+  const amount = document.getElementById('account-amount-db').value;
+  const reason = document.getElementById('debit-reason').value;
+
+  const urlDebit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNumber}/debit`;
+  const urlDebit = `http://localhost:4000/api/v1/transactions/${accountNumber}/debit`;
+
+  const accountNoError = document.querySelector('#account-no-error-db');
+  const amountError = document.querySelector('#amount-error-db');
+  const reasonError = document.querySelector('#reason-error-db');
+  const successDebited = document.querySelector('#success-debit');
+  const connectionErrorDb = document.querySelector('#connection-error-debit');
+  const token = localStorage.getItem('token');
+
+  fetch(urlDebit, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'access-token': token,
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ amount, reason }),
+  })
+    .then(res => res.json())
+    .then((response) => {
+      if (response.status === 201) {
+        successDebited.innerHTML = `<h3>Successful Debited ${response.data.accountNumber} ${response.data.amount}! </h3>`;
+        setTimeout(() => {
+          window.location = './cashier.html';
+        }, 1500);
+      }
+      if (response.status === 400) {
+        if (response.error[0].field === 'amount') {
+          amountError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'reason') {
+          reasonError.innerHTML = `${response.error[0].message}`;
+        }
+      }
+      if (response.status === 404) {
+        accountNoError.innerHTML = `${response.error}`;
+      }
+    })
+    .catch((err) => {
+      connectionErrorDb.innerHTML = 'Error of Connection, Please check your internet connection and try again';
     });
 }
