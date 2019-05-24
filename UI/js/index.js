@@ -92,7 +92,7 @@ function userSignin(e) {
   const password = document.getElementById('password1').value;
 
   const urlSignin = 'https://banka-apps.herokuapp.com/api/v1/auth/signin';
-//   const urlSignin = 'http://localhost:4000/api/v1/auth/signin';
+  // const urlSignin = 'http://localhost:4000/api/v1/auth/signin';
 
   const incorrectEmailPassword = document.querySelector('#incorrect-error');
   const successfulLogin = document.querySelector('#success-login');

@@ -51,14 +51,17 @@
           <h3>Credit Account</h3>
 
           <label>Account Number</label>
-          <input type="number" placeholder="Enter Account number" id="account-no-ct" required>
-
+          <input type="number" placeholder="Enter Account number" id="account-no-cr" required>
+          <div class="error" id="account-no-error-cr"></div>
           <label>Amount</label>
-          <input type="text" placeholder="Enter Amount" id="account-amount-ct" required>
-
+          <input type="text" placeholder="Enter Amount" id="account-amount-cr" required>
+          <div class="error" id="amount-error-cr"></div>
           <label>Reason/Motif</label>
           <input type="text" placeholder="Enter Reason" id="credit-reason" required>
+          <div class="error" id="reason-error-cr"></div>
+          <div class="error" id="connection-error-credit"></div>
           <button type="submit" id="credit">Credit</button>
+          <div class="success" id="success-credit"></div>
         </form>
         <form class="animate" id="debitAccountForm">
           <h3> Debit Account</h3>
@@ -71,6 +74,7 @@
           <label>Reason/Motif</label>
           <input type="text" placeholder="Enter Reason" id="debit-reason" required>
           <div class="error" id="reason-error-db"></div>
+          <div class="error" id="connection-error-debit"></div>
           <button type="submit" id="debit">Debit</button>
           <div class="success" id="success-debit"></div>
         </form>
