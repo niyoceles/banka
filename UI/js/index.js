@@ -123,10 +123,10 @@ function userSignin(e) {
           if (response.data.type === 'client') {
             window.location = './html/user.html'; return window.location;
           }
-          if (response.data.isAdmin = false) {
+          if (response.data.isAdmin === false) {
             window.location = './html/cashier.html'; return window.location;
           }
-          if (response.data.isAdmin = true) {
+          if (response.data.isAdmin === true) {
             window.location = './html/admin.html'; return window.location;
           }
         }, 3000);
