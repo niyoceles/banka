@@ -37,25 +37,21 @@ function accountCreate(e) {
       if (response.status === 201) {
         successfulCreateAc.innerHTML = `Account Successfull Created!  A/C:${response.data.accountNumber}`;
         setTimeout(() => {
-          window.location = './myaccounts.html'; return window.location;
+          window.location = './myaccounts.html';
         }, 3000);
       }
       if (response.status === 400) {
         if (response.error[0].field === 'type') {
           createAcErrorType.innerHTML = `${response.error[0].message}`;
-          return createAcErrorType;
         }
         if (response.error[0].field === 'phone') {
           createAcErrorPhone.innerHTML = `${response.error[0].message}`;
-          return createAcErrorPhone;
         }
         if (response.error[0].field === 'email') {
           createAcErrorEmail.innerHTML = `${response.error[0].message}`;
-          return createAcErrorEmail;
         }
         if (response.error[0].field === 'balance') {
           createAcErrorBalance.innerHTML = `${response.error[0].message}`;
-          return createAcErrorBalance;
         }
       }
     })

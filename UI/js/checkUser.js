@@ -1,7 +1,7 @@
 function setSession() {
   if (!localStorage.getItem('isloggedIn')) {
     alert('Please Sign in');
-    window.location = '../index.html'; return window.location;
+    window.location = '../index.html';
   }
 }
 setSession();
