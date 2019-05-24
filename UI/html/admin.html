@@ -98,26 +98,38 @@
           <button class="cancelbtn">Close</button>
         </form>
         <form class="animate" id="createAccountForm">
-          <h3> Create User Account</h3>
+          <h3> Create Staff user Account</h3>
+          <label>First name</label>
+          <input type="text" id="firstname" placeholder="Enter First name" required>
+          <div class="error" id="firstname-error"></div>
+          <label>Last name</label>
+          <input type="text" placeholder="Enter Last name" id="lastname" required>
+          <div class="error" id="lastname-error"></div>
           <label>Email</label>
           <input type="email" id="email" placeholder="Enter Email" required>
-
-          <label>First Name</label>
-          <input type="text" placeholder="Enter First Name" id="firstname" required>
-
-          <label>Last Name</label>
-          <input type="text" placeholder="Enter Last Name" id="lastname" required>
-
-          <label>Password</label>
-          <input type="password" id="password" placeholder="Enter Password" required>
-
+          <div class="error" id="email-error"></div>
+          <label>Phone Number</label>
+          <input type="number" placeholder="Enter Phone number" id="phonenumber" required>
+          <div class="error" id="phone-error"></div>
           <label>User Account type</label>
-          <select name="account-type" id="account-type">
+          <select name="account-type" id="type" required>
             <option value="">Select account type</option>
-            <option value="admin">Admin</option>
-            <option value="staff">Staff</option>
+            <option value="true">Admin</option>
+            <option value="false">Staff</option>
           </select>
-          <button type="submit" id="btnSignUp">Create User</button>
+          <label>Username</label>
+          <input type="text" placeholder="Enter Username" id="username" required>
+          <div class="error" id="username-error"></div>
+          <label>Password</label>
+          <input type="password" placeholder="Enter Password" id="password" required>
+          <div class="error" id="password-error"></div>
+          <label>Location</label>
+          <input type="text" placeholder="Enter location" id="location" required>
+          <div class="error" id="location-error"></div>
+          <div class="error" id="connection-error"></div>
+          <div class="error" id="authorization-error"></div>
+          <button type="submit" id="btnStaff">Create Staff</button>
+          <div class="success" id="success-staff"></div>
         </form>
       </div>
     </div>
@@ -129,7 +141,7 @@
   </div>
   <script src="../js/app.js"></script>
   <script src="../js/checkUser.js"></script>
-  <script src="../js/admin.js"></script>
+  <script src="../js/adminFetch.js"></script>
 </body>
 
 </html>
