@@ -26,6 +26,7 @@ class UsersController {
   static async getAllUserAccounts(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
@@ -158,6 +159,7 @@ class UsersController {
   static async adminCreateUser(req, res) {
     if (req.decodedToken.isAdmin === false || req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, Admin Only',
       });
     }

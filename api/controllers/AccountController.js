@@ -5,6 +5,7 @@ class AccountsController {
   static async getAllBankAccounts(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
@@ -37,6 +38,7 @@ class AccountsController {
   static async getAllActiveByStatus(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, admin Only',
       });
     }
@@ -79,6 +81,7 @@ class AccountsController {
   static async getAllAccountByUser(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
@@ -140,6 +143,7 @@ class AccountsController {
   static async createAccount(req, res) {
     if (req.decodedToken.type === 'staff') {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, client Only',
       });
     }
@@ -189,7 +193,8 @@ class AccountsController {
   static async updateAccount(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
-        message: 'Not allowed to access this feature',
+        status: 401,
+        message: 'Not allowed to access this feature customer only',
       });
     }
 
@@ -230,6 +235,7 @@ class AccountsController {
   static async deleteAccount(req, res) {
     if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
       return res.status(401).json({
+        status: 401,
         message: 'Not allowed to access this feature, for Admin only',
       });
     }
