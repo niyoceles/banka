@@ -72,7 +72,7 @@ function createDebitAccount(e) {
   const reason = document.getElementById('debit-reason').value;
 
   const urlDebit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNumber}/debit`;
-  const urlDebit = `http://localhost:4000/api/v1/transactions/${accountNumber}/debit`;
+  // const urlDebit = `http://localhost:4000/api/v1/transactions/${accountNumber}/debit`;
 
   const accountNoError = document.querySelector('#account-no-error-db');
   const amountError = document.querySelector('#amount-error-db');

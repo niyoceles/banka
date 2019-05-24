@@ -53,7 +53,7 @@ function userSignup(e) {
         successfullSignup.innerHTML = `Welcome to Banka ${response.data.type} ${response.data.firstName}!`;
         setTimeout(() => {
           if (response.data.type === 'client') {
-            window.location = './html/user-profile.html'; return window.location;
+            window.location = './html/user-profile.html';
           }
         }, 3000);
         localStorage.setItem('token', response.token);
@@ -63,30 +63,22 @@ function userSignup(e) {
       if (response.status === 400) {
         if (response.error[0].field === 'firstName') {
           firstNameError.innerHTML = `${response.error[0].message}`;
-          return firstNameError;
         } if (response.error[0].field === 'lastName') {
           lastNameError.innerHTML = `${response.error[0].message}`;
-          return lastNameError;
         } if (response.error[0].field === 'email') {
           emailError.innerHTML = `${response.error[0].message}`;
-          return emailError;
         } if (response.error[0].field === 'phone') {
           phoneError.innerHTML = `${response.error[0].message}`;
-          return phoneError;
         } if (response.error[0].field === 'userName') {
           userNameError.innerHTML = `${response.error[0].message}`;
-          return userNameError;
         } if (response.error[0].field === 'password') {
           passwordError.innerHTML = `${response.error[0].message}`;
-          return passwordError;
         } if (response.error[0].field === 'location') {
           locationError.innerHTML = `${response.error[0].message}`;
-          return locationError;
         }
       }
       if (response.status === 200) {
         existAccountError.innerHTML = `${response.error[0].message}`;
-        return existAccountError;
       }
     })
     .catch((err) => {
@@ -99,8 +91,8 @@ function userSignin(e) {
   const email = document.getElementById('email1').value;
   const password = document.getElementById('password1').value;
 
-  const urlSignin = 'https://banka-apps.herokuapp.com/api/v1/auth/signin';
-  // const urlSignin = 'http://localhost:4000/api/v1/auth/signin';
+  // const urlSignin = 'https://banka-apps.herokuapp.com/api/v1/auth/signin';
+  const urlSignin = 'http://localhost:4000/api/v1/auth/signin';
 
   const incorrectEmailPassword = document.querySelector('#incorrect-error');
   const successfulLogin = document.querySelector('#success-login');
@@ -121,13 +113,13 @@ function userSignin(e) {
         successfulLogin.innerHTML = `Welcome to Banka ${response.data.type} ${response.data.firstName}!`;
         setTimeout(() => {
           if (response.data.type === 'client') {
-            window.location = './html/user.html'; return window.location;
+            window.location = './html/user.html';
           }
           if (response.data.isAdmin === false) {
-            window.location = './html/cashier.html'; return window.location;
+            window.location = './html/cashier.html';
           }
           if (response.data.isAdmin === true) {
-            window.location = './html/admin.html'; return window.location;
+            window.location = './html/admin.html';
           }
         }, 3000);
         localStorage.setItem('token', response.token);
