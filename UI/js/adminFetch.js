@@ -121,3 +121,90 @@ function checkUserAccount(e) {
       document.getElementById('account').innerHTML = '<h3 style="color: brown">Error of Connection, Please check your internet connection and try again </h3>';
     });
 }
+
+document.getElementById('createAccountForm').addEventListener('submit', createStaffUser);
+function createStaffUser(e) {
+  e.preventDefault();
+
+  // const urlCreateStaff = 'http://localhost:4000/api/v1/auth/user';
+  const urlCreateStaff = 'https://banka-apps.herokuapp.com/api/v1/auth/user';
+
+  const firstName = document.getElementById('firstname').value;
+  const lastName = document.getElementById('lastname').value;
+  const email = document.getElementById('email').value;
+  const isAdmin = document.getElementById('type').value;
+  const phone = document.getElementById('phonenumber').value;
+  const userName = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const location = document.getElementById('location').value;
+
+  // Successful
+  const successfullstaff = document.querySelector('#success-staff');
+  // errors
+  const connectionError = document.querySelector('#connection-error');
+  const firstNameError = document.querySelector('#firstname-error');
+  const lastNameError = document.querySelector('#lastname-error');
+  const phoneError = document.querySelector('#phone-error');
+  const emailError = document.querySelector('#email-error');
+  const passwordError = document.querySelector('#password-error');
+  const userNameError = document.querySelector('#username-error');
+  const locationError = document.querySelector('#location-error');
+  const existAccountError = document.querySelector('#account-exist');
+
+  const token = localStorage.getItem('token');
+
+  fetch(urlCreateStaff, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'access-token': token,
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      phone,
+      email,
+      isAdmin,
+      userName,
+      password,
+      location,
+    }),
+  })
+    .then(res => res.json())
+    // .then((data) => console.log(data))
+    .then((response) => {
+      if (response.status === 201) {
+        successfullstaff.innerHTML = `Account Successful Created ${response.data.firstName} ${response.data.email}!`;
+        setTimeout(() => {
+          window.location = './admin.html';
+        }, 1500);
+      }
+      if (response.status === 400) {
+        if (response.error[0].field === 'firstName') {
+          firstNameError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'lastName') {
+          lastNameError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'email') {
+          emailError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'phone') {
+          phoneError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'userName') {
+          userNameError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'password') {
+          passwordError.innerHTML = `${response.error[0].message}`;
+        } if (response.error[0].field === 'location') {
+          locationError.innerHTML = `${response.error[0].message}`;
+        }
+      }
+      if (response.status === 200) {
+        existAccountError.innerHTML = `<h3 style="color: brown">${response.error[0].message} </h3>`;
+      }
+      if (response.status === 401) {
+        document.getElementById('authorization-error').innerHTML = `<h3 style="color: brown">${response.message} </h3>`;
+      }
+    })
+    .catch((err) => {
+      connectionError.innerHTML = '<h3 style="color: brown">Error of Connection, Please check your internet connection and try again </h3>';
+    });
+}
