@@ -66,7 +66,7 @@ document.getElementById('bankAccountForm').addEventListener('submit', activateDe
 function activateDeactivate(e) {
   e.preventDefault();
 
-  const accountNo = document.getElementById('account-number').value;
+  const accountNo = document.getElementById('account-no').value;
   const status = document.getElementById('status').value;
 
   // const urlActiveDeactive = `http://localhost:4000/api/v1/accounts/${accountNo}`;
@@ -113,6 +113,44 @@ function activateDeactivate(e) {
         </tr>
         `;
         document.getElementById('account').innerHTML = dataInData;
+      }
+      if (response.status === 404) {
+        document.getElementById('account').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
+      }
+      if (response.status === 401) {
+        document.getElementById('account').innerHTML = `<h3 style="color: brown">${response.message} </h3>`;
+      }
+    })
+    .catch((err) => {
+      document.getElementById('account').innerHTML = '<h3 style="color: brown">Error of Connection, Please check your internet connection and try again </h3>';
+    });
+}
+
+// ADMIN DELETE USER ACCOUNT ACCOUNT
+document.getElementById('deleteBankAccountForm').addEventListener('submit', deleteBankAccount);
+
+function deleteBankAccount(e) {
+  e.preventDefault();
+
+  const accountNumber = document.getElementById('account-number').value;
+
+  // const urlDeleteAccount = `http://localhost:4000/api/v1/account/${accountNumber}`;
+  const urlDeleteAccount = `https://banka-apps.herokuapp.com/api/v1/account/${accountNumber}`;
+
+  const token = localStorage.getItem('token');
+
+  fetch(urlDeleteAccount, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'access-token': token,
+      'Content-type': 'application/json',
+    },
+  })
+    .then(res => res.json())
+    .then((response) => {
+      if (response.status === 201) {
+        document.getElementById('account').innerHTML = `<h3 style="color: brown">${response.message} </h3>`;;
       }
       if (response.status === 404) {
         document.getElementById('account').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
