@@ -11,7 +11,7 @@ const validAcc = accountValid();
 const statusVal = statusValid();
 
 const router = Router();
-router.get('/accounts', Account.getAllBankAccounts);
+router.get('/accounts', checkToken, Account.getAllBankAccounts);
 router.get('/v2/accounts', checkToken, Account.getAllActiveByStatus);
 router.get('/user/:email/accounts', checkToken, Account.getAllAccountByUser);
 router.post('/account', checkToken, validAcc, Account.createAccount);
