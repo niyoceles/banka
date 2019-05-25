@@ -292,6 +292,10 @@ button.cancelbtn {
     background-color: rgb(206, 74, 74);
 }
 
+button.delete {
+  background-color: rgb(206, 74, 74);
+}
+
 /* responsive navbar */
 .navbar{
     position: sticky;
@@ -880,4 +884,8 @@ a.links{
   button.get-stared-link{
     margin-left: 45px;
   }
+}
+
+#admin-section-panel{
+  border: 1px solid;
 }
