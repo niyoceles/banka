@@ -31,11 +31,20 @@
       <a href="../html/admin-bank-account.html">Bank Account</a>
     </div>
   </div>
-
-  <section id="main-section">
-    <div class="container">
-      <div class="panel" id="admin-section-panel">
-        <form id="bankAccountForm">
+  <div class="container">
+    <button id="deleteAccount">Delete</button>
+    <button id="viewAccount">Activate or deactive</button></td>
+    <div id="account"></div>
+    <h1>List of all bank accounts</h1>
+    <div id="bankAccount"></div>
+  </div>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="img-close">
+        <span class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <form class="animate" id="bankAccountForm">
           <h3> Activate or Deactivate Account below</h3>
           <input type="text" placeholder="Account Number" id="account-no" required>
           <select name="account-status" id="status" required>
@@ -45,98 +54,10 @@
           </select>
           <button type="submit" class="btn-submit">Active Or Deactivate</button>
         </form>
-      </div>
-      <div class="panel" style="margin-right: -5%"></div>
-      <div class="panel" id="admin-section-panel">
-        <form id="deleteBankAccountForm">
+        <form class="animate" id="deleteAccountForm">
           <h3> Delete Specific Account</h3>
           <input type="text" placeholder="Account Number" id="account-number" required>
           <button type="submit" class="delete">Delete Account</button>
-        </form>
-      </div>
-    </div>
-  </section>
-  <div class="container">
-    <div id="account"></div>
-    <h1>List of all bank accounts</h1>
-    <div id="bankAccount"></div>
-    <!-- <table id="table">
-      <tr>
-        <th>ID</th>
-        <th>Account Number</th>
-        <th>Created On</th>
-        <th>Owner</th>
-        <th>Type</th>
-        <th>Status</th>
-        <th>Balance</th>
-        <th>Action</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>000-234-1234-001</td>
-        <td>20/03/2019</td>
-        <td>Celestin NIYONSABA</td>
-        <td>Savings</td>
-        <td>Active</td>
-        <td>55.000</td>
-        <td>
-          <button id="deleteAccountLink">Delete</button>
-          <button id="viewAccountLink">View</button></td>
-
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>000-998-3838-02</td>
-        <td>20/03/2019</td>
-        <td>Celestin TUYISHIMIRE</td>
-        <td>Savings</td>
-        <td>Desactive</td>
-        <td>58.000</td>
-        <td>
-          <button id="deleteAccount">Delete</button>
-          <button id="viewAccount">View</button></td>
-      </tr>
-    </table> -->
-  </div>
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <div class="img-close">
-        <span class="close" title="Close Modal">&times;</span>
-      </div>
-      <div class="container">
-        <form class="animate" id="viewAccountTable">
-          <h3> View Account Record</h3>
-          <label>Account No: <b>000-234-1234-001</b></label>
-          <label>Account Names: <b>Celestin NIYONSABA</b></label>
-          <label>Created on :<b>20/03/2019</b></label>
-          <!-- <div id="account"></div> -->
-          <table id="table">
-            <tr>
-              <th>No</th>
-              <th>Debit</th>
-              <th>Credit</th>
-              <th>Reason</th>
-              <th>Date</th>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>60.000</td>
-              <td></td>
-              <td>Bank charges</td>
-              <td>22/03/2018</td>
-            <tr>
-              <td>2</td>
-              <td></td>
-              <td>55.500</td>
-              <td>Monthly Interest</td>
-              <td>30/03/2018</td>
-            </tr>
-          </table>
-        </form>
-        <form class="animate" id="deleteAccountForm">
-          <h2>Are you sure want to Delete this Account?</h2>
-          <button id="" class="btn-submit">Confirm Delete</button>
-          <button id="" class="cancelbtn">Close</button>
         </form>
       </div>
     </div>

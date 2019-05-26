@@ -34,51 +34,10 @@
   </div>
 
   <div class="container">
-    <form id="userAccountForm">
-      <h3> Check specific user Account below</h3>
-      <input type="email" placeholder="email" id="user-email" required>
-      <div class="error" id="incorrect-user"></div>
-      <button type="submit" class="btn-submit">Check Transaction </button>
-    </form>
+    <button class="activate" id="check-account">Check Account</button>
     <div id="account"></div>
     <h1>All User Accounts</h1>
     <div id="userAccount"></div>
-
-    <!-- <table id="table">
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Password</th>
-        <th>Type</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>celestin@gmail.com</td>
-        <td>Celestin</td>
-        <td>TUYISHIMIRE</td>
-        <td>password</td>
-        <td>admin</td>
-        <td> <span>Active</span></td>
-        <td><button class="deactivate" id="deactivate-user-account">Deactivate</button>
-          <button class="activate" id="activate-user-account">Activate</button></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>kamanaalp@gmail.com</td>
-        <td>Alphonse </td>
-        <td>kamanzi</td>
-        <td>password</td>
-        <td>cashier</td>
-        <td><span>Desactive</span></td>
-        <td><button id="goto-deactivate" class="deactivateLink">Deactivate</button>
-          <button id="goto-activate" class="activateLink">Activate</button>
-        </td>
-      </tr>
-    </table> -->
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -86,16 +45,11 @@
         <span class="close" title="Close Modal">&times;</span>
       </div>
       <div class="container">
-        <form class="animate" id="activateModal">
-          <h2>Are you sure want to Activate this User Account?</h2>
-          <button class="btn-confirm">Confirm</button>
-          <button class="cancelbtn">Close</button>
-        </form>
-
-        <form class="animate" id="deactivateModal">
-          <h2>Are you sure want to deactivate this User Account?</h2>
-          <button class="btn-confirm">Confirm</button>
-          <button class="cancelbtn">Close</button>
+        <form class="animate" id="accountFormModal">
+          <h3> Check specific user Account below</h3>
+          <input type="email" placeholder="email" id="user-email" required>
+          <div class="error" id="incorrect-user"></div>
+          <button type="submit" class="btn-submit">Check Account</button>
         </form>
         <form class="animate" id="createAccountForm">
           <h3> Create Staff user Account</h3>
