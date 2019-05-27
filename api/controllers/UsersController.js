@@ -1,35 +1,49 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import users from '../models/users';
+// import users from '../models/users';
 import db from '../models';
+import AccountsController from './AccountController';
 
 dotenv.config();
 
 class UsersController {
   // Get a single Users
-  static getSingleUser(req, res) {
-    const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
-    if (findUsers) {
-      res.status(200).json({
-        status: '200',
-        Users: findUsers,
-        message: 'A single Users record',
+  // static getSingleUser(req, res) {
+  //   const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
+  //   if (findUsers) {
+  //     res.status(200).json({
+  //       status: '200',
+  //       Users: findUsers,
+  //       message: 'A single Users record',
+  //     });
+  //   }
+  //   res.status(404).json({
+  //     status: '404',
+  //     message: 'Users Id is not found',
+  //   });
+  // }
+
+  static checkAdminOnly(req, res) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        status: 401,
+        message: 'Not allowed to access this feature, for Admin only',
       });
     }
-    res.status(404).json({
-      status: '404',
-      message: 'Users Id is not found',
-    });
   }
 
-  static async getAllUserAccounts(req, res) {
+  static checkStaffOnly(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
         status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
+  }
+
+  static async getAllUserAccounts(req, res) {
+    AccountsController.checkStaffOnly(req, res)
     try {
       let checkUserAccounts = '';
       checkUserAccounts = await db.query('SELECT * FROM users');
@@ -129,7 +143,7 @@ class UsersController {
             }, process.env.SECRET_KEY, {
                 expiresIn: 86400, // expires in 24 hours
               });
-            return res.status(200).json({
+            res.status(200).json({
               status: 200,
               data: {
                 id: rows[i].id,
@@ -146,8 +160,7 @@ class UsersController {
           }
         }
       }
-
-      return res.status(400).json({
+      res.status(400).json({
         status: 400,
         error: 'Sorry, your email or password is incorrect',
       });
@@ -157,12 +170,7 @@ class UsersController {
   }
 
   static async adminCreateUser(req, res) {
-    if (req.decodedToken.isAdmin === false || req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, Admin Only',
-      });
-    }
+    AccountsController.checkAdminOnly(req, res);
     const values = [
       req.body.firstName,
       req.body.lastName,

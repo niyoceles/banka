@@ -1,14 +1,36 @@
 import db from '../models';
 
 class AccountsController {
-  // GET All Bank Accounts
-  static async getAllBankAccounts(req, res) {
+  static checkStaffOnly(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
         status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
+  }
+
+  static checkUserOnly(req, res) {
+    if (req.decodedToken.type === 'staff') {
+      return res.status(401).json({
+        status: 401,
+        message: 'Not allowed to access this feature, client Only',
+      });
+    }
+  }
+
+  static checkAdminOnly(req, res) {
+    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
+      return res.status(401).json({
+        status: 401,
+        message: 'Not allowed to access this feature, for Admin only',
+      });
+    }
+  }
+
+  // GET All Bank Accounts
+  static async getAllBankAccounts(req, res) {
+    AccountsController.checkStaffOnly(req, res);
     try {
       let checkAllBankAccounts = '';
       checkAllBankAccounts = await db.query('SELECT * FROM accounts, users where users.id=owner');
@@ -36,12 +58,7 @@ class AccountsController {
   }
 
   static async getAllActiveByStatus(req, res) {
-    if (req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, admin Only',
-      });
-    }
+    AccountsController.checkStaffOnly(req, res);
     try {
       let checkStatusAccount = '';
       if (req.query.status === 'active' || req.query.status === 'dormant') {
@@ -79,12 +96,7 @@ class AccountsController {
 
   // GET list of all account owned by user email
   static async getAllAccountByUser(req, res) {
-    if (req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, staff Only',
-      });
-    }
+    AccountsController.checkStaffOnly(req, res);
     try {
       let checkAllAccounts = '';
       if (req.params.email) {
@@ -122,7 +134,7 @@ class AccountsController {
       }
 
       if (checkAccountDetails.rows.length > 0) {
-        checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
+        // checkAccountDetails.rows[0].createdOn = new Date(checkAccountDetails.rows[0].createdOn).toDateString();
         delete checkAccountDetails.rows[0].password;
         res.status(200).json({
           status: 200,
@@ -141,12 +153,7 @@ class AccountsController {
   }
 
   static async createAccount(req, res) {
-    if (req.decodedToken.type === 'staff') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, client Only',
-      });
-    }
+    AccountsController.checkUserOnly(req, res);
     const accountValue = [
       Date.now(),
       req.decodedToken.userId,
@@ -165,7 +172,8 @@ class AccountsController {
     try {
       let checkAccount = '';
       if (req.body.email) {
-        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1 OR email=$2 AND type=$3', [req.body.accountNumber, req.body.email, req.body.type]);
+        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1 OR email=$2 AND type=$3',
+          [req.body.accountNumber, req.body.email, req.body.type]);
       }
 
       if (checkAccount.rows > 1) {
@@ -191,12 +199,7 @@ class AccountsController {
   }
 
   static async updateAccount(req, res) {
-    if (req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature customer only',
-      });
-    }
+    AccountsController.checkStaffOnly(req, res);
 
     const accountStatusValue = [
       req.body.status,
@@ -233,12 +236,7 @@ class AccountsController {
   }
 
   static async deleteAccount(req, res) {
-    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, for Admin only',
-      });
-    }
+    AccountsController.checkAdminOnly(req, res);
     const updateData = `DELETE FROM accounts WHERE "accountNumber"=${req.params.accountNumber}
     RETURNING *`;
 
