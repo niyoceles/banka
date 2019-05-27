@@ -4,14 +4,10 @@ document.getElementById('creditAccountForm').addEventListener('submit', createCr
 
 function checkTransactionId(e) {
   e.preventDefault();
-
   const transactionId = document.getElementById('transaction-id').value;
-
   // const urlTransactionId = `http://localhost:4000/api/v1/transactions/${transactionId}`;
   const urlTransactionId = `https://banka-apps.herokuapp.com/api/v1/transactions/${transactionId}`;
-
   const token = localStorage.getItem('token');
-
   fetch(urlTransactionId, {
     method: 'GET',
     headers: {
@@ -48,9 +44,7 @@ function checkTransactionId(e) {
         <td>${response.data.newBalance}</td>
         <td>${response.data.reason}</td>
         </tr>
-        `;
-
-        document.getElementById('transaction').innerHTML = htmlTableData;
+        `; document.getElementById('transaction').innerHTML = htmlTableData;
       }
       if (response.status === 404) {
         document.getElementById('transaction').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
@@ -67,13 +61,11 @@ function checkTransactionId(e) {
 // User Debit account
 function createDebitAccount(e) {
   e.preventDefault();
-  const accountNumber = document.getElementById('account-no-db').value;
-  const amount = document.getElementById('account-amount-db').value;
-  const reason = document.getElementById('debit-reason').value;
-
-  const urlDebit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNumber}/debit`;
-  // const urlDebit = `http://localhost:4000/api/v1/transactions/${accountNumber}/debit`;
-
+  const accountNoDb = document.getElementById('account-no-db').value;
+  const amountDb = document.getElementById('account-Db-db').value;
+  const reasonDb = document.getElementById('debit-reason').value;
+  const urlDebit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNoDb}/debit`;
+  // const urlDebit = `http://localhost:4000/api/v1/transactions/${accountNoDb}/debit`;
   const accountNoError = document.querySelector('#account-no-error-db');
   const amountError = document.querySelector('#amount-error-db');
   const reasonError = document.querySelector('#reason-error-db');
@@ -88,7 +80,7 @@ function createDebitAccount(e) {
       'access-token': token,
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({ amount, reason }),
+    body: JSON.stringify({ amountDb, reasonDb }),
   })
     .then(res => res.json())
     .then((response) => {
@@ -116,13 +108,11 @@ function createDebitAccount(e) {
 
 function createCreditAccount(e) {
   e.preventDefault();
-  const accountNumber = document.getElementById('account-no-cr').value;
-  const amount = document.getElementById('account-amount-cr').value;
-  const reason = document.getElementById('credit-reason').value;
-
-  const urlCredit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNumber}/credit`;
-  // const urlCredit = `http://localhost:4000/api/v1/transactions/${accountNumber}/credit`;
-
+  const accountNoCr = document.getElementById('account-no-cr').value;
+  const amountCr = document.getElementById('account-amount-cr').value;
+  const reasonCr = document.getElementById('credit-reason').value;
+  const urlCredit = `https://banka-apps.herokuapp.com/api/v1/transactions/${accountNoCr}/credit`;
+  // const urlCredit = `http://localhost:4000/api/v1/transactions/${accountNoCr}/credit`;
   const accountNoErrorCr = document.querySelector('#account-no-error-cr');
   const amountErrorCr = document.querySelector('#amount-error-cr');
   const reasonErrorCr = document.querySelector('#reason-error-cr');
@@ -137,7 +127,7 @@ function createCreditAccount(e) {
       'access-token': token,
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({ amount, reason }),
+    body: JSON.stringify({ amountCr, reasonCr }),
   })
     .then(res => res.json())
     .then((response) => {
