@@ -44,8 +44,7 @@ function checkTransactionId(e) {
         <td>${response.data.newBalance}</td>
         <td>${response.data.reason}</td>
         </tr>
-        `;
-        document.getElementById('transaction').innerHTML = htmlTableData;
+        `; document.getElementById('transaction').innerHTML = htmlTableData;
       }
       if (response.status === 404) {
         document.getElementById('transaction').innerHTML = `<h3 style="color: brown">${response.error} </h3>`;
