@@ -58,7 +58,7 @@ function getUserAccount() {
 getUserAccount();
 
 
-document.getElementById('userAccountForm').addEventListener('submit', checkUserAccount);
+document.getElementById('accountFormModal').addEventListener('submit', checkUserAccount);
 function checkUserAccount(e) {
   e.preventDefault();
 

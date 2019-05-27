@@ -127,7 +127,7 @@ function activateDeactivate(e) {
 }
 
 // ADMIN DELETE USER ACCOUNT ACCOUNT
-document.getElementById('deleteBankAccountForm').addEventListener('submit', deleteBankAccount);
+document.getElementById('deleteAccountForm').addEventListener('submit', deleteBankAccount);
 
 function deleteBankAccount(e) {
   e.preventDefault();

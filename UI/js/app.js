@@ -11,15 +11,9 @@ const signIn = document.querySelector('#sign-in');
 const signInLink = document.querySelector('.signInlink');
 const signInForm = document.querySelector('#signInForm');
 
-// on activate
-const activate = document.querySelector('#activate-user-account');
-const activateLink = document.querySelector('.activateLink');
-const activateModal = document.querySelector('#activateModal');
-
-// on deactivate
-const deactivate = document.querySelector('#deactivate-user-account');
-const deactivateLink = document.querySelector('.deactivateLink');
-const deactivateModal = document.querySelector('#deactivateModal');
+// on check account
+const accountCheck = document.querySelector('#check-account');
+const accountForm = document.querySelector('#accountFormModal');
 
 // on create an admin/staff Account
 const createAccount = document.querySelector('#createAccount');
@@ -35,12 +29,10 @@ const debitAccountForm = document.querySelector('#debitAccountForm');
 
 // on view specific bank account
 const viewAccount = document.querySelector('#viewAccount');
-const viewAccountLink = document.querySelector('#viewAccountLink');
-const viewAccountTable = document.querySelector('#viewAccountTable');
+const viewAccountTable = document.querySelector('#bankAccountForm');
 
 // on delete specific  bank account
 const deleteAccount = document.querySelector('#deleteAccount');
-const deleteAccountLink = document.querySelector('#deleteAccountLink');
 const deleteAccountForm = document.querySelector('#deleteAccountForm');
 
 // on user create  bank account
@@ -69,23 +61,15 @@ const onSignIn = () => {
   signInForm.style.display = 'block';
   signUpForm.style.display = 'none';
 };
-// display the Activate modal page
-const onActivate = () => {
-  activateModal.style.display = 'block';
-  deactivateModal.style.display = 'none';
+// display the Account modal page
+const onAccount = () => {
+  accountForm.style.display = 'block';
   createAccountForm.style.display = 'none';
 };
-// display the deactivate modal page
-const ondeactivate = () => {
-  deactivateModal.style.display = 'block';
-  activateModal.style.display = 'none';
-  createAccountForm.style.display = 'none';
-};
-// display the deactivate modal page
+// display the create account modal page
 const onCreateAccount = () => {
   createAccountForm.style.display = 'block';
-  deactivateModal.style.display = 'none';
-  activateModal.style.display = 'none';
+  accountForm.style.display = 'none';
 };
 // display the credit account modal page
 const onCreditAccount = () => {
@@ -144,17 +128,10 @@ elementExist(getStarted, () => {
   });
 });
 
-elementExist(activate, () => {
-  activate.addEventListener('click', () => {
+elementExist(accountCheck, () => {
+  accountCheck.addEventListener('click', () => {
     openModal();// open the modal
-    onActivate(); // with Activate modal
-  });
-});
-
-elementExist(deactivate, () => {
-  deactivate.addEventListener('click', () => {
-    openModal(); // open the modal
-    ondeactivate(); // with deactivate modal
+    onAccount(); // with Account modal
   });
 });
 
@@ -213,34 +190,6 @@ elementExist(signInLink, () => {
   signInLink.addEventListener('click', () => {
     openModal(); // open the modal
     onSignIn(); // with Sign In form link modal
-  });
-});
-
-elementExist(activateLink, () => {
-  activateLink.addEventListener('click', () => {
-    openModal(); // open the modal
-    onActivate(); // with Activate link modal
-  });
-});
-
-elementExist(deactivateLink, () => {
-  deactivateLink.addEventListener('click', () => {
-    openModal(); // open the modal
-    ondeactivate(); // with deactivate link modal
-  });
-});
-
-elementExist(viewAccountLink, () => {
-  viewAccountLink.addEventListener('click', () => {
-    openModal(); // open the modal
-    onViewAccount(); // with view account link modal
-  });
-});
-
-elementExist(deleteAccountLink, () => {
-  deleteAccountLink.addEventListener('click', () => {
-    openModal(); // open the modal
-    onDeleteAccount(); // with delete an account link modal
   });
 });
 
