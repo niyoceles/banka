@@ -3,47 +3,17 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 // import users from '../models/users';
 import db from '../models';
-import AccountsController from './AccountController';
 
 dotenv.config();
 
 class UsersController {
-  // Get a single Users
-  // static getSingleUser(req, res) {
-  //   const findUsers = users.find(User => User.id === parseInt(req.params.id, 10));
-  //   if (findUsers) {
-  //     res.status(200).json({
-  //       status: '200',
-  //       Users: findUsers,
-  //       message: 'A single Users record',
-  //     });
-  //   }
-  //   res.status(404).json({
-  //     status: '404',
-  //     message: 'Users Id is not found',
-  //   });
-  // }
 
-  static checkAdminOnly(req, res) {
-    if (req.decodedToken.type === 'client' || req.decodedToken.isAdmin === false) {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, for Admin only',
-      });
-    }
-  }
-
-  static checkStaffOnly(req, res) {
+  static async getAllUserAccounts(req, res) {
     if (req.decodedToken.type === 'client') {
       return res.status(401).json({
-        status: 401,
         message: 'Not allowed to access this feature, staff Only',
       });
     }
-  }
-
-  static async getAllUserAccounts(req, res) {
-    AccountsController.checkStaffOnly(req, res)
     try {
       let checkUserAccounts = '';
       checkUserAccounts = await db.query('SELECT * FROM users');
@@ -72,15 +42,9 @@ class UsersController {
 
   static async signup(req, res) {
     const values = [
-      req.body.firstName,
-      req.body.lastName,
-      req.body.userName,
-      bcrypt.hashSync(req.body.password),
-      req.body.phone,
-      req.body.email,
-      'client',
-      false,
-      req.body.location,
+      req.body.firstName, req.body.lastName, req.body.userName,
+      bcrypt.hashSync(req.body.password), req.body.phone,
+      req.body.email, 'client', false, req.body.location,
     ];
 
     const inserData = `INSERT INTO
@@ -91,9 +55,8 @@ class UsersController {
       let checkUser = '';
 
       if (req.body.email) {
-        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2 AND password=$3', [req.body.userName, req.body.email, req.body.password]);
-      } else {
-        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 AND password=$2', [req.body.userName, req.body.password]);
+        checkUser = await db.query('SELECT * FROM users WHERE "userName"=$1 OR email=$2',
+          [req.body.userName, req.body.email]);
       }
 
       if (checkUser.rows.length > 0) {
@@ -129,7 +92,8 @@ class UsersController {
   static async signin(req, res) {
     // get sign data from the request body
     try {
-      const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [req.body.email]);
+      const { rows } = await db.query('SELECT * FROM users WHERE email=$1',
+        [req.body.email]);
 
       if (rows.length > 0) {
         for (let i = 0; i < rows.length; i += 1) {
@@ -143,7 +107,7 @@ class UsersController {
             }, process.env.SECRET_KEY, {
                 expiresIn: 86400, // expires in 24 hours
               });
-            res.status(200).json({
+            return res.status(200).json({
               status: 200,
               data: {
                 id: rows[i].id,
@@ -160,7 +124,8 @@ class UsersController {
           }
         }
       }
-      res.status(400).json({
+
+      return res.status(400).json({
         status: 400,
         error: 'Sorry, your email or password is incorrect',
       });
@@ -170,17 +135,16 @@ class UsersController {
   }
 
   static async adminCreateUser(req, res) {
-    AccountsController.checkAdminOnly(req, res);
+    if (req.decodedToken.isAdmin === false || req.decodedToken.type === 'client') {
+      return res.status(401).json({
+        message: 'Not allowed to access this feature, Admin Only',
+      });
+    }
     const values = [
-      req.body.firstName,
-      req.body.lastName,
-      req.body.userName,
-      bcrypt.hashSync(req.body.password),
-      req.body.phone,
-      req.body.email,
-      'staff',
-      req.body.isAdmin,
-      req.body.location,
+      req.body.firstName, req.body.lastName,
+      req.body.userName, bcrypt.hashSync(req.body.password),
+      req.body.phone, req.body.email,
+      'staff', req.body.isAdmin, req.body.location,
     ];
 
     const inserData = `INSERT INTO
