@@ -2,6 +2,15 @@ import db from '../models';
 
 class TransactionsController {
   // Get a single Transactions
+  static async checkCashierOnly(req, res) {
+    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
+      res.status(401).json({
+        status: 401,
+        message: 'Not allowed to access this feature, cashier Only',
+      });
+    }
+  }
+
   static async getSingleTransaction(req, res) {
     try {
       let checkTransaction = '';
@@ -36,12 +45,7 @@ class TransactionsController {
 
   // GET specific account transaction
   static async getSpecificTransaction(req, res) {
-    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, cashier Only',
-      });
-    }
+    TransactionsController.checkCashierOnly(req, res);
     try {
       let checkTransactionId = '';
       if (req.params.id) {
@@ -67,32 +71,43 @@ class TransactionsController {
     }
   }
 
-  static async creditAccount(req, res) {
-    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, cashier Only',
-      });
-    }
+  static async checkAccountExist(req, res) {
     let checkAccount = '';
-    let checkTransaction = '';
     if (req.params.accountNumber) {
       checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
-      checkTransaction = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
     }
 
-    if (checkAccount.rows.length <= 0) {
+    if (checkAccount.rows < 1) {
+      res.status(404).json({
+        status: 404,
+        error: 'Sorry, Not Found this Account',
+      });
+    }
+  }
+
+  static async creditAccount(req, res) {
+    TransactionsController.checkCashierOnly(req, res);
+    let checkAccountCr = '';
+    let checkTransactionCr = '';
+    if (req.params.accountNumber) {
+      checkAccountCr = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1',
+        [req.params.accountNumber]);
+      checkTransactionCr = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1',
+        [req.params.accountNumber]);
+    }
+
+    if (checkAccountCr.rows.length <= 0) {
       res.status(404).json({
         status: 404,
         error: 'Sorry, Not Found this Account',
       });
     }
 
-    let oldBalance = checkAccount.rows[0].balance;
+    let oldBalance = checkAccountCr.rows[0].balance;
     let newBalance = oldBalance + req.body.amount;
 
-    if (checkTransaction.rows.length > 0) {
-      oldBalance = checkTransaction.rows[checkTransaction.rows.length - 1].newBalance;
+    if (checkTransactionCr.rows.length > 0) {
+      oldBalance = checkTransactionCr.rows[checkTransactionCr.rows.length - 1].newBalance;
       newBalance = parseFloat(oldBalance, 10) + parseFloat(req.body.amount, 10);
     }
 
@@ -112,22 +127,11 @@ class TransactionsController {
   returning id, "accountNumber", "createdOn", type, cashier, amount, "oldBalance", "newBalance", reason`;
 
     try {
-      if (req.params.accountNumber) {
-        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
-      }
-
-      if (checkAccount.rows < 1) {
-        res.status(404).json({
-          status: 404,
-          error: 'Sorry, Not Found this Account',
-        });
-      }
-
+      TransactionsController.checkAccountExist(req, res);
       const addTransaction = await db.query(insertTransaction, transactionValue);
-
       if (addTransaction.rows.length >= 0) {
         // addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
-        addTransaction.rows[0].accountNumber = checkAccount.rows[0].accountNumber;
+        addTransaction.rows[0].accountNumber = checkAccountCr.rows[0].accountNumber;
         res.status(201).json({
           status: 201,
           data: addTransaction.rows[0],
@@ -139,31 +143,26 @@ class TransactionsController {
   }
 
   static async debitAccount(req, res) {
-    if (req.decodedToken.isAdmin === true || req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, Cashier Only',
-      });
-    }
-    let checkAccount = '';
-    let checkTransaction = '';
+    TransactionsController.checkCashierOnly(req, res);
+    let checkAccountDb = '';
+    let checkTransactionDb = '';
     if (req.params.accountNumber) {
-      checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
-      checkTransaction = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      checkAccountDb = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
+      checkTransactionDb = await db.query('SELECT * FROM transactions WHERE "accountNumber"=$1', [req.params.accountNumber]);
     }
 
-    if (checkAccount.rows.length <= 0) {
+    if (checkAccountDb.rows.length <= 0) {
       res.status(404).json({
         status: 404,
         error: 'Sorry, Not Found this Account',
       });
     }
 
-    let oldBalance = checkAccount.rows[0].balance;
+    let oldBalance = checkAccountDb.rows[0].balance;
     let newBalance = oldBalance - req.body.amount;
 
-    if (checkTransaction.rows.length > 0) {
-      oldBalance = checkTransaction.rows[checkTransaction.rows.length - 1].newBalance;
+    if (checkTransactionDb.rows.length > 0) {
+      oldBalance = checkTransactionDb.rows[checkTransactionDb.rows.length - 1].newBalance;
       newBalance = parseFloat(oldBalance, 10) - parseFloat(req.body.amount, 10);
     }
 
@@ -183,22 +182,11 @@ class TransactionsController {
   returning id, "accountNumber", "createdOn", type, cashier, amount, "oldBalance", "newBalance", reason`;
 
     try {
-      if (req.params.accountNumber) {
-        checkAccount = await db.query('SELECT * FROM accounts WHERE "accountNumber"=$1', [req.params.accountNumber]);
-      }
-
-      if (checkAccount.rows < 1) {
-        res.status(404).json({
-          status: 404,
-          error: 'Sorry, Not Found this Account',
-        });
-      }
-
+      TransactionsController.checkAccountExist(req, res);
       const addTransaction = await db.query(insertTransaction, transactionValue);
-
       if (addTransaction.rows.length >= 0) {
         // addTransaction.rows[0].createdOn = new Date(addTransaction.rows[0].createdOn).toDateString();
-        addTransaction.rows[0].accountNumber = checkAccount.rows[0].accountNumber;
+        addTransaction.rows[0].accountNumber = checkAccountDb.rows[0].accountNumber;
         res.status(201).json({
           status: 201,
           data: addTransaction.rows[0],
