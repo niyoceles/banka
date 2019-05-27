@@ -169,14 +169,14 @@ button.ifyou {
     float: left;
 }
 
-button.desactivate {
+button.deactivate {
     background-color: rgb(180, 60, 60);
 }
 button.activate {
     background-color: rgb(57, 145, 76);
 }
 
-button#goto-desactivate {
+button#goto-deactivate {
     background-color: rgb(180, 60, 60);
 }
 button#goto-activate {
@@ -196,14 +196,14 @@ button#deleteAccountLink{
 button#deleteAccount{
   background-color: rgb(180, 60, 60);
 }
-button.desactivate {
+button.deactivate {
   background-color: rgb(180, 60, 60);
 }
 button.activate {
   background-color: rgb(57, 145, 76);
 }
 
-button#goto-desactivate {
+button#goto-deactivate {
   background-color: rgb(180, 60, 60);
 }
 button#goto-activate {
@@ -384,7 +384,7 @@ button.delete {
     }
     .navbar > #navbar-check:checked + .navbar-links {
       height: calc(100vh - 50px);
-      height: 250px;
+      height: 300px;
     }
 
     button.createBankAccountLink{
@@ -540,7 +540,7 @@ h4{
   }
   .navbar > #navbar-check:checked + .navbar-links {
     height: calc(100vh - 50px);
-    height: 250px;
+    height: 300px;
   }
 
   #main-section .panel{
@@ -616,7 +616,7 @@ a.links{
   }
   .navbar > #navbar-check:checked + .navbar-links {
     height: calc(100vh - 50px);
-    height: 250px;
+    height: 300px;
   }
 
   button.createBankAccountLink{
@@ -697,7 +697,7 @@ a.links{
   }
   .navbar > #navbar-check:checked + .navbar-links {
     height: calc(100vh - 50px);
-    height: 250px;
+    height: 300px;
   }
 
   #main-section .panel{
@@ -774,7 +774,7 @@ a.links{
   }
   .navbar > #navbar-check:checked + .navbar-links {
     height: calc(100vh - 50px);
-    height: 250px;
+    height: 300px;
   }
 
   #main-section .panel{
@@ -851,7 +851,7 @@ a.links{
   }
   .navbar > #navbar-check:checked + .navbar-links {
     height: calc(100vh - 50px);
-    height: 250px;
+    height: 300px;
   }
 
   #main-section .panel{
