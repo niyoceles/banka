@@ -2,21 +2,21 @@ import db from '../models';
 
 class AccountsController {
   static checkStaffOnly(req, res) {
-    if (req.decodedToken.type === 'client') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, staff Only',
-      });
-    }
+    // if (req.decodedToken.type === 'client') {
+    //   return res.status(401).json({
+    //     status: 401,
+    //     message: 'Not allowed to access this feature, staff Only',
+    //   });
+    // }
   }
 
   static checkUserOnly(req, res) {
-    if (req.decodedToken.type === 'staff') {
-      return res.status(401).json({
-        status: 401,
-        message: 'Not allowed to access this feature, client Only',
-      });
-    }
+    // if (req.decodedToken.type === 'staff') {
+    //   return res.status(401).json({
+    //     status: 401,
+    //     message: 'Not allowed to access this feature, client Only',
+    //   });
+    // }
   }
 
   static checkAdminOnly(req, res) {

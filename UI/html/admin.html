@@ -38,7 +38,21 @@
     <button class="activate" id="check-account">Check Account</button>
     <div id="account"></div>
     <h1>All User Accounts</h1>
-    <div id="userAccount"></div>
+    <div id="userAccount">
+      <table id="table">
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Username</th>
+          <th>Type of user</th>
+          <th>Location</th>
+          <th>Create On</th>
+        </tr>
+      </table>
+    </div>
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -55,35 +69,36 @@
         <form class="animate" id="createAccountForm">
           <h3> Create Staff user Account</h3>
           <label>First name</label>
-          <input type="text" id="firstname" placeholder="Enter First name" required>
-          <div class="error" id="firstname-error"></div>
+          <input type="text" id="firstName" placeholder="Enter First name" >
+          <div class="error" id="firstName-error"></div>
           <label>Last name</label>
-          <input type="text" placeholder="Enter Last name" id="lastname" required>
-          <div class="error" id="lastname-error"></div>
+          <input type="text" placeholder="Enter Last name" id="lastName" >
+          <div class="error" id="lastName-error"></div>
           <label>Email</label>
-          <input type="email" id="email" placeholder="Enter Email" required>
+          <input type="email" id="email" placeholder="Enter Email" >
           <div class="error" id="email-error"></div>
           <label>Phone Number</label>
-          <input type="number" placeholder="Enter Phone number" id="phonenumber" required>
+          <input type="number" placeholder="Enter Phone number" id="phone" >
           <div class="error" id="phone-error"></div>
           <label>User Account type</label>
-          <select name="account-type" id="type" required>
+          <select name="account-type" id="type" >
             <option value="">Select account type</option>
             <option value="true">Admin</option>
             <option value="false">Staff</option>
           </select>
           <label>Username</label>
-          <input type="text" placeholder="Enter Username" id="username" required>
+          <input type="text" placeholder="Enter Username" id="username" >
           <div class="error" id="username-error"></div>
           <label>Password</label>
-          <input type="password" placeholder="Enter Password" id="password" required>
+          <input type="password" placeholder="Enter Password" id="password" >
           <div class="error" id="password-error"></div>
           <label>Location</label>
-          <input type="text" placeholder="Enter location" id="location" required>
+          <input type="text" placeholder="Enter location" id="location" >
           <div class="error" id="location-error"></div>
           <div class="error" id="connection-error"></div>
           <div class="error" id="authorization-error"></div>
           <button type="submit" id="btnStaff">Create Staff</button>
+          <div class="error" id="exist-error"></div>
           <div class="success" id="success-staff"></div>
         </form>
       </div>
