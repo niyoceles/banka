@@ -16,7 +16,7 @@ class UsersController {
   }
 
   static async getAllUserAccounts(req, res) {
-    UsersController.checkUser(req, res); 
+//     UsersController.checkUser(req, res); all other users to view users
     try {
       let checkUserAccounts = '';
       checkUserAccounts = await db.query('SELECT * FROM users');
