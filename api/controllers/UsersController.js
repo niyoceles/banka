@@ -16,7 +16,7 @@ class UsersController {
   }
 
   static async getAllUserAccounts(req, res) {
-//     UsersController.checkUser(req, res); removing authentication ?????????????????????
+    UsersController.checkUser(req, res); 
     try {
       let checkUserAccounts = '';
       checkUserAccounts = await db.query('SELECT * FROM users');
