@@ -29,13 +29,9 @@ const password = joi.string()
   .label('At least one uppercase and lowercase letter, one digit, and special character required for valid password');
 
 const userSchema = joi.object().keys({
-  firstName: name,
-  lastName: name,
   email: email,
-  phone: phoneNumber,
   userName: userName,
   password: password,
-  location: name,
 });
 
 export default () => {
